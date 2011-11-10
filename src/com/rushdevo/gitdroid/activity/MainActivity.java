@@ -1,13 +1,14 @@
-package com.rushdevo.gitdroid;
+package com.rushdevo.gitdroid.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
+import com.rushdevo.gitdroid.R;
 
-public class MainActivity extends Activity {
-    /** Called when the activity is first created. */
+public class MainActivity extends BaseActivity {
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        tryToSetToken();
     }
 }

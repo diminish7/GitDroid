@@ -1,2 +1,3 @@
 client_id=yourclientidgoeshere
 client_secret=yoursecretgoeshere
+callback_url=gitdroid://githubauth
