@@ -14,8 +14,7 @@ import com.github.api.v2.services.GitHubException;
 import com.github.api.v2.services.GitHubServiceFactory;
 import com.github.api.v2.services.OAuthService;
 import com.github.api.v2.services.OAuthService.Scope;
-import com.google.inject.Inject;
-import com.rushdevo.gitdroid.util.ErrorDisplay;
+import com.rushdevo.gitdroid.utils.ErrorDisplay;
 
 /**
  * @author jasonrush
@@ -45,7 +44,6 @@ public class GithubImpl implements Github {
 	/**
 	 * Basic constructor
 	 */
-	@Inject
 	public GithubImpl(Context ctx, SharedPreferences sharedPrefs) {
 		this.ctx = ctx;
 		this.sharedPrefs = sharedPrefs;

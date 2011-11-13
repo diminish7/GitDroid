@@ -1,4 +1,4 @@
-package com.rushdevo.gitdroid.util;
+package com.rushdevo.gitdroid.utils;
 
 import android.content.Context;
 import android.util.Log;

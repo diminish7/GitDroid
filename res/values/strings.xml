@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, MainActivity!</string>
     <string name="app_name">GitDroid</string>
 	<string name="exception_message">An error occurred: %s</string>
+	
+	<string name="news_feed">News Feed</string>
+	<string name="public_activity">Public Activity</string>
+	<string name="repositories">Your Repositories</string>
+	<string name="collaborator_repositories">Collaborator Repositories</string>
+	<string name="watched_repositories">Watched Repositories</string>
+	<string name="followers">Followers</string>
+	<string name="following">Following</string>
+	<string name="organizations">Organizations</string>
+	<string name="gists">Gists</string>
 </resources>
