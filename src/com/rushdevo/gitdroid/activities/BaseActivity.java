@@ -51,6 +51,16 @@ public abstract class BaseActivity extends FragmentActivity {
 	}
 	
 	/**
+	 * If the analytics tracker is running, stop it
+	 */
+	protected void stopAnalyticsTracking() {
+		if (analyticsTracker != null) {
+			analyticsTracker.stopSession();
+			analyticsTracker = null;
+		}
+	}
+	
+	/**
 	 * @return The lazy-loaded Google Analytics Tracker
 	 */
 	protected GoogleAnalyticsTracker getAnalyticsTracker() {
@@ -59,7 +69,7 @@ public abstract class BaseActivity extends FragmentActivity {
 			Properties analyticsProperties = new Properties();
 			try {
 				analyticsProperties.load(this.getResources().getAssets().open("analytics.properties"));
-				analyticsTracker.startNewSession(analyticsProperties.getProperty("account"), this);
+				analyticsTracker.startNewSession(analyticsProperties.getProperty("account"), 30, this);
 			} catch (IOException e) {
 				e.printStackTrace();
 				analyticsTracker = null;

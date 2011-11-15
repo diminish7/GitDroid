@@ -27,6 +27,12 @@ public class MainActivity extends BaseActivity implements ActionSelected {
     }
     
     @Override
+    protected void onDestroy() {
+    	super.onDestroy();
+    	stopAnalyticsTracking();
+    }
+    
+    @Override
 	public void OnActionSelected(String action) {
     	if (panelLayout) {
     		// Multi-panel layout, just change the selected fragment
