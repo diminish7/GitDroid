@@ -4,7 +4,6 @@
 package com.rushdevo.gitdroid.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import com.rushdevo.gitdroid.R;
  * @author jasonrush
  * Display fragment for public activity
  */
-public class PublicActivityFragment extends Fragment {
+public class PublicActivityFragment extends BaseFragment {
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

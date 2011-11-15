@@ -1,6 +1,8 @@
 package com.rushdevo.gitdroid.activities;
 
+import java.io.IOException;
 import java.util.Map;
+import java.util.Properties;
 import java.util.TreeMap;
 
 import android.content.Intent;
@@ -11,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.fragments.CollaboratorRepositoriesFragment;
 import com.rushdevo.gitdroid.fragments.FollowersFragment;
@@ -32,8 +35,38 @@ public abstract class BaseActivity extends FragmentActivity {
 	/** The key in intent's extras for the action selected */
 	public static final String SELECTED_ACTION = "SELECTED_ACTION";
 	
+	protected GoogleAnalyticsTracker analyticsTracker;
 	protected Github github;
 	protected Map<String, Fragment> contentFragmentMap;
+	
+	/**
+	 * Track a page view with Google Analytics
+	 * @param className - The name of the activity or fragment we are tracking
+	 */
+	public void trackPageView(String className) {
+		GoogleAnalyticsTracker tracker = getAnalyticsTracker();
+		if (tracker != null) {
+			tracker.trackPageView("/"+className);
+		}
+	}
+	
+	/**
+	 * @return The lazy-loaded Google Analytics Tracker
+	 */
+	protected GoogleAnalyticsTracker getAnalyticsTracker() {
+		if (analyticsTracker == null) {
+			analyticsTracker = GoogleAnalyticsTracker.getInstance();
+			Properties analyticsProperties = new Properties();
+			try {
+				analyticsProperties.load(this.getResources().getAssets().open("analytics.properties"));
+				analyticsTracker.startNewSession(analyticsProperties.getProperty("account"), this);
+			} catch (IOException e) {
+				e.printStackTrace();
+				analyticsTracker = null;
+			}
+		}
+		return analyticsTracker;
+	}
 	
 	/**
 	 * @return The lazy-loaded content fragment map
