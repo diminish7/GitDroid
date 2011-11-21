@@ -1,5 +1,6 @@
 package com.rushdevo.gitdroid.activities;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -21,4 +22,15 @@ public class ContentActivity extends BaseActivity {
     	fragmentTransaction.replace(R.id.standalone_content_container, fragment);
     	fragmentTransaction.commit();
 	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	    super.onConfigurationChanged(newConfig);
+
+	    // Checks the orientation of the screen
+	    if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE && newConfig.isLayoutSizeAtLeast(Configuration.SCREENLAYOUT_SIZE_XLARGE)) {
+	    	// Going to landscape and on a tablet, pop this view and go back to the main.xml panel layout
+	        finish();
+	    }
+	  }
 }
