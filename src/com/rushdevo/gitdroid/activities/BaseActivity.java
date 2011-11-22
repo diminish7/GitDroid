@@ -7,6 +7,7 @@ import java.util.TreeMap;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -38,6 +39,7 @@ public abstract class BaseActivity extends FragmentActivity {
 	protected GoogleAnalyticsTracker analyticsTracker;
 	protected Github github;
 	protected Map<String, Fragment> contentFragmentMap;
+	protected Map<String, String> reverseContentFragmentMap;
 	
 	/**
 	 * Track a page view with Google Analytics
@@ -111,7 +113,16 @@ public abstract class BaseActivity extends FragmentActivity {
 	 * Get the instance of shared preferences
 	 */
 	protected SharedPreferences getSharedPrefs() {
-		return PreferenceManager.getDefaultSharedPreferences(this);
+		return PreferenceManager.getDefaultSharedPreferences(this.getBaseContext());
+	}
+	
+	/**
+	 * Clear the selected action from preferences
+	 */
+	protected void clearSelectedAction() {
+        Editor prefEditor = getSharedPrefs().edit();
+        prefEditor.remove(SELECTED_ACTION);
+        prefEditor.commit();
 	}
 	
 	/**

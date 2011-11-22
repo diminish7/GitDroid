@@ -4,6 +4,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 
 import com.rushdevo.gitdroid.R;
 
@@ -32,5 +33,14 @@ public class ContentActivity extends BaseActivity {
 	    	// Going to landscape and on a tablet, pop this view and go back to the main.xml panel layout
 	        finish();
 	    }
-	  }
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+	    	// Clicking back from here means going to the main menu
+	    	clearSelectedAction();
+	    }
+	    return super.onKeyDown(keyCode, event);
+	}
 }
