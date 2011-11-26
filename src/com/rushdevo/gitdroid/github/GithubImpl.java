@@ -10,10 +10,13 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 
+import com.github.api.v2.schema.User;
 import com.github.api.v2.services.GitHubException;
 import com.github.api.v2.services.GitHubServiceFactory;
 import com.github.api.v2.services.OAuthService;
 import com.github.api.v2.services.OAuthService.Scope;
+import com.github.api.v2.services.UserService;
+import com.github.api.v2.services.auth.OAuthAuthentication;
 import com.rushdevo.gitdroid.utils.ErrorDisplay;
 
 /**
@@ -35,11 +38,15 @@ public class GithubImpl implements Github {
 	private Context ctx;
 	private SharedPreferences sharedPrefs;
 	
+	private User currentUser;
 	private String accessToken;
 	private String clientId;
 	private String clientSecret;
 	private String callbackUrl;
+	private GitHubServiceFactory factoryInstance;
+	private UserService userService;
 	private OAuthService oAuthService;
+	private OAuthAuthentication oAuthAuthentication;
 	
 	/**
 	 * Basic constructor
@@ -75,11 +82,37 @@ public class GithubImpl implements Github {
 		return accessToken;
 	}
 	
+	public User getCurrentUser() {
+		return currentUser;
+	}
+	
+	public GitHubServiceFactory getFactoryInstance() {
+		if (factoryInstance == null) {
+			factoryInstance = GitHubServiceFactory.newInstance();
+		}
+		return factoryInstance;
+	}
+	
+	public UserService getUserService() {
+		if (userService == null) {
+			userService = getFactoryInstance().createUserService();
+			userService.setAuthentication(getOAuthAuthentication());
+		}
+		return userService;
+	}
+	
 	public OAuthService getOAuthServiceInstance() {
 		if (oAuthService == null) {
-			oAuthService = GitHubServiceFactory.newInstance().createOAuthService(clientId, clientSecret);
+			oAuthService = getFactoryInstance().createOAuthService(clientId, clientSecret);
 		}
 		return oAuthService;
+	}
+	
+	public OAuthAuthentication getOAuthAuthentication() {
+		if (oAuthAuthentication == null) {
+			oAuthAuthentication = new OAuthAuthentication(accessToken);
+		}
+		return oAuthAuthentication;
 	}
 	
 	public String getAuthUrl() {
@@ -115,5 +148,10 @@ public class GithubImpl implements Github {
 		Editor editor = sharedPrefs.edit();
 		editor.putString(TOKEN_FIELD_NAME, accessToken);
 		editor.commit();
+	}
+
+	@Override
+	public void updateCurrentUser() {
+		if (currentUser == null) currentUser = getUserService().getCurrentUser();
 	}
 }

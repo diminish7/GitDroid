@@ -16,4 +16,20 @@ public class WatchedRepositoriesFragment extends BaseFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.watched_repositories, container, false);
 	}
+	
+	@Override
+	protected void initializeData() {
+		// TODO Auto-generated method stub
+		initializeView();
+	}
+	
+	@Override
+	protected boolean viewIsReady() {
+		return true;
+	}
+	
+	@Override
+	protected void initializeView() {
+		hideSpinner(R.id.watched_repositories_todo);
+	}
 }

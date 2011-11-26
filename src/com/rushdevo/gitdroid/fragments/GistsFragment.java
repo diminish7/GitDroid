@@ -16,4 +16,20 @@ public class GistsFragment extends BaseFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.gists, container, false);
 	}
+	
+	@Override
+	protected void initializeData() {
+		// TODO Auto-generated method stub
+		initializeView();
+	}
+	
+	@Override
+	protected boolean viewIsReady() {
+		return true;
+	}
+	
+	@Override
+	protected void initializeView() {
+		hideSpinner(R.id.gists_todo);
+	}
 }

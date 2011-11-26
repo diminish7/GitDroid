@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">GitDroid</string>
 	<string name="exception_message">An error occurred: %s</string>
+	<string name="loading">Loading...</string>
 	
 	<string name="news_feed">News Feed</string>
 	<string name="public_activity">Public Activity</string>

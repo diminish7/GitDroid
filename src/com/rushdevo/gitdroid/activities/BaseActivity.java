@@ -5,15 +5,14 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
+import com.github.api.v2.schema.User;
+import com.github.api.v2.services.auth.OAuthAuthentication;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.fragments.CollaboratorRepositoriesFragment;
@@ -50,6 +49,37 @@ public abstract class BaseActivity extends FragmentActivity {
 		if (tracker != null) {
 			tracker.trackPageView("/"+className);
 		}
+	}
+	
+	/**
+	 * Lazy-load the github delegate
+	 */
+	public Github getGithub() {
+		if (github == null) {
+			github = new GithubImpl(this, getSharedPrefs());
+		}
+		return github;
+	}
+	
+	/**
+	 * @return the instance of shared preferences
+	 */
+	public SharedPreferences getSharedPrefs() {
+		return PreferenceManager.getDefaultSharedPreferences(this.getBaseContext());
+	}
+	
+	/**
+	 * @return the authentication instance 
+	 */
+	public OAuthAuthentication getAuthentication() {
+		return getGithub().getOAuthAuthentication();
+	}
+	
+	/**
+	 * @return the currently authenticated user
+	 */
+	public User getCurrentUser() {
+		return getGithub().getCurrentUser();
 	}
 	
 	/**
@@ -100,75 +130,11 @@ public abstract class BaseActivity extends FragmentActivity {
     }
 	
 	/**
-	 * Lazy-load the github delegate
-	 */
-	protected Github getGithub() {
-		if (github == null) {
-			github = new GithubImpl(this, getSharedPrefs());
-		}
-		return github;
-	}
-	
-	/**
-	 * Get the instance of shared preferences
-	 */
-	protected SharedPreferences getSharedPrefs() {
-		return PreferenceManager.getDefaultSharedPreferences(this.getBaseContext());
-	}
-	
-	/**
 	 * Clear the selected action from preferences
 	 */
 	protected void clearSelectedAction() {
         Editor prefEditor = getSharedPrefs().edit();
         prefEditor.remove(SELECTED_ACTION);
         prefEditor.commit();
-	}
-	
-	/**
-	 * Performs OAuth authentication
-	 */
-	protected void authenticate() {
-		String authUrl = getGithub().getAuthUrl();
-		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(authUrl)));
-		finish();
-	}
-	
-	/**
-	 * Check to see if this user has authenticated
-	 * 
-	 * @return true iff we have an oath token
-	 */
-	protected boolean isAuthenticated() {
-		return getGithub().getToken() != null;
-	}
-	
-	/**
-	 * If we just got back from a call to the github auth url, grab the oath code and call for a token
-	 * Runs asynchronously
-	 */
-	protected void tryToSetToken() {
-		if (getGithub().getToken() == null)
-			new RetrieveAccessTokenTask().execute(this.getIntent().getData());
-	}
-	
-	///////////// INNER CLASSES ////////////////////////
-	/**
-	 * Async task for passing the temp code to github to get the access token back
-	 */
-	private class RetrieveAccessTokenTask extends AsyncTask<Uri, Void, String> {
-		@Override
-		protected String doInBackground(Uri... params) {
-			Uri uri = (params.length > 0) ? params[0] : null;
-			return getGithub().retrievAccessToken(uri);
-		}
-		
-		@Override
-		protected void onPostExecute(String result) {
-			// If we didn't get anything back - not auth'd yet
-			if (result == null) authenticate();
-			else getGithub().updateAccessToken(result);
-		}
-		
 	}
 }

@@ -18,7 +18,6 @@ public class MainActivity extends BaseActivity implements ActionSelected {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tryToSetToken();
         setContentView(R.layout.main);
         panelLayout = (findViewById(R.id.content_containter) != null);
         actionListFragment = (ActionListFragment)getSupportFragmentManager().findFragmentById(R.id.action_list_fragment);

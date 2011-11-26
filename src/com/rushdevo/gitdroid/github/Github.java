@@ -5,7 +5,10 @@ package com.rushdevo.gitdroid.github;
 
 import android.net.Uri;
 
+import com.github.api.v2.schema.User;
+import com.github.api.v2.services.GitHubServiceFactory;
 import com.github.api.v2.services.OAuthService;
+import com.github.api.v2.services.auth.OAuthAuthentication;
 
 /**
  * @author jasonrush
@@ -33,9 +36,19 @@ public interface Github {
 	public abstract String getToken();
 	
 	/**
+	 * @return The singleton github factory
+	 */
+	public abstract GitHubServiceFactory getFactoryInstance();
+	
+	/**
 	 * @return The singleton github OAuth service
 	 */
 	public abstract OAuthService getOAuthServiceInstance();
+	
+	/**
+	 * @return The OAuth authentication object
+	 */
+	public abstract OAuthAuthentication getOAuthAuthentication();
 	
 	/**
 	 * @return The Github auth URL to which the user should be redirected for external auth
@@ -56,4 +69,16 @@ public interface Github {
 	 * @param token - The Github access token
 	 */
 	public abstract void updateAccessToken(String token);
+	
+	/**
+	 * Set aside the authenticated user
+	 */
+	public abstract void updateCurrentUser();
+	
+	/**
+	 * Set the authenticated user name in this.userName and put it in default shared prefs
+	 * 
+	 * return The authenticated user
+	 */
+	public abstract User getCurrentUser();
 }
