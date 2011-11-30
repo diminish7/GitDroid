@@ -29,4 +29,14 @@ public class ErrorDisplay {
 		Log.d(ctx.getClass().getName(), message);
 		Toast.makeText(ctx, String.format(ctx.getString(R.string.exception_message), message), Toast.LENGTH_LONG).show();
 	}
+	
+	/**
+	 * Write a debug message to the log
+	 * 
+	 * @param obj - The object the debug message is coming from (its class will be the tag)
+	 * @param message - The message to write to the log
+	 */
+	public static void debug(Object obj, String message) {
+		Log.d(obj.getClass().getSimpleName(), message);
+	}
 }

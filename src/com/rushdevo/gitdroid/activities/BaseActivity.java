@@ -11,8 +11,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
-import com.github.api.v2.schema.User;
-import com.github.api.v2.services.auth.OAuthAuthentication;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.fragments.CollaboratorRepositoriesFragment;
@@ -24,8 +22,7 @@ import com.rushdevo.gitdroid.fragments.OrganizationsFragment;
 import com.rushdevo.gitdroid.fragments.PublicActivityFragment;
 import com.rushdevo.gitdroid.fragments.RepositoriesFragment;
 import com.rushdevo.gitdroid.fragments.WatchedRepositoriesFragment;
-import com.rushdevo.gitdroid.github.Github;
-import com.rushdevo.gitdroid.github.GithubImpl;
+import com.rushdevo.gitdroid.github.v3.Github;
 
 /**
  * @author jasonrush
@@ -56,7 +53,7 @@ public abstract class BaseActivity extends FragmentActivity {
 	 */
 	public Github getGithub() {
 		if (github == null) {
-			github = new GithubImpl(this, getSharedPrefs());
+			github = new Github(this, getSharedPrefs());
 		}
 		return github;
 	}
@@ -66,20 +63,6 @@ public abstract class BaseActivity extends FragmentActivity {
 	 */
 	public SharedPreferences getSharedPrefs() {
 		return PreferenceManager.getDefaultSharedPreferences(this.getBaseContext());
-	}
-	
-	/**
-	 * @return the authentication instance 
-	 */
-	public OAuthAuthentication getAuthentication() {
-		return getGithub().getOAuthAuthentication();
-	}
-	
-	/**
-	 * @return the currently authenticated user
-	 */
-	public User getCurrentUser() {
-		return getGithub().getCurrentUser();
 	}
 	
 	/**

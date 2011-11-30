@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.api.v2.schema.Feed;
-import com.github.api.v2.services.FeedService;
 import com.rushdevo.gitdroid.R;
 
 /**
@@ -15,9 +13,6 @@ import com.rushdevo.gitdroid.R;
  * Display fragment for news feed content
  */
 public class NewsFeedFragment extends BaseFragment {
-	private FeedService feedService;
-	private Feed feed;
-	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.news_feed, container, false);
@@ -31,7 +26,7 @@ public class NewsFeedFragment extends BaseFragment {
 	
 	@Override
 	protected boolean viewIsReady() {
-		return getCurrentUser() != null && feed != null;
+		return true;
 	}
 	
 	@Override
@@ -46,14 +41,30 @@ public class NewsFeedFragment extends BaseFragment {
 	private class RetrieveFeedTask extends AsyncTask<Void, Void, Void> {
 		@Override
 		protected void onPreExecute() {
-			showSpinner(R.id.news_feed_todo);
+//			showSpinner(R.id.news_feed_todo);
 		}
 		
 		@Override
 		protected Void doInBackground(Void... params) {
-			feedService = getGithub().getFactoryInstance().createFeedService();
-			feedService.setAuthentication(getAuthentication());
-			feed = feedService.getPrivateUserFeed(getCurrentUser().getLogin(), 20);
+//			feedService = getGithub().getFactoryInstance().createFeedService();
+//			feedService.setAuthentication(getAuthentication());
+//			feed = feedService.getPrivateUserFeed(getCurrentUser().getLogin(), 20);
+//			logd("**** Feed Info *****");
+//			logd("Title: " + feed.getTitle());
+//			logd("Auther: " + feed.getAuthor());
+//			logd("Link: " + feed.getLink());
+//			logd("Desc: " + feed.getDescription());
+//			logd("**** Entries *****");
+//			for (FeedEntry entry : feed.getEntries()) {
+//				logd("Title: " + entry.getTitle());
+//				logd("Auther: " + entry.getAuthor());
+//				logd("Link: " + entry.getLink());
+//				logd("Date: " + entry.getPublishedDate());
+//				logd("Content: " + entry.getContent());
+//				for (String cat : entry.getCategories()) {
+//					logd("   Category: " + cat);
+//				}
+//			}
 			return null;
 		}
 		
