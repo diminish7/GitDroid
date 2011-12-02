@@ -8,12 +8,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
 
+import com.rushdevo.gitdroid.GitDroidApplication;
 import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.activities.BaseActivity;
-import com.rushdevo.gitdroid.github.v3.Github;
+import com.rushdevo.gitdroid.github.v3.services.OAuthService;
 import com.rushdevo.gitdroid.utils.ErrorDisplay;
 
 /**
@@ -25,6 +25,7 @@ public abstract class BaseFragment extends Fragment {
 	protected static final int INIT_VIEW_MESSAGE = 1;
 	protected static final int NO_ACCESS_CODE_MESSAGE = 2;
 	protected Handler initHandler;
+	protected OAuthService oAuthService;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,12 +41,16 @@ public abstract class BaseFragment extends Fragment {
 		if (viewIsReady()) initializeView();
 	}
 	
-	protected Github getGithub() {
-		return ((BaseActivity)getActivity()).getGithub();
+	public GitDroidApplication getGitDroidApplication() {
+		return (GitDroidApplication)getActivity().getApplication();
+	}
+	
+	public OAuthService getOAuthServiceInstance() {
+		return getGitDroidApplication().getOAuthServiceInstance();
 	}
 	
 	protected Uri getOAuthUri() {
-		return getGithub().getOAuthUri();
+		return getOAuthServiceInstance().getAuthUri();
 	}
 	
 	/**
@@ -62,7 +67,7 @@ public abstract class BaseFragment extends Fragment {
 	 * @return true iff we have an oath token
 	 */
 	protected boolean isAuthenticated() {
-		return getGithub().getAccessToken() != null;
+		return getGitDroidApplication().getAccessToken() != null;
 	}
 	
 	/**
@@ -71,7 +76,7 @@ public abstract class BaseFragment extends Fragment {
 	 * Runs asynchronously
 	 */
 	protected void initializeCommonData() {
-		if (getGithub().getAccessToken() == null) {
+		if (getGitDroidApplication().getAccessToken() == null) {
 			new RetrieveAccessTokenTask().execute(getActivity().getIntent().getData());
 //		} else if (getCurrentUser() == null) {
 //			new RetrieveCurrentUserTask().execute();
@@ -117,15 +122,6 @@ public abstract class BaseFragment extends Fragment {
 	}
 	
 	/**
-	 * Shorthand for Log.d
-	 * 
-	 * @param msg - The message to log
-	 */
-	protected void logd(String msg) {
-		Log.d(getClass().getSimpleName(), msg);
-	}
-	
-	/**
 	 * Initialize data specific to this particular fragment
 	 */
 	protected abstract void initializeData();
@@ -148,7 +144,7 @@ public abstract class BaseFragment extends Fragment {
 		@Override
 		protected String doInBackground(Uri... params) {
 			Uri uri = (params.length > 0) ? params[0] : null;
-			return getGithub().retrievAccessToken(uri);
+			return getOAuthServiceInstance().retrievAccessToken(uri);
 		}
 		
 		@Override
@@ -158,11 +154,11 @@ public abstract class BaseFragment extends Fragment {
 				authenticate();
 			} else if (result == "") {
 				// If we get an empty access code, that means auth failed
-				getGithub().updateAccessToken(null);
+				getGitDroidApplication().updateAccessToken(null);
 				getInitHandler().sendEmptyMessage(NO_ACCESS_CODE_MESSAGE);
 			} else {
 				// Update the access token and current user
-				getGithub().updateAccessToken(result);
+				getGitDroidApplication().updateAccessToken(result);
 //				getGithub().updateCurrentUser();
 				// Initialize the fragment-specific data
 				getInitHandler().sendEmptyMessage(INIT_DATA_MESSAGE);

@@ -13,8 +13,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 
+import com.rushdevo.gitdroid.GitDroidApplication;
 import com.rushdevo.gitdroid.utils.ErrorDisplay;
 
 /**
@@ -22,28 +22,90 @@ import com.rushdevo.gitdroid.utils.ErrorDisplay;
  * Base Github Service
  */
 public abstract class GithubService {
+	// Common URLs
+	public static final String BASE_URL = "https://api.github.com";
+	protected static final String ACCESS_TOKEN_KEY = "access_token";
+	
 	protected Context ctx;
+	protected GitDroidApplication app;
 	private HttpClient client;
 	private static final Integer SUCCESS = 200;
 	
 	public GithubService(Context ctx) {
 		this.ctx = ctx;
+		this.app = (GitDroidApplication)ctx.getApplicationContext();
 	}
 	
-	protected HttpResponse get(Uri uri) {
+	/**
+	 * Returns the uri for the given url after appending the oauth access token to it
+	 * 
+	 * @param url
+	 * @return the new uri
+	 */
+	protected Uri getAuthenticatedUri(String url) {
+		return getAuthenticatedUri(Uri.parse(url));
+	}
+	
+	/**
+	 * Returns the uri for the given url after appending the oauth access token to it
+	 * 
+	 * @param uri
+	 * @return the new uri
+	 */
+	protected Uri getAuthenticatedUri(Uri uri) {
+		Uri.Builder builder = uri.buildUpon();
+		builder.appendQueryParameter(ACCESS_TOKEN_KEY, getAccessToken());
+		return builder.build();
+	}
+	
+	protected String getAccessToken() {
+		return app.getAccessToken();
+	}
+	
+	/**
+	 * Do an HTTP GET request for the given URI
+	 * 
+	 * @param uri
+	 * @param appendAccessToken
+	 * @return the HttpResponse
+	 */
+	protected HttpResponse get(Uri uri, Boolean appendAccessToken) {
+		if (appendAccessToken) uri = getAuthenticatedUri(uri);
 		return executeRequest(new HttpGet(uri.toString()));
 	}
 	
-	protected String getResponseBody(Uri uri) {
-		return responseBody(get(uri));
+	/**
+	 * Do an HTTP GET request for the given URI
+	 * 
+	 * @param uri
+	 * @param appendAccessToken
+	 * @return the body of the HttpResponse
+	 */
+	protected String getResponseBody(Uri uri, Boolean appendAccessToken) {
+		return responseBody(get(uri, appendAccessToken));
 	}
 	
-	protected HttpResponse post(Uri uri) {
+	/**
+	 * Do an HTTP POST for the given URI
+	 * 
+	 * @param uri
+	 * @param appendAccessToken
+	 * @return The HttpResponse
+	 */
+	protected HttpResponse post(Uri uri, Boolean appendAccessToken) {
+		if (appendAccessToken) uri = getAuthenticatedUri(uri);
 		return executeRequest(new HttpPost(uri.toString()));
 	}
 	
-	protected String postResponseBody(Uri uri) {
-		return responseBody(post(uri)); 
+	/**
+	 * Do an HTTP POST for the given URI
+	 * 
+	 * @param uri
+	 * @param appendAccessToken
+	 * @return the body of the HttpResponse
+	 */
+	protected String postResponseBody(Uri uri, Boolean appendAccessToken) {
+		return responseBody(post(uri, appendAccessToken)); 
 	}
 	
 	private String responseBody(HttpResponse response) {
@@ -60,7 +122,7 @@ public abstract class GithubService {
 				reader.close();
 				return buffer.toString();
 			} catch (IOException e) {
-				ErrorDisplay.errorToast(ctx, e);
+				ErrorDisplay.debug(this, e);
 				return null;
 			}
 		}
@@ -77,7 +139,7 @@ public abstract class GithubService {
 		} catch (Exception e) {
 			// Blank out the response and display an error message
 			response = null;
-			ErrorDisplay.errorToast(ctx, e);
+			ErrorDisplay.debug(this, e);
 		}
 		return response;
 	}

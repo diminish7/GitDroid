@@ -39,4 +39,14 @@ public class ErrorDisplay {
 	public static void debug(Object obj, String message) {
 		Log.d(obj.getClass().getSimpleName(), message);
 	}
+	
+	/**
+	 * Write a debug message to the log
+	 * 
+	 * @param obj - The object the debug message is coming from (its class will be the tag)
+	 * @param e - The exception who's message will be written to the log
+	 */
+	public static void debug(Object obj, Exception e) {
+		debug(obj, e.getMessage());
+	}
 }

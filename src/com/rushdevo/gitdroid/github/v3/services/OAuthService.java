@@ -13,7 +13,8 @@ import android.net.Uri;
 
 /**
  * @author jasonrush
- *
+ * 
+ * Github OAuth calls service (http://developer.github.com/v3/oauth/)
  */
 public class OAuthService extends GithubService {
 	// Auth URL consts
@@ -60,6 +61,10 @@ public class OAuthService extends GithubService {
 		this.scopes = scopes;
 	}
 	
+	/**
+	 * Get the URI for requesting an OAuth code
+	 * @return the uri
+	 */
 	public Uri getAuthUri() {
 		Uri uri = Uri.parse(OAUTH_URL);
 		Uri.Builder builder = uri.buildUpon();
@@ -69,6 +74,11 @@ public class OAuthService extends GithubService {
 		return builder.build();
 	}
 	
+	/**
+	 * Get the URI for retrieving the access token for a given code
+	 * @param code
+	 * @return the uri
+	 */
 	public Uri getAccessTokenUri(String code) {
 		Uri uri = Uri.parse(ACCESS_TOKEN_URL);
 		Uri.Builder builder = uri.buildUpon();
@@ -97,8 +107,30 @@ public class OAuthService extends GithubService {
 	}
 	
 	// Helpers
-	public String retrieveAccessToken(String code) {
-		String responseBody = postResponseBody(getAccessTokenUri(code));
+	
+	/**
+	 * Call to Github and request the access token for the given code
+	 * @param The uri containing the temporary oauth code
+	 * @return the access token
+	 */
+	public String retrievAccessToken(Uri uri) {
+		if (uri != null && uri.toString().startsWith(app.getCallbackUrl())) {
+			try {
+				// We got here from an auth call
+				// Grab the code
+				String code = uri.getQueryParameter("code");
+				// Then grab the access accessToken
+				return retrieveAccessToken(code);
+			} catch (Exception e) {
+				ErrorDisplay.debug(this, "An error occurred retrieving the access code: " + e.getMessage());
+				return "";
+			}
+		}
+		return null;
+	}
+	
+	private String retrieveAccessToken(String code) {
+		String responseBody = postResponseBody(getAccessTokenUri(code), false);
 		if (responseBody != null) {
 			String[] parts = responseBody.split("&");
 			for (String part : parts) {

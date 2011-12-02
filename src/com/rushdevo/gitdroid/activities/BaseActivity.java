@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
+import com.rushdevo.gitdroid.GitDroidApplication;
 import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.fragments.CollaboratorRepositoriesFragment;
 import com.rushdevo.gitdroid.fragments.FollowersFragment;
@@ -22,7 +23,6 @@ import com.rushdevo.gitdroid.fragments.OrganizationsFragment;
 import com.rushdevo.gitdroid.fragments.PublicActivityFragment;
 import com.rushdevo.gitdroid.fragments.RepositoriesFragment;
 import com.rushdevo.gitdroid.fragments.WatchedRepositoriesFragment;
-import com.rushdevo.gitdroid.github.v3.Github;
 
 /**
  * @author jasonrush
@@ -33,9 +33,12 @@ public abstract class BaseActivity extends FragmentActivity {
 	public static final String SELECTED_ACTION = "SELECTED_ACTION";
 	
 	protected GoogleAnalyticsTracker analyticsTracker;
-	protected Github github;
 	protected Map<String, Fragment> contentFragmentMap;
 	protected Map<String, String> reverseContentFragmentMap;
+	
+	public GitDroidApplication getGitDroidApplication() {
+		return (GitDroidApplication)getApplication();
+	}
 	
 	/**
 	 * Track a page view with Google Analytics
@@ -46,16 +49,6 @@ public abstract class BaseActivity extends FragmentActivity {
 		if (tracker != null) {
 			tracker.trackPageView("/"+className);
 		}
-	}
-	
-	/**
-	 * Lazy-load the github delegate
-	 */
-	public Github getGithub() {
-		if (github == null) {
-			github = new Github(this, getSharedPrefs());
-		}
-		return github;
 	}
 	
 	/**
