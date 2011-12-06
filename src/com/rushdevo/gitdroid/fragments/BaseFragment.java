@@ -13,7 +13,9 @@ import android.view.View;
 import com.rushdevo.gitdroid.GitDroidApplication;
 import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.activities.BaseActivity;
+import com.rushdevo.gitdroid.github.v3.models.User;
 import com.rushdevo.gitdroid.github.v3.services.OAuthService;
+import com.rushdevo.gitdroid.github.v3.services.UserService;
 import com.rushdevo.gitdroid.utils.ErrorDisplay;
 
 /**
@@ -25,7 +27,7 @@ public abstract class BaseFragment extends Fragment {
 	protected static final int INIT_VIEW_MESSAGE = 1;
 	protected static final int NO_ACCESS_CODE_MESSAGE = 2;
 	protected Handler initHandler;
-	protected OAuthService oAuthService;
+	protected UserService userService;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,8 +51,23 @@ public abstract class BaseFragment extends Fragment {
 		return getGitDroidApplication().getOAuthServiceInstance();
 	}
 	
+	public UserService getUserServiceInstance() {
+		if (userService == null) {
+			userService = new UserService(this.getActivity());
+		}
+		return userService;
+	}
+	
 	protected Uri getOAuthUri() {
 		return getOAuthServiceInstance().getAuthUri();
+	}
+	
+	protected User getCurrentUser() {
+		return getGitDroidApplication().getCurrentUser();
+	}
+	
+	protected String getAccessToken() {
+		return getGitDroidApplication().getAccessToken();
 	}
 	
 	/**
@@ -76,10 +93,10 @@ public abstract class BaseFragment extends Fragment {
 	 * Runs asynchronously
 	 */
 	protected void initializeCommonData() {
-		if (getGitDroidApplication().getAccessToken() == null) {
+		if (getAccessToken() == null) {
 			new RetrieveAccessTokenTask().execute(getActivity().getIntent().getData());
-//		} else if (getCurrentUser() == null) {
-//			new RetrieveCurrentUserTask().execute();
+		} else if (getCurrentUser() == null) {
+			new RetrieveCurrentUserTask().execute();
 		} else {
 			// The common stuff's initialized already, go ahead and initialize fragment-specific data
 			initializeData();
@@ -157,30 +174,32 @@ public abstract class BaseFragment extends Fragment {
 				getGitDroidApplication().updateAccessToken(null);
 				getInitHandler().sendEmptyMessage(NO_ACCESS_CODE_MESSAGE);
 			} else {
-				// Update the access token and current user
+				// Update the access token
 				getGitDroidApplication().updateAccessToken(result);
-//				getGithub().updateCurrentUser();
-				// Initialize the fragment-specific data
-				getInitHandler().sendEmptyMessage(INIT_DATA_MESSAGE);
+				// And retrieve the current user
+				new RetrieveCurrentUserTask().execute();
 			}
 		}
 		
 	}
 	
 	/**
-	 * Async task for getting the user name of the authenticated user
+	 * Async task for getting the user object for the authenticated user
 	 */
-//	private class RetrieveCurrentUserTask extends AsyncTask<Void, Void, Void> {
-//		@Override
-//		protected Void doInBackground(Void... params) {
-//			// Update the current user
-////			getGithub().updateCurrentUser();
-//			// Initialize the fragment-specific data
-//			getInitHandler().sendEmptyMessage(INIT_DATA_MESSAGE);
-//			return null;
-//		}
-//		
-//	}
+	private class RetrieveCurrentUserTask extends AsyncTask<Void, Void, User> {
+		@Override
+		protected User doInBackground(Void... params) {
+			// Get the current auth'd user
+			return getUserServiceInstance().retrieveCurrentUser();
+		}
+		
+		@Override
+		protected void onPostExecute(User currentUser) {
+			getGitDroidApplication().setCurrentUser(currentUser);
+			getInitHandler().sendEmptyMessage(INIT_DATA_MESSAGE);
+		}
+		
+	}
 	
 	/**
 	 * Initialization handler

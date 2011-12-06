@@ -13,6 +13,7 @@ import com.rushdevo.gitdroid.github.v3.models.User;
 public class UserService extends GithubService {
 	// User URLS
 	public static final String USER_URL = BASE_URL + "/user";
+	public static final String USERS_URL = USER_URL + "s";
 	
 	public UserService(Context ctx) {
 		super(ctx);
@@ -20,9 +21,12 @@ public class UserService extends GithubService {
 	
 	/**
 	 * Retrieve the currently authenticated user from Github
+	 * 
+	 * https://api.github.com/user
+	 * 
 	 * @return the user
 	 */
 	public User retrieveCurrentUser() {
-		return new User(getResponseBody(Uri.parse(USER_URL), true));
+		return User.fromJson(getResponseBody(Uri.parse(USER_URL), true), User.class);
 	}
 }

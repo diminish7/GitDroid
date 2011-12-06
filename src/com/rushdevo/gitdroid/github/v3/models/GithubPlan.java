@@ -11,11 +11,6 @@ public class GithubPlan extends BaseGithubModel {
 	private Integer collaborators;
 	private Integer private_repos;
 	
-	// Constructors
-	public GithubPlan(String json) {
-		super(json);
-	}
-	
 	// Getters and Setters
 	public String getName() {
 		return name;
@@ -38,7 +33,7 @@ public class GithubPlan extends BaseGithubModel {
 	public Integer getPrivateRepos() {
 		return private_repos;
 	}
-	public void setPrivateRepos(Integer private_repos) {
-		this.private_repos = private_repos;
+	public void setPrivateRepos(Integer privateRepos) {
+		this.private_repos = privateRepos;
 	}
 }

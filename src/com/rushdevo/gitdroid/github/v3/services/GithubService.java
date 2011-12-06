@@ -14,7 +14,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.content.Context;
 import android.net.Uri;
 
+import com.google.gson.Gson;
 import com.rushdevo.gitdroid.GitDroidApplication;
+import com.rushdevo.gitdroid.gson.GsonUtils;
 import com.rushdevo.gitdroid.utils.ErrorDisplay;
 
 /**
@@ -34,6 +36,22 @@ public abstract class GithubService {
 	public GithubService(Context ctx) {
 		this.ctx = ctx;
 		this.app = (GitDroidApplication)ctx.getApplicationContext();
+	}
+	
+	/**
+	 * Get an instance of a Gson parser
+	 * @return The gson object
+	 */
+	protected Gson getGson() {
+		return GsonUtils.getGsonInstance();
+	}
+	
+	/**
+	 * Get the GitDroid application context
+	 * @return the application context
+	 */
+	public GitDroidApplication getGitDroidApplication() {
+		return (GitDroidApplication)ctx.getApplicationContext();
 	}
 	
 	/**

@@ -34,11 +34,6 @@ public class User extends BaseGithubModel {
 	private Integer collaborators;
 	private GithubPlan plan;
 	
-	// Constructors
-	public User(String json) {
-		super(json);
-	}
-	
 	// Getters and Setters
 	public String getLogin() {
 		return login;
@@ -55,14 +50,14 @@ public class User extends BaseGithubModel {
 	public String getAvatarUrl() {
 		return avatar_url;
 	}
-	public void setAvatarUrl(String avatar_url) {
-		this.avatar_url = avatar_url;
+	public void setAvatarUrl(String avatarUrl) {
+		this.avatar_url = avatarUrl;
 	}
 	public String getGravatarId() {
 		return gravatar_id;
 	}
-	public void setGravatarId(String gravatar_id) {
-		this.gravatar_id = gravatar_id;
+	public void setGravatarId(String gravatarId) {
+		this.gravatar_id = gravatarId;
 	}
 	public String getUrl() {
 		return url;
@@ -115,14 +110,14 @@ public class User extends BaseGithubModel {
 	public Integer getPublicRepos() {
 		return public_repos;
 	}
-	public void setPublicRepos(Integer public_repos) {
-		this.public_repos = public_repos;
+	public void setPublicRepos(Integer publicRepos) {
+		this.public_repos = publicRepos;
 	}
 	public Integer getPublicGists() {
 		return public_gists;
 	}
-	public void setPublicGists(Integer public_gists) {
-		this.public_gists = public_gists;
+	public void setPublicGists(Integer publicGists) {
+		this.public_gists = publicGists;
 	}
 	public Integer getFollowers() {
 		return followers;
@@ -139,14 +134,14 @@ public class User extends BaseGithubModel {
 	public String getHtmlUrl() {
 		return html_url;
 	}
-	public void setHtmlUrl(String html_url) {
-		this.html_url = html_url;
+	public void setHtmlUrl(String htmlUrl) {
+		this.html_url = htmlUrl;
 	}
 	public Date getCreatedAt() {
 		return created_at;
 	}
-	public void setCreatedAt(Date created_at) {
-		this.created_at = created_at;
+	public void setCreatedAt(Date createdAt) {
+		this.created_at = createdAt;
 	}
 	public String getType() {
 		return type;
@@ -157,26 +152,26 @@ public class User extends BaseGithubModel {
 	public Integer getTotalPrivateRepos() {
 		return total_private_repos;
 	}
-	public void setTotalPrivateRepos(Integer total_private_repos) {
-		this.total_private_repos = total_private_repos;
+	public void setTotalPrivateRepos(Integer totalPrivateRepos) {
+		this.total_private_repos = totalPrivateRepos;
 	}
 	public Integer getOwnedPrivateRepos() {
 		return owned_private_repos;
 	}
-	public void setOwnedPrivateRepos(Integer owned_private_repos) {
-		this.owned_private_repos = owned_private_repos;
+	public void setOwnedPrivateRepos(Integer ownedPrivateRepos) {
+		this.owned_private_repos = ownedPrivateRepos;
 	}
 	public Integer getPrivateGists() {
 		return private_gists;
 	}
-	public void setPrivateGists(Integer private_gists) {
-		this.private_gists = private_gists;
+	public void setPrivateGists(Integer privateGists) {
+		this.private_gists = privateGists;
 	}
 	public Integer getDiskUsage() {
 		return disk_usage;
 	}
-	public void setDiskUsage(Integer disk_usage) {
-		this.disk_usage = disk_usage;
+	public void setDiskUsage(Integer diskUsage) {
+		this.disk_usage = diskUsage;
 	}
 	public Integer getCollaborators() {
 		return collaborators;

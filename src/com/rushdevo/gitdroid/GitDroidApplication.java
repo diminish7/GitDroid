@@ -56,6 +56,13 @@ public class GitDroidApplication extends Application {
 	public void setCurrentUser(User currentUser) {
 		this.currentUser = currentUser;
 	}
+	public String getCurrentUserLogin() {
+		if (currentUser == null) {
+			return null;
+		} else {
+			return currentUser.getLogin();
+		}
+	}
 	public String getClientId() {
 		return clientId;
 	}

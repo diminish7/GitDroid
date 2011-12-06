@@ -1,5 +1,7 @@
 package com.rushdevo.gitdroid.fragments;
 
+import java.util.List;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,12 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rushdevo.gitdroid.R;
+import com.rushdevo.gitdroid.github.v3.models.Event;
+import com.rushdevo.gitdroid.github.v3.services.EventService;
 
 /**
  * @author jasonrush
  * Display fragment for news feed content
  */
 public class NewsFeedFragment extends BaseFragment {
+	private EventService service;
+	private List<Event> receivedEvents;
+	private Integer page;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.news_feed, container, false);
@@ -26,12 +34,27 @@ public class NewsFeedFragment extends BaseFragment {
 	
 	@Override
 	protected boolean viewIsReady() {
-		return true;
+		return (getReceivedEvents() != null);
 	}
 	
 	@Override
 	protected void initializeView() {
 		hideSpinner(R.id.news_feed_todo);
+	}
+	
+	// Getters and Setters
+	public List<Event> getReceivedEvents() {
+		return this.receivedEvents;
+	}
+	
+	public Integer getPage() {
+		if (page == null) page = 1;
+		return page;
+	}
+	
+	public EventService getEventServiceInstance() {
+		if (service == null) service = new EventService(getActivity());
+		return service;
 	}
 	
 	///////////// INNER CLASSES ////////////////////////
@@ -41,11 +64,15 @@ public class NewsFeedFragment extends BaseFragment {
 	private class RetrieveFeedTask extends AsyncTask<Void, Void, Void> {
 		@Override
 		protected void onPreExecute() {
-//			showSpinner(R.id.news_feed_todo);
+			showSpinner(R.id.news_feed_todo);
 		}
 		
 		@Override
 		protected Void doInBackground(Void... params) {
+			receivedEvents = getEventServiceInstance().retrieveReceivedEvents(getPage());
+			for (Event event : receivedEvents) {
+				event.toString();
+			}
 //			feedService = getGithub().getFactoryInstance().createFeedService();
 //			feedService.setAuthentication(getAuthentication());
 //			feed = feedService.getPrivateUserFeed(getCurrentUser().getLogin(), 20);
