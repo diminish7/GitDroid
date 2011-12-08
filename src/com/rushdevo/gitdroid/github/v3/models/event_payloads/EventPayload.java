@@ -5,5 +5,9 @@ package com.rushdevo.gitdroid.github.v3.models.event_payloads;
  * All the different types of payload that can be returned by an event must implement this
  */
 public interface EventPayload {
-	
+	/**
+	 * Get the id of the xml layout to inflate to display this type of event payload
+	 * @return the id
+	 */
+	public int getLayoutId();
 }

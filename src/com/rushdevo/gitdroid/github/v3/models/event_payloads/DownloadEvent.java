@@ -1,5 +1,6 @@
 package com.rushdevo.gitdroid.github.v3.models.event_payloads;
 
+import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.github.v3.models.BaseGithubModel;
 import com.rushdevo.gitdroid.github.v3.models.Download;
 
@@ -12,10 +13,12 @@ public class DownloadEvent extends BaseGithubModel implements EventPayload {
 	private Download download;
 	
 	// Getters and Setters
+	public int getLayoutId() {
+		return R.layout.default_event_list_item;
+	}
 	public Download getDownload() {
 		return this.download;
 	}
-	
 	public void setDownload(Download download) {
 		this.download = download;
 	}

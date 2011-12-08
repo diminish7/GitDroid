@@ -1,4 +1,7 @@
-package com.rushdevo.gitdroid.fragments;
+/**
+ * 
+ */
+package com.rushdevo.gitdroid.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,12 +12,13 @@ import com.rushdevo.gitdroid.R;
 
 /**
  * @author jasonrush
- * Display fragment for organizations content
+ * Display fragment for public activity
  */
-public class OrganizationsFragment extends BaseFragment {
+public class PublicActivityFragment extends BaseFragment {
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.organizations, container, false);
+		return inflater.inflate(R.layout.public_activity, container, false);
 	}
 	
 	@Override
@@ -30,6 +34,7 @@ public class OrganizationsFragment extends BaseFragment {
 	
 	@Override
 	protected void initializeView() {
-		hideSpinner(R.id.organizations_todo);
+		hideSpinner(R.id.public_activity_todo);
 	}
+	
 }

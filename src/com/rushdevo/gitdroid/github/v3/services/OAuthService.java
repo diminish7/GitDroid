@@ -6,10 +6,10 @@ package com.rushdevo.gitdroid.github.v3.services;
 import java.util.Set;
 import java.util.TreeSet;
 
-import com.rushdevo.gitdroid.utils.ErrorDisplay;
-
 import android.content.Context;
 import android.net.Uri;
+
+import com.rushdevo.gitdroid.utils.ErrorDisplay;
 
 /**
  * @author jasonrush

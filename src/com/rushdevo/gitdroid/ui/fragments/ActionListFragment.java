@@ -1,4 +1,4 @@
-package com.rushdevo.gitdroid.fragments;
+package com.rushdevo.gitdroid.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -34,7 +34,7 @@ public class ActionListFragment extends ListFragment {
 	
 	private void initializeAdapter() {
 		String[] actions = new String[] {
-			getString(R.string.news_feed),
+			getString(R.string.events),
 			getString(R.string.public_activity),
 			getString(R.string.repositories),
 			getString(R.string.collaborator_repositories),

@@ -3,12 +3,12 @@ package com.rushdevo.gitdroid;
 import java.io.IOException;
 import java.util.Properties;
 
-import com.rushdevo.gitdroid.github.v3.models.User;
-import com.rushdevo.gitdroid.github.v3.services.OAuthService;
-
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+
+import com.rushdevo.gitdroid.github.v3.models.User;
+import com.rushdevo.gitdroid.github.v3.services.OAuthService;
 
 /**
  * @author jasonrush

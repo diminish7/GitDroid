@@ -1,4 +1,4 @@
-package com.rushdevo.gitdroid.activities;
+package com.rushdevo.gitdroid.ui.activities;
 
 import java.io.IOException;
 import java.util.Map;
@@ -14,15 +14,15 @@ import android.support.v4.app.FragmentActivity;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.rushdevo.gitdroid.GitDroidApplication;
 import com.rushdevo.gitdroid.R;
-import com.rushdevo.gitdroid.fragments.CollaboratorRepositoriesFragment;
-import com.rushdevo.gitdroid.fragments.FollowersFragment;
-import com.rushdevo.gitdroid.fragments.FollowingFragment;
-import com.rushdevo.gitdroid.fragments.GistsFragment;
-import com.rushdevo.gitdroid.fragments.NewsFeedFragment;
-import com.rushdevo.gitdroid.fragments.OrganizationsFragment;
-import com.rushdevo.gitdroid.fragments.PublicActivityFragment;
-import com.rushdevo.gitdroid.fragments.RepositoriesFragment;
-import com.rushdevo.gitdroid.fragments.WatchedRepositoriesFragment;
+import com.rushdevo.gitdroid.ui.fragments.CollaboratorRepositoriesFragment;
+import com.rushdevo.gitdroid.ui.fragments.EventsFragment;
+import com.rushdevo.gitdroid.ui.fragments.FollowersFragment;
+import com.rushdevo.gitdroid.ui.fragments.FollowingFragment;
+import com.rushdevo.gitdroid.ui.fragments.GistsFragment;
+import com.rushdevo.gitdroid.ui.fragments.OrganizationsFragment;
+import com.rushdevo.gitdroid.ui.fragments.PublicActivityFragment;
+import com.rushdevo.gitdroid.ui.fragments.RepositoriesFragment;
+import com.rushdevo.gitdroid.ui.fragments.WatchedRepositoriesFragment;
 
 /**
  * @author jasonrush
@@ -92,7 +92,7 @@ public abstract class BaseActivity extends FragmentActivity {
 	protected Map<String, Fragment> getContentFragmentMap() {
 		if (contentFragmentMap == null) {
 	    	contentFragmentMap = new TreeMap<String, Fragment>();
-			contentFragmentMap.put(getString(R.string.news_feed), new NewsFeedFragment());
+			contentFragmentMap.put(getString(R.string.events), new EventsFragment());
 			contentFragmentMap.put(getString(R.string.public_activity), new PublicActivityFragment());
 			contentFragmentMap.put(getString(R.string.repositories), new RepositoriesFragment());
 			contentFragmentMap.put(getString(R.string.collaborator_repositories), new CollaboratorRepositoriesFragment());

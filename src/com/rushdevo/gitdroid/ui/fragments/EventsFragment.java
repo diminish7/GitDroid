@@ -1,5 +1,6 @@
-package com.rushdevo.gitdroid.fragments;
+package com.rushdevo.gitdroid.ui.fragments;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.os.AsyncTask;
@@ -11,19 +12,32 @@ import android.view.ViewGroup;
 import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.github.v3.models.Event;
 import com.rushdevo.gitdroid.github.v3.services.EventService;
+import com.rushdevo.gitdroid.ui.EventsAdapter;
 
 /**
  * @author jasonrush
  * Display fragment for news feed content
  */
-public class NewsFeedFragment extends BaseFragment {
+public class EventsFragment extends BaseFragment {
 	private EventService service;
 	private List<Event> receivedEvents;
+	private boolean haveRetrievedEvents = false;
 	private Integer page;
+	
+	private EventsAdapter adapter;
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		this.receivedEvents = new ArrayList<Event>();
+		haveRetrievedEvents = false;
+		this.adapter = new EventsAdapter(getActivity(), android.R.layout.simple_list_item_1, receivedEvents);
+		setListAdapter(adapter);
+	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.news_feed, container, false);
+		return inflater.inflate(R.layout.events, container, false);
 	}
 	
 	@Override
@@ -34,12 +48,12 @@ public class NewsFeedFragment extends BaseFragment {
 	
 	@Override
 	protected boolean viewIsReady() {
-		return (getReceivedEvents() != null);
+		return (receivedEvents != null && !receivedEvents.isEmpty()) || haveRetrievedEvents;
 	}
 	
 	@Override
 	protected void initializeView() {
-		hideSpinner(R.id.news_feed_todo);
+		hideSpinner(R.id.news_feed_container);
 	}
 	
 	// Getters and Setters
@@ -64,34 +78,15 @@ public class NewsFeedFragment extends BaseFragment {
 	private class RetrieveFeedTask extends AsyncTask<Void, Void, Void> {
 		@Override
 		protected void onPreExecute() {
-			showSpinner(R.id.news_feed_todo);
+			showSpinner(R.id.news_feed_container);
 		}
 		
 		@Override
 		protected Void doInBackground(Void... params) {
 			receivedEvents = getEventServiceInstance().retrieveReceivedEvents(getPage());
-			for (Event event : receivedEvents) {
-				event.toString();
-			}
-//			feedService = getGithub().getFactoryInstance().createFeedService();
-//			feedService.setAuthentication(getAuthentication());
-//			feed = feedService.getPrivateUserFeed(getCurrentUser().getLogin(), 20);
-//			logd("**** Feed Info *****");
-//			logd("Title: " + feed.getTitle());
-//			logd("Auther: " + feed.getAuthor());
-//			logd("Link: " + feed.getLink());
-//			logd("Desc: " + feed.getDescription());
-//			logd("**** Entries *****");
-//			for (FeedEntry entry : feed.getEntries()) {
-//				logd("Title: " + entry.getTitle());
-//				logd("Auther: " + entry.getAuthor());
-//				logd("Link: " + entry.getLink());
-//				logd("Date: " + entry.getPublishedDate());
-//				logd("Content: " + entry.getContent());
-//				for (String cat : entry.getCategories()) {
-//					logd("   Category: " + cat);
-//				}
-//			}
+			adapter.setEvents(receivedEvents);
+			adapter.notifyDataSetChanged();
+			haveRetrievedEvents = true;
 			return null;
 		}
 		

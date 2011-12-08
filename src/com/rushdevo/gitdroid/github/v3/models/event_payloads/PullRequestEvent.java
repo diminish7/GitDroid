@@ -1,5 +1,6 @@
 package com.rushdevo.gitdroid.github.v3.models.event_payloads;
 
+import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.github.v3.models.BaseGithubModel;
 import com.rushdevo.gitdroid.github.v3.models.PullRequest;
 
@@ -14,6 +15,9 @@ public class PullRequestEvent extends BaseGithubModel implements EventPayload {
 	private PullRequest pull_request;
 	
 	// Getters and Setters
+	public int getLayoutId() {
+		return R.layout.default_event_list_item;
+	}
 	public String getAction() {
 		return action;
 	}

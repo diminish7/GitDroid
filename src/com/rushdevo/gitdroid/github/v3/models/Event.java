@@ -2,6 +2,7 @@ package com.rushdevo.gitdroid.github.v3.models;
 
 import java.util.Date;
 
+import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.github.v3.models.event_payloads.EventPayload;
 
 /**
@@ -17,6 +18,14 @@ public class Event extends BaseGithubModel {
 	private Repository repo;
 	private User actor;
 	private Organization org;
+	
+	public int getLayoutId() {
+		if (payload == null) {
+			return R.layout.default_event_list_item;
+		} else {
+			return payload.getLayoutId();
+		}
+	}
 	
 	// Getters and setters
 	public String getType() {

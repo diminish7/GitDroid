@@ -1,4 +1,4 @@
-package com.rushdevo.gitdroid.fragments;
+package com.rushdevo.gitdroid.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,14 +9,14 @@ import com.rushdevo.gitdroid.R;
 
 /**
  * @author jasonrush
- * Display fragment for watched repositories content
+ * Display fragment for collaborator repositories content
  */
-public class WatchedRepositoriesFragment extends BaseFragment {
+public class CollaboratorRepositoriesFragment extends BaseFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.watched_repositories, container, false);
+		return inflater.inflate(R.layout.collaborator_repositories, container, false);
 	}
-	
+
 	@Override
 	protected void initializeData() {
 		// TODO Auto-generated method stub
@@ -30,6 +30,6 @@ public class WatchedRepositoriesFragment extends BaseFragment {
 	
 	@Override
 	protected void initializeView() {
-		hideSpinner(R.id.watched_repositories_todo);
+		hideSpinner(R.id.collaborator_repository_todo);
 	}
 }

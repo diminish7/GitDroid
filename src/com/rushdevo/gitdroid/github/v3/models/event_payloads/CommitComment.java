@@ -1,5 +1,6 @@
 package com.rushdevo.gitdroid.github.v3.models.event_payloads;
 
+import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.github.v3.models.BaseGithubModel;
 import com.rushdevo.gitdroid.github.v3.models.Comment;
 
@@ -12,6 +13,9 @@ public class CommitComment extends BaseGithubModel implements EventPayload {
 	private Comment comment;
 	
 	// Getters and Setters
+	public int getLayoutId() {
+		return R.layout.default_event_list_item;
+	}
 	public Comment getComment() {
 		return this.comment;
 	}

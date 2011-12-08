@@ -6,7 +6,7 @@
     >
 	
 	<fragment 
-		class="com.rushdevo.gitdroid.fragments.ActionListFragment"
+		class="com.rushdevo.gitdroid.ui.fragments.ActionListFragment"
 		android:id="@+id/action_list_fragment"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"

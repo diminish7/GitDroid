@@ -1,4 +1,4 @@
-package com.rushdevo.gitdroid.activities;
+package com.rushdevo.gitdroid.ui.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
@@ -7,8 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
 import com.rushdevo.gitdroid.R;
-import com.rushdevo.gitdroid.fragments.ActionListFragment;
 import com.rushdevo.gitdroid.listeners.ActionSelected;
+import com.rushdevo.gitdroid.ui.fragments.ActionListFragment;
 
 public class MainActivity extends BaseActivity implements ActionSelected {
 	private Boolean panelLayout;
@@ -34,7 +34,7 @@ public class MainActivity extends BaseActivity implements ActionSelected {
     @Override
 	public void OnActionSelected(String action) {
     	boolean updatePrefs = (action != null);
-    	if (panelLayout && action == null) action = getString(R.string.news_feed);
+    	if (panelLayout && action == null) action = getString(R.string.events);
     	if (action != null && action != "") {
 	    	if (panelLayout) {
 	    		// Multi-panel layout, just change the selected fragment

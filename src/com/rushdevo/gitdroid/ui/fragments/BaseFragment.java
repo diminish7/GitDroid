@@ -1,4 +1,4 @@
-package com.rushdevo.gitdroid.fragments;
+package com.rushdevo.gitdroid.ui.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,22 +7,22 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.view.View;
 
 import com.rushdevo.gitdroid.GitDroidApplication;
 import com.rushdevo.gitdroid.R;
-import com.rushdevo.gitdroid.activities.BaseActivity;
 import com.rushdevo.gitdroid.github.v3.models.User;
 import com.rushdevo.gitdroid.github.v3.services.OAuthService;
 import com.rushdevo.gitdroid.github.v3.services.UserService;
+import com.rushdevo.gitdroid.ui.activities.BaseActivity;
 import com.rushdevo.gitdroid.utils.ErrorDisplay;
 
 /**
  * @author jasonrush
  * Base fragment class for shared fragment behavior
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends ListFragment {
 	protected static final int INIT_DATA_MESSAGE = 0;
 	protected static final int INIT_VIEW_MESSAGE = 1;
 	protected static final int NO_ACCESS_CODE_MESSAGE = 2;

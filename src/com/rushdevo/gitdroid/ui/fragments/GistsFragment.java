@@ -1,4 +1,4 @@
-package com.rushdevo.gitdroid.fragments;
+package com.rushdevo.gitdroid.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,12 +9,12 @@ import com.rushdevo.gitdroid.R;
 
 /**
  * @author jasonrush
- * Display fragment for repositories content
+ * Display fragment for gist content
  */
-public class RepositoriesFragment extends BaseFragment {
+public class GistsFragment extends BaseFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.repositories, container, false);
+		return inflater.inflate(R.layout.gists, container, false);
 	}
 	
 	@Override
@@ -30,6 +30,6 @@ public class RepositoriesFragment extends BaseFragment {
 	
 	@Override
 	protected void initializeView() {
-		hideSpinner(R.id.repositories_todo);
+		hideSpinner(R.id.gists_todo);
 	}
 }

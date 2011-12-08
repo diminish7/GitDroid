@@ -6,15 +6,10 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	>
-    
-	<include layout="@layout/loading" />
-  
 	<TextView
-	    android:id="@+id/news_feed_todo"
-		android:visibility="gone"
-		android:text="News Feed (TODO)"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"        
-	    />
-    
+		android:id="@+id/default_text_view"
+	    android:gravity="center_vertical|center_horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:text="Default Event View"/>
 </LinearLayout>
