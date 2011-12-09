@@ -1,6 +1,5 @@
 package com.rushdevo.gitdroid.github.v3.models.event_payloads;
 
-import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.github.v3.models.BaseGithubModel;
 import com.rushdevo.gitdroid.github.v3.models.Gist;
 
@@ -14,9 +13,6 @@ public class GistEvent extends BaseGithubModel implements EventPayload {
 	private Gist gist;
 	
 	// Getters and Setters
-	public int getLayoutId() {
-		return R.layout.default_event_list_item;
-	}
 	public String getAction() {
 		return this.action;
 	}
@@ -28,5 +24,20 @@ public class GistEvent extends BaseGithubModel implements EventPayload {
 	}
 	public void setGist(Gist gist) {
 		this.gist = gist;
+	}
+	@Override
+	public String getActionVerb() {
+		// TODO Auto-generated method stub
+		return "";
+	}
+	@Override
+	public String getActionSubject() {
+		// TODO Auto-generated method stub
+		return "";
+	}
+	@Override
+	public String getContent() {
+		// TODO Auto-generated method stub
+		return "";
 	}
 }

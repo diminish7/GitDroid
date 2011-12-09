@@ -6,8 +6,15 @@ package com.rushdevo.gitdroid.github.v3.models.event_payloads;
  */
 public interface EventPayload {
 	/**
-	 * Get the id of the xml layout to inflate to display this type of event payload
-	 * @return the id
+	 * @return The action verb for the event (commented, opened, closed, etc)
 	 */
-	public int getLayoutId();
+	public String getActionVerb();
+	/**
+	 * @return The action subject for the event (pull request, commit sha, etc)
+	 */
+	public String getActionSubject();
+	/**
+	 * @return The content of the event (comment, description, etc)
+	 */
+	public String getContent();
 }

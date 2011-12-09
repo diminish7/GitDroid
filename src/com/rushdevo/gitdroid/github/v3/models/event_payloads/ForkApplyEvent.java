@@ -1,6 +1,5 @@
 package com.rushdevo.gitdroid.github.v3.models.event_payloads;
 
-import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.github.v3.models.BaseGithubModel;
 
 /**
@@ -14,9 +13,6 @@ public class ForkApplyEvent extends BaseGithubModel implements EventPayload {
 	private String after;
 	
 	// Getters and Setters
-	public int getLayoutId() {
-		return R.layout.default_event_list_item;
-	}
 	public String getHead() {
 		return head;
 	}
@@ -34,5 +30,20 @@ public class ForkApplyEvent extends BaseGithubModel implements EventPayload {
 	}
 	public void setAfter(String after) {
 		this.after = after;
+	}
+	@Override
+	public String getActionVerb() {
+		// TODO Auto-generated method stub
+		return "";
+	}
+	@Override
+	public String getActionSubject() {
+		// TODO Auto-generated method stub
+		return "";
+	}
+	@Override
+	public String getContent() {
+		// TODO Auto-generated method stub
+		return "";
 	}
 }

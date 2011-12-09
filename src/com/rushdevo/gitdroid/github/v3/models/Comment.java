@@ -19,6 +19,15 @@ public class Comment extends BaseGithubModel {
 	private Date updated_at;
 	
 	// Getters and Setters
+	public String getPartialCommitId() {
+		if (commit_id == null || commit_id.length() < 7) return commit_id;
+		else return commit_id.substring(0, 7);
+	}
+	public String getPartialBody() {
+		// TODO: Truncate the body at a word boundary with elipsis
+		if (body == null) return "";
+		else return body;
+	}
 	public String getUrl() {
 		return url;
 	}

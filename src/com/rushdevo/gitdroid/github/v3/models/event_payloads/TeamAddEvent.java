@@ -1,6 +1,5 @@
 package com.rushdevo.gitdroid.github.v3.models.event_payloads;
 
-import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.github.v3.models.BaseGithubModel;
 import com.rushdevo.gitdroid.github.v3.models.Repository;
 import com.rushdevo.gitdroid.github.v3.models.Team;
@@ -17,9 +16,6 @@ public class TeamAddEvent extends BaseGithubModel implements EventPayload {
 	private Repository repo;
 	
 	// Getters and Setters
-	public int getLayoutId() {
-		return R.layout.default_event_list_item;
-	}
 	public Team getTeam() {
 		return team;
 	}
@@ -37,5 +33,20 @@ public class TeamAddEvent extends BaseGithubModel implements EventPayload {
 	}
 	public void setRepo(Repository repo) {
 		this.repo = repo;
+	}
+	@Override
+	public String getActionVerb() {
+		// TODO Auto-generated method stub
+		return "";
+	}
+	@Override
+	public String getActionSubject() {
+		// TODO Auto-generated method stub
+		return "";
+	}
+	@Override
+	public String getContent() {
+		// TODO Auto-generated method stub
+		return "";
 	}
 }

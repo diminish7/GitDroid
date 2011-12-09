@@ -14,26 +14,30 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_list_fragment=0x7f050009;
+        public static final int action_list_fragment=0x7f05000d;
+        public static final int avatar_view=0x7f050002;
         public static final int collaborator_repository_todo=0x7f050000;
-        public static final int content_containter=0x7f05000a;
-        public static final int default_text_view=0x7f050002;
-        public static final int followers_todo=0x7f050004;
-        public static final int following_todo=0x7f050005;
-        public static final int gists_todo=0x7f050006;
-        public static final int main_container=0x7f050008;
-        public static final int news_feed_container=0x7f050003;
-        public static final int organizations_todo=0x7f05000b;
-        public static final int public_activity_todo=0x7f05000c;
-        public static final int repositories_todo=0x7f05000d;
-        public static final int spinner_container=0x7f050007;
+        public static final int content_containter=0x7f05000e;
+        public static final int event_content=0x7f050006;
+        public static final int event_content_container=0x7f050003;
+        public static final int event_description=0x7f050004;
+        public static final int event_timestamp=0x7f050005;
+        public static final int followers_todo=0x7f050008;
+        public static final int following_todo=0x7f050009;
+        public static final int gists_todo=0x7f05000a;
+        public static final int main_container=0x7f05000c;
+        public static final int news_feed_container=0x7f050007;
+        public static final int organizations_todo=0x7f05000f;
+        public static final int public_activity_todo=0x7f050010;
+        public static final int repositories_todo=0x7f050011;
+        public static final int spinner_container=0x7f05000b;
         public static final int standalone_content_container=0x7f050001;
-        public static final int watched_repositories_todo=0x7f05000e;
+        public static final int watched_repositories_todo=0x7f050012;
     }
     public static final class layout {
         public static final int collaborator_repositories=0x7f030000;
         public static final int content_container=0x7f030001;
-        public static final int default_event_list_item=0x7f030002;
+        public static final int event_list_item=0x7f030002;
         public static final int events=0x7f030003;
         public static final int followers=0x7f030004;
         public static final int following=0x7f030005;
