@@ -7,6 +7,7 @@ import java.net.URL;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.github.v3.models.Event;
+import com.rushdevo.gitdroid.utils.ErrorDisplay;
 
 /**
  * @author jasonrush
@@ -52,29 +54,54 @@ public class EventView extends LinearLayout {
 		TextView timestampView = (TextView)view.findViewById(R.id.event_timestamp);
 		TextView contentView = (TextView)view.findViewById(R.id.event_content);
 		// Set the content of the views
-		avatarView.setImageDrawable(getAvatarDrawableForEvent(event));
 		descriptionView.setText(event.getFullDescription());
 		timestampView.setText(event.getTimestamp());
 		contentView.setText(event.getContent());
-		
+		// Load the avatar image asynchronously
+		new RetrieveAvatarTask(avatarView).execute(event);
 		return view;
 	}
 	
-	private Drawable getAvatarDrawableForEvent(Event event) {
-		Drawable avatar = null;
-		URL url;
-		InputStream is;
-		try {
-			url = new URL(event.getActorAvatarUrl());
-			is = (InputStream)url.getContent();
-			avatar = Drawable.createFromStream(is, event.getActorName());
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	///////////// INNER CLASSES ////////////////////////
+	/**
+	 * Async task for passing the temp code to github to get the access token back
+	 */
+	private class RetrieveAvatarTask extends AsyncTask<Event, Void, Drawable> {
+		private ImageView imageView;
+		
+		public RetrieveAvatarTask(ImageView imageView) {
+			this.imageView = imageView;
 		}
-		return avatar;
+		
+		@Override
+		protected Drawable doInBackground(Event... params) {
+			Event event = (params.length > 0) ? params[0] : null;
+			return getAvatarDrawableForEvent(event);
+		}
+		
+		@Override
+		protected void onPostExecute(Drawable avatar) {
+			imageView.setImageDrawable(avatar);
+		}
+		
+		// Helpers
+		private Drawable getAvatarDrawableForEvent(Event event) {
+			Drawable avatar = null;
+			if (event != null) {
+				URL url;
+				InputStream is;
+				try {
+					url = new URL(event.getActorAvatarUrl());
+					is = (InputStream)url.getContent();
+					avatar = Drawable.createFromStream(is, event.getActorName());
+				} catch (MalformedURLException e) {
+					ErrorDisplay.debug(this, e);
+				} catch (IOException e) {
+					ErrorDisplay.debug(this, e);
+				}
+			}
+			if (avatar == null) avatar = getResources().getDrawable(R.drawable.default_avatar);
+			return avatar;
+		}
 	}
 }

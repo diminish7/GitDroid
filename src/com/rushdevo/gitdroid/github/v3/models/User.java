@@ -7,6 +7,9 @@ import java.util.Date;
  * Class representing a Github User
  */
 public class User extends BaseGithubModel {
+	// Consts
+	public static final String GRAVATAR_URL = "http://www.gravatar.com/avatar/";
+	
 	// Properties
 	private String login;
 	private Integer id;
@@ -58,6 +61,14 @@ public class User extends BaseGithubModel {
 	}
 	public void setGravatarId(String gravatarId) {
 		this.gravatar_id = gravatarId;
+	}
+	public String getAvatarOrGravatarUrl() {
+		if (avatar_url != null) return avatar_url;
+		else if (gravatar_id != null) {
+			return GRAVATAR_URL + gravatar_id;
+		} else {
+			return null;
+		}
 	}
 	public String getUrl() {
 		return url;

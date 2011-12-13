@@ -1,5 +1,7 @@
 package com.rushdevo.gitdroid.github.v3.models;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import com.rushdevo.gitdroid.github.v3.models.event_payloads.EventPayload;
@@ -9,6 +11,11 @@ import com.rushdevo.gitdroid.github.v3.models.event_payloads.EventPayload;
  * Class representing a Github event
  */
 public class Event extends BaseGithubModel {
+	// Consts
+	private static final int HOUR_IN_SECONDS = 60*60;
+	private static final int DAY_IN_SECONDS = HOUR_IN_SECONDS*24;
+	private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("M d, yyyy");
+	
 	// Properties
 	private String type;
 	private Boolean isPublic;
@@ -38,7 +45,7 @@ public class Event extends BaseGithubModel {
 	}
 	public String getActorAvatarUrl() {
 		if (actor == null) return "";
-		else return actor.getAvatarUrl();
+		else return actor.getAvatarOrGravatarUrl();
 	}
 	public String getContent() {
 		if (payload == null) return "";
@@ -55,11 +62,42 @@ public class Event extends BaseGithubModel {
 		builder.append(getRepoName());
 		return builder.toString();
 	}
+	/**
+	 * Returns a formatted time for the event
+	 * If it was less than an hour ago, it will be 'n minute(s) ago'
+	 * If it was less than a day ago, it will be 'n hour(s) ago'
+	 * Otherwise it will be 'Month dd, yyyy'
+	 * 
+	 * @return The formatted date expression
+	 */
 	public String getTimestamp() {
-		// TODO: If less than an hour ago: 'n minutes ago'
-		//		 If less than a day ago: 'n hours ago'
-		// 		 If more than a day ago: 'Month dd, yyyy'
-		return "";
+		if (getCreatedAt() == null) return "";
+		long now = System.currentTimeMillis();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(getCreatedAt());
+		long created = cal.getTimeInMillis();
+		int diff = (int)((now-created)/1000);
+		StringBuilder builder = new StringBuilder();
+		if (diff < HOUR_IN_SECONDS) {
+			// If less than an hour ago: 'n minutes ago'
+			int diffMinutes = diff / 60;
+			builder.append(diffMinutes);
+			if (diffMinutes == 1) builder.append(" minute ago");
+			else builder.append(" minutes ago");
+		} else if (diff < DAY_IN_SECONDS) {
+			// If less than a day ago: 'n hours ago'
+			long diffHours = Math.round(diff / 60.0 / 60.0);
+			builder.append("About ");
+			if (diffHours == 1) builder.append("an hour ago");
+			else {
+				builder.append(diffHours);
+				builder.append(" hours ago");
+			}
+		} else {
+			// If more than a day ago: 'Month dd, yyyy'
+			builder.append(dateFormatter.format(getCreatedAt()));
+		}
+		return builder.toString();
 	}
 	public String getType() {
 		return type;

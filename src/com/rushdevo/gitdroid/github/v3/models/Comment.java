@@ -2,6 +2,8 @@ package com.rushdevo.gitdroid.github.v3.models;
 
 import java.util.Date;
 
+import com.rushdevo.gitdroid.utils.StringUtils;
+
 /**
  * @author jasonrush
  * Class representing a comment on Github
@@ -24,9 +26,8 @@ public class Comment extends BaseGithubModel {
 		else return commit_id.substring(0, 7);
 	}
 	public String getPartialBody() {
-		// TODO: Truncate the body at a word boundary with elipsis
 		if (body == null) return "";
-		else return body;
+		else return StringUtils.getTruncatedString(body, 150);
 	}
 	public String getUrl() {
 		return url;

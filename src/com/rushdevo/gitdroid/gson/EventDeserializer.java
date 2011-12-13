@@ -64,39 +64,39 @@ public class EventDeserializer implements JsonDeserializer<Event> {
 	}
 	
 	public EventPayload getPayload(JsonElement json, JsonDeserializationContext ctx, String type) {
-		if (type == "CommitComment") {
+		if (type.equals("CommitComment")) {
 			return (CommitComment)ctx.deserialize(json, CommitComment.class);
-		} else if (type == "CreateEvent") {
+		} else if (type.equals("CreateEvent")) {
 			return (CreateEvent)ctx.deserialize(json, CreateEvent.class);
-		} else if (type == "DeleteEvent") {
+		} else if (type.equals("DeleteEvent")) {
 			return (DeleteEvent)ctx.deserialize(json, DeleteEvent.class);
-		} else if (type == "DownloadEvent") {
+		} else if (type.equals("DownloadEvent")) {
 			return (DownloadEvent)ctx.deserialize(json, DownloadEvent.class);
-		} else if (type == "FollowEvent") {
+		} else if (type.equals("FollowEvent")) {
 			return (FollowEvent)ctx.deserialize(json, FollowEvent.class);
-		} else if (type == "ForkEvent") {
+		} else if (type.equals("ForkEvent")) {
 			return (ForkEvent)ctx.deserialize(json, ForkEvent.class);
-		} else if (type == "ForkApplyEvent") {
+		} else if (type.equals("ForkApplyEvent")) {
 			return (ForkApplyEvent)ctx.deserialize(json, ForkApplyEvent.class);
-		} else if (type == "GistEvent") {
+		} else if (type.equals("GistEvent")) {
 			return (GistEvent)ctx.deserialize(json, GistEvent.class);
-		} else if (type == "GollumEvent") {
+		} else if (type.equals("GollumEvent")) {
 			return (GollumEvent)ctx.deserialize(json, GollumEvent.class);
-		} else if (type == "IssueCommentEvent") {
+		} else if (type.equals("IssueCommentEvent")) {
 			return (IssueCommentEvent)ctx.deserialize(json, IssueCommentEvent.class);
-		} else if (type == "IssuesEvent") {
+		} else if (type.equals("IssuesEvent")) {
 			return (IssuesEvent)ctx.deserialize(json, IssuesEvent.class);
-		} else if (type == "MemberEvent") {
+		} else if (type.equals("MemberEvent")) {
 			return (MemberEvent)ctx.deserialize(json, MemberEvent.class);
-		} else if (type == "PublicEvent") {
+		} else if (type.equals("PublicEvent")) {
 			return (PublicEvent)ctx.deserialize(json, PublicEvent.class);
-		} else if (type == "PullRequestEvent") {
+		} else if (type.equals("PullRequestEvent")) {
 			return (PullRequestEvent)ctx.deserialize(json, PullRequestEvent.class);
-		} else if (type == "PushEvent") {
+		} else if (type.equals("PushEvent")) {
 			return (PushEvent)ctx.deserialize(json, PushEvent.class);
-		} else if (type == "TeamAddEvent") {
+		} else if (type.equals("TeamAddEvent")) {
 			return (TeamAddEvent)ctx.deserialize(json, TeamAddEvent.class);
-		} else if (type == "WatchEvent") {
+		} else if (type.equals("WatchEvent")) {
 			return (WatchEvent)ctx.deserialize(json, WatchEvent.class);
 		} else {
 			// Invalid type, can't parse the payload
