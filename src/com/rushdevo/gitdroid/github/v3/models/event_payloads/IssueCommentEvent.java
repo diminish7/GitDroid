@@ -2,6 +2,7 @@ package com.rushdevo.gitdroid.github.v3.models.event_payloads;
 
 import com.rushdevo.gitdroid.github.v3.models.BaseGithubModel;
 import com.rushdevo.gitdroid.github.v3.models.Comment;
+import com.rushdevo.gitdroid.github.v3.models.Event;
 import com.rushdevo.gitdroid.github.v3.models.Issue;
 
 /**
@@ -34,18 +35,23 @@ public class IssueCommentEvent extends BaseGithubModel implements EventPayload {
 		this.comment = comment;
 	}
 	@Override
-	public String getActionVerb() {
-		// TODO Auto-generated method stub
-		return "";
-	}
-	@Override
-	public String getActionSubject() {
-		// TODO Auto-generated method stub
-		return "";
+	public String getFullDescription(Event event) {
+		if (event == null) return "(unknown issue comment event)";
+		StringBuilder builder = new StringBuilder();
+		builder.append(event.getActorName());
+		builder.append(" commented on ");
+		if (issue == null && issue.getNumber() == null) builder.append("an issue");
+		else {
+			builder.append("issue ");
+			builder.append(issue.getNumber());
+		}
+		builder.append(" on ");
+		builder.append(event.getRepoName());
+		return builder.toString();
 	}
 	@Override
 	public String getContent() {
-		// TODO Auto-generated method stub
-		return "";
+		if (comment == null || comment.getBody() == null) return "";
+		else return comment.getPartialBody();
 	}
 }

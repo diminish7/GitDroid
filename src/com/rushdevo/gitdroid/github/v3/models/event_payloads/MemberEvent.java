@@ -1,6 +1,7 @@
 package com.rushdevo.gitdroid.github.v3.models.event_payloads;
 
 import com.rushdevo.gitdroid.github.v3.models.BaseGithubModel;
+import com.rushdevo.gitdroid.github.v3.models.Event;
 import com.rushdevo.gitdroid.github.v3.models.User;
 
 /**
@@ -26,18 +27,24 @@ public class MemberEvent extends BaseGithubModel implements EventPayload {
 		this.action = action;
 	}
 	@Override
-	public String getActionVerb() {
-		// TODO Auto-generated method stub
-		return "";
-	}
-	@Override
-	public String getActionSubject() {
-		// TODO Auto-generated method stub
-		return "";
+	public String getFullDescription(Event event) {
+		if (event == null) return "(unknown member event)";
+		StringBuilder builder = new StringBuilder();
+		builder.append(event.getActorName());
+		if (action == null) builder.append(" added ");
+		else {
+			builder.append(" ");
+			builder.append(action);
+			builder.append(" ");
+		}
+		if (member == null || member.getName() == null) builder.append("someone");
+		else builder.append(member.getName());
+		builder.append(" to ");
+		builder.append(event.getRepoName());
+		return builder.toString();
 	}
 	@Override
 	public String getContent() {
-		// TODO Auto-generated method stub
 		return "";
 	}
 }

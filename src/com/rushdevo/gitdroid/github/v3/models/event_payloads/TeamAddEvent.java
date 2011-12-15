@@ -1,6 +1,7 @@
 package com.rushdevo.gitdroid.github.v3.models.event_payloads;
 
 import com.rushdevo.gitdroid.github.v3.models.BaseGithubModel;
+import com.rushdevo.gitdroid.github.v3.models.Event;
 import com.rushdevo.gitdroid.github.v3.models.Repository;
 import com.rushdevo.gitdroid.github.v3.models.Team;
 import com.rushdevo.gitdroid.github.v3.models.User;
@@ -35,18 +36,23 @@ public class TeamAddEvent extends BaseGithubModel implements EventPayload {
 		this.repo = repo;
 	}
 	@Override
-	public String getActionVerb() {
-		// TODO Auto-generated method stub
-		return "";
-	}
-	@Override
-	public String getActionSubject() {
-		// TODO Auto-generated method stub
-		return "";
+	public String getFullDescription(Event event) {
+		if (event == null) return "(unknown team add event)";
+		StringBuilder builder = new StringBuilder();
+		builder.append(event.getActorName());
+		builder.append(" added ");
+		if (user == null || user.getName() == null) builder.append("someone");
+		else builder.append(user.getName());
+		builder.append(" to ");
+		if (team == null || team.getName() == null) builder.append("a team");
+		else {
+			builder.append("team ");
+			builder.append(team.getName());
+		}
+		return builder.toString();
 	}
 	@Override
 	public String getContent() {
-		// TODO Auto-generated method stub
 		return "";
 	}
 }

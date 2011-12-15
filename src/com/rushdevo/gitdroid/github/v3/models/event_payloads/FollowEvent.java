@@ -1,6 +1,7 @@
 package com.rushdevo.gitdroid.github.v3.models.event_payloads;
 
 import com.rushdevo.gitdroid.github.v3.models.BaseGithubModel;
+import com.rushdevo.gitdroid.github.v3.models.Event;
 import com.rushdevo.gitdroid.github.v3.models.User;
 
 /**
@@ -19,18 +20,17 @@ public class FollowEvent extends BaseGithubModel implements EventPayload {
 		this.target = target;
 	}
 	@Override
-	public String getActionVerb() {
-		// TODO Auto-generated method stub
-		return "";
-	}
-	@Override
-	public String getActionSubject() {
-		// TODO Auto-generated method stub
-		return "";
+	public String getFullDescription(Event event) {
+		if (event == null) return "(unknown follow event)";
+		StringBuilder builder = new StringBuilder();
+		builder.append(event.getActorName());
+		builder.append(" started following ");
+		if (target == null || target.getName() == null) builder.append("someone");
+		else builder.append(target.getName());
+		return builder.toString();
 	}
 	@Override
 	public String getContent() {
-		// TODO Auto-generated method stub
 		return "";
 	}
 }

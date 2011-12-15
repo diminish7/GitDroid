@@ -33,7 +33,7 @@ public class EventView extends LinearLayout {
 	public EventView(Context ctx, Event event) {
 		super(ctx);
 		this.event = event;
-		addView(getAndSetupView(ctx), new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT));
+		addView(inflateView(ctx), new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT));
 	}
 	
 	// Getters and Setters
@@ -42,12 +42,18 @@ public class EventView extends LinearLayout {
 	}
 	public void setEvent(Event event) {
 		this.event = event;
+		updateView(this);
 	}
 	
 	// Helpers
-	private View getAndSetupView(Context ctx) {
+	private View inflateView(Context ctx) {
 		LayoutInflater inflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view  = inflater.inflate(R.layout.event_list_item, null);
+		updateView(view);
+		return view;
+	}
+	
+	private void updateView(View view) {
 		// Grab the views from the layout
 		ImageView avatarView = (ImageView)view.findViewById(R.id.avatar_view);
 		TextView descriptionView = (TextView)view.findViewById(R.id.event_description);
@@ -59,7 +65,6 @@ public class EventView extends LinearLayout {
 		contentView.setText(event.getContent());
 		// Load the avatar image asynchronously
 		new RetrieveAvatarTask(avatarView).execute(event);
-		return view;
 	}
 	
 	///////////// INNER CLASSES ////////////////////////

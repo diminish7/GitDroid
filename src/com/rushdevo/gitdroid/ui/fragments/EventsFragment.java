@@ -13,6 +13,7 @@ import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.github.v3.models.Event;
 import com.rushdevo.gitdroid.github.v3.services.EventService;
 import com.rushdevo.gitdroid.ui.EventsAdapter;
+import com.rushdevo.gitdroid.utils.ErrorDisplay;
 
 /**
  * @author jasonrush
@@ -84,6 +85,9 @@ public class EventsFragment extends BaseFragment {
 		@Override
 		protected Void doInBackground(Void... params) {
 			receivedEvents = getEventServiceInstance().retrieveReceivedEvents(getPage());
+			for (Event event : receivedEvents) {
+				ErrorDisplay.debug(this, event.getTimestamp());
+			}
 			adapter.setEvents(receivedEvents);
 			adapter.notifyDataSetChanged();
 			haveRetrievedEvents = true;

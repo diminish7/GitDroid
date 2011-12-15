@@ -5,6 +5,7 @@ package com.rushdevo.gitdroid.utils;
  * String helpers
  */
 public class StringUtils {
+	public static final int DEFAULT_TRUNCATION_LENGTH = 150;
 	/**
 	 * Truncate a string to at most length chars, breaking at a word boundary
 	 * 
@@ -31,5 +32,15 @@ public class StringUtils {
 			}
 			return builder.toString();
 		}
+	}
+	
+	/**
+	 * Truncate a string to at most 150 chars, breaking at a word boundary
+	 * 
+	 * @param orig The original string
+	 * @return The truncated string
+	 */
+	public static String getTruncatedString(String orig) {
+		return getTruncatedString(orig, DEFAULT_TRUNCATION_LENGTH);
 	}
 }

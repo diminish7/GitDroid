@@ -26,14 +26,6 @@ public class Event extends BaseGithubModel {
 	private Organization org;
 	
 	// Getters and setters
-	public String getActionVerb() {
-		if (payload == null) return "did something";
-		else return payload.getActionVerb();
-	}
-	public String getActionSubject() {
-		if (payload == null) return "something";
-		else return payload.getActionSubject();
-	}
 	public String getRepoName() {
 		if (repo == null) return "some repo";
 		else return repo.getName();
@@ -52,15 +44,8 @@ public class Event extends BaseGithubModel {
 		else return payload.getContent();
 	}
 	public String getFullDescription() {
-		StringBuilder builder = new StringBuilder();
-		builder.append(getActionSubject());
-		builder.append(" ");
-		builder.append(getActionVerb());
-		builder.append(" on ");
-		builder.append(getActionSubject());
-		builder.append(" on ");
-		builder.append(getRepoName());
-		return builder.toString();
+		if (payload == null) return "(unknown event)";
+		else return payload.getFullDescription(this);
 	}
 	/**
 	 * Returns a formatted time for the event

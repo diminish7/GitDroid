@@ -1,6 +1,7 @@
 package com.rushdevo.gitdroid.github.v3.models.event_payloads;
 
 import com.rushdevo.gitdroid.github.v3.models.BaseGithubModel;
+import com.rushdevo.gitdroid.github.v3.models.Event;
 
 /**
  * @author jasonrush
@@ -18,18 +19,16 @@ public class WatchEvent extends BaseGithubModel implements EventPayload {
 		this.action = action;
 	}
 	@Override
-	public String getActionVerb() {
-		// TODO Auto-generated method stub
-		return "";
-	}
-	@Override
-	public String getActionSubject() {
-		// TODO Auto-generated method stub
-		return "";
+	public String getFullDescription(Event event) {
+		if (event == null) return "(unknown watch event)";
+		StringBuilder builder = new StringBuilder();
+		builder.append(event.getActorName());
+		builder.append(" started watching ");
+		builder.append(event.getRepoName());
+		return builder.toString();
 	}
 	@Override
 	public String getContent() {
-		// TODO Auto-generated method stub
 		return "";
 	}
 }

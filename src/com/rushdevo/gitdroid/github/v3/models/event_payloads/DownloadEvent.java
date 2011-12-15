@@ -2,6 +2,8 @@ package com.rushdevo.gitdroid.github.v3.models.event_payloads;
 
 import com.rushdevo.gitdroid.github.v3.models.BaseGithubModel;
 import com.rushdevo.gitdroid.github.v3.models.Download;
+import com.rushdevo.gitdroid.github.v3.models.Event;
+import com.rushdevo.gitdroid.utils.StringUtils;
 
 /**
  * @author jasonrush
@@ -19,18 +21,19 @@ public class DownloadEvent extends BaseGithubModel implements EventPayload {
 		this.download = download;
 	}
 	@Override
-	public String getActionVerb() {
-		// TODO Auto-generated method stub
-		return "";
-	}
-	@Override
-	public String getActionSubject() {
-		// TODO Auto-generated method stub
-		return "";
+	public String getFullDescription(Event event) {
+		if (event == null) return "(unknown download event)";
+		StringBuilder builder = new StringBuilder();
+		builder.append(event.getActorName());
+		builder.append(" downloaded ");
+		if (download == null || download.getName() == null) builder.append("something");
+		else builder.append(download.getName());
+		builder.append(" from ");
+		builder.append(event.getRepoName());
+		return builder.toString();
 	}
 	@Override
 	public String getContent() {
-		// TODO Auto-generated method stub
-		return "";
+		return StringUtils.getTruncatedString(download.getDescription());
 	}
 }

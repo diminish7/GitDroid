@@ -27,7 +27,7 @@ public class Comment extends BaseGithubModel {
 	}
 	public String getPartialBody() {
 		if (body == null) return "";
-		else return StringUtils.getTruncatedString(body, 150);
+		else return StringUtils.getTruncatedString(body);
 	}
 	public String getUrl() {
 		return url;

@@ -2,6 +2,7 @@ package com.rushdevo.gitdroid.github.v3.models.event_payloads;
 
 import com.rushdevo.gitdroid.github.v3.models.BaseGithubModel;
 import com.rushdevo.gitdroid.github.v3.models.Commit;
+import com.rushdevo.gitdroid.github.v3.models.Event;
 
 /**
  * @author jasonrush
@@ -27,6 +28,13 @@ public class PushEvent extends BaseGithubModel implements EventPayload {
 	public void setRef(String ref) {
 		this.ref = ref;
 	}
+	public String getShortRef() {
+		if (ref == null) return null;
+		else {
+			String[] parts = ref.split("/");
+			return parts[parts.length-1];
+		}
+	}
 	public Integer getSize() {
 		return size;
 	}
@@ -40,18 +48,20 @@ public class PushEvent extends BaseGithubModel implements EventPayload {
 		this.commits = commits;
 	}
 	@Override
-	public String getActionVerb() {
-		// TODO Auto-generated method stub
-		return "";
-	}
-	@Override
-	public String getActionSubject() {
-		// TODO Auto-generated method stub
-		return "";
+	public String getFullDescription(Event event) {
+		if (event == null) return "(unknown push event)";
+		StringBuilder builder = new StringBuilder();
+		builder.append(event.getActorName());
+		builder.append(" pushed to ");
+		if (ref != null) {
+			builder.append(getShortRef());
+			builder.append(" at ");
+		}
+		builder.append(event.getRepoName());
+		return builder.toString();
 	}
 	@Override
 	public String getContent() {
-		// TODO Auto-generated method stub
 		return "";
 	}
 }
