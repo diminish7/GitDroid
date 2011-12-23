@@ -48,7 +48,8 @@ public final class R {
         public static final int organizations=0x7f030009;
         public static final int public_activity=0x7f03000a;
         public static final int repositories=0x7f03000b;
-        public static final int watched_repositories=0x7f03000c;
+        public static final int simple_list_item=0x7f03000c;
+        public static final int watched_repositories=0x7f03000d;
     }
     public static final class string {
         public static final int app_name=0x7f040000;

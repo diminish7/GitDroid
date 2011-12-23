@@ -45,7 +45,7 @@ public class ActionListFragment extends ListFragment {
 			getString(R.string.gists)
 		};
 		
-		ArrayAdapter<String> actionsAdapter = new ArrayAdapter<String>( getActivity(), android.R.layout.simple_list_item_1, actions );
+		ArrayAdapter<String> actionsAdapter = new ArrayAdapter<String>(getActivity(), R.layout.simple_list_item, actions);
 		setListAdapter(actionsAdapter);
 	}
 }

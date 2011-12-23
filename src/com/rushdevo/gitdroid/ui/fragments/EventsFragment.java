@@ -1,8 +1,15 @@
 package com.rushdevo.gitdroid.ui.fragments;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +18,7 @@ import android.view.ViewGroup;
 
 import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.github.v3.models.Event;
+import com.rushdevo.gitdroid.github.v3.models.User;
 import com.rushdevo.gitdroid.github.v3.services.EventService;
 import com.rushdevo.gitdroid.ui.EventsAdapter;
 import com.rushdevo.gitdroid.utils.ErrorDisplay;
@@ -84,10 +92,10 @@ public class EventsFragment extends BaseFragment {
 		
 		@Override
 		protected Void doInBackground(Void... params) {
+			// Retrieve events
 			receivedEvents = getEventServiceInstance().retrieveReceivedEvents(getPage());
-			for (Event event : receivedEvents) {
-				ErrorDisplay.debug(this, event.getTimestamp());
-			}
+			// Download avatar images for each event
+			retrieveAvatarDrawables(receivedEvents);
 			adapter.setEvents(receivedEvents);
 			adapter.notifyDataSetChanged();
 			haveRetrievedEvents = true;
@@ -100,5 +108,46 @@ public class EventsFragment extends BaseFragment {
 			getInitHandler().sendEmptyMessage(INIT_VIEW_MESSAGE);
 		}
 		
+		private void retrieveAvatarDrawables(List<Event> events) {
+			Map<String, List<Event>> eventsByLogin = new TreeMap<String, List<Event>>();
+			// Group events by user so just one call per user
+			for (Event event : events) {
+				User actor = event.getActor();
+				if (actor == null) continue;	// Shouldn't happen
+				String login = actor.getLogin();
+				if (login == null) continue;	// Shouldn't happen
+				if (!eventsByLogin.containsKey(login))
+					eventsByLogin.put(login, new ArrayList<Event>());
+				eventsByLogin.get(login).add(event);
+			}
+			// Now for each unique login, grab the avatar drawable and set it up on the event actors
+			for (String login : eventsByLogin.keySet()) {
+				List<Event> userEvents = eventsByLogin.get(login);
+				if (!userEvents.isEmpty()) {
+					User user = userEvents.get(0).getActor();
+					if (user == null) continue;	// Shouldn't happen
+					String avatarUrl = user.getAvatarOrGravatarUrl();
+					if (avatarUrl == null) continue; // Shouldn't happen
+					Drawable avatar = null;
+					URL url;
+					InputStream is;
+					try {
+						url = new URL(avatarUrl);
+						is = (InputStream)url.getContent();
+						avatar = Drawable.createFromStream(is, user.getName());
+					} catch (MalformedURLException e) {
+						ErrorDisplay.debug(this, e);
+					} catch (IOException e) {
+						ErrorDisplay.debug(this, e);
+					}
+					if (avatar == null) avatar = getResources().getDrawable(R.drawable.default_avatar);
+					for (Event event : userEvents) {
+						User actor = event.getActor();
+						if (actor == null) continue; 	// Shouldn't happen
+						actor.setAvatar(avatar);
+					}
+				}
+			}
+		}
 	}
 }

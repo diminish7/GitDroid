@@ -2,6 +2,8 @@ package com.rushdevo.gitdroid.github.v3.models;
 
 import java.util.Date;
 
+import android.graphics.drawable.Drawable;
+
 /**
  * @author jasonrush
  * Class representing a Github User
@@ -15,6 +17,7 @@ public class User extends BaseGithubModel {
 	private Integer id;
 	private String avatar_url;
 	private String gravatar_id;
+	private Drawable avatar;
 	private String url;
 	private String name;
 	private String company;
@@ -69,6 +72,12 @@ public class User extends BaseGithubModel {
 		} else {
 			return null;
 		}
+	}
+	public Drawable getAvatar() {
+		return this.avatar;
+	}
+	public void setAvatar(Drawable avatar) {
+		this.avatar = avatar;
 	}
 	public String getUrl() {
 		return url;
