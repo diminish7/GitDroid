@@ -64,7 +64,7 @@ public class EventDeserializer implements JsonDeserializer<Event> {
 	}
 	
 	public EventPayload getPayload(JsonElement json, JsonDeserializationContext ctx, String type) {
-		if (type.equals("CommitComment")) {
+		if (type.equals("CommitCommentEvent")) {
 			return (CommitComment)ctx.deserialize(json, CommitComment.class);
 		} else if (type.equals("CreateEvent")) {
 			return (CreateEvent)ctx.deserialize(json, CreateEvent.class);
