@@ -51,7 +51,7 @@ public class EventsFragment extends BaseFragment {
 	
 	@Override
 	protected void initializeData() {
-		if (viewIsReady()) initializeView(); 
+		if (viewIsReady()) initializeView();
 		else new RetrieveFeedTask().execute();
 	}
 	
@@ -93,12 +93,14 @@ public class EventsFragment extends BaseFragment {
 		@Override
 		protected Void doInBackground(Void... params) {
 			// Retrieve events
-			receivedEvents = getEventServiceInstance().retrieveReceivedEvents(getPage());
-			// Download avatar images for each event
-			retrieveAvatarDrawables(receivedEvents);
-			adapter.setEvents(receivedEvents);
-			adapter.notifyDataSetChanged();
-			haveRetrievedEvents = true;
+			if (getActivity() != null) { // In case this gets called after the activity is detached
+				receivedEvents = getEventServiceInstance().retrieveReceivedEvents(getPage());
+				// Download avatar images for each event
+				retrieveAvatarDrawables(receivedEvents);
+				adapter.setEvents(receivedEvents);
+				adapter.notifyDataSetChanged();
+				haveRetrievedEvents = true;
+			}
 			return null;
 		}
 		

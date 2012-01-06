@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 
@@ -109,11 +110,14 @@ public abstract class BaseFragment extends ListFragment {
 	 * @param mainViewId: The id of the main view that the spinner will toggle with
 	 */
 	protected void showSpinner(int mainViewId) {
-		View main = getActivity().findViewById(mainViewId);
-		View spinner = getActivity().findViewById(R.id.spinner_container);
-		if (main != null && spinner != null) {
-			main.setVisibility(View.GONE);
-			spinner.setVisibility(View.VISIBLE);
+		FragmentActivity activity = getActivity();
+		if (activity != null) { // Called async, could be detached from activity now
+			View main = activity.findViewById(mainViewId);
+			View spinner = activity.findViewById(R.id.spinner_container);
+			if (main != null && spinner != null) {
+				main.setVisibility(View.GONE);
+				spinner.setVisibility(View.VISIBLE);
+			}
 		}
 	}
 	
@@ -123,11 +127,14 @@ public abstract class BaseFragment extends ListFragment {
 	 * @param mainViewId: The id of the main view that the spinner will toggle with
 	 */
 	protected void hideSpinner(int mainViewId) {
-		View main = getActivity().findViewById(mainViewId);
-		View spinner = getActivity().findViewById(R.id.spinner_container);
-		if (main != null && spinner != null) {
-			spinner.setVisibility(View.GONE);
-			main.setVisibility(View.VISIBLE);
+		FragmentActivity activity = getActivity();
+		if (activity != null) { // Called async, could be detached from activity now
+			View main = getActivity().findViewById(mainViewId);
+			View spinner = getActivity().findViewById(R.id.spinner_container);
+			if (main != null && spinner != null) {
+				spinner.setVisibility(View.GONE);
+				main.setVisibility(View.VISIBLE);
+			}
 		}
 	}
 	
