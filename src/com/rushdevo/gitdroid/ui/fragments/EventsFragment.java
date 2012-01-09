@@ -7,6 +7,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.TreeMap;
 
 import android.graphics.drawable.Drawable;
@@ -29,17 +31,17 @@ import com.rushdevo.gitdroid.utils.ErrorDisplay;
  */
 public class EventsFragment extends BaseFragment {
 	private EventService service;
-	private List<Event> receivedEvents;
-	private boolean haveRetrievedEvents = false;
+	private static List<Event> receivedEvents = new ArrayList<Event>();
 	private Integer page;
 	
 	private EventsAdapter adapter;
 	
+	private Timer requeryTimer;
+	private static final long REQUERY_PERIOD = 1000*60*5;	// 5 Minutes
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.receivedEvents = new ArrayList<Event>();
-		haveRetrievedEvents = false;
 		this.adapter = new EventsAdapter(getActivity(), android.R.layout.simple_list_item_1, receivedEvents);
 		setListAdapter(adapter);
 	}
@@ -52,12 +54,15 @@ public class EventsFragment extends BaseFragment {
 	@Override
 	protected void initializeData() {
 		if (viewIsReady()) initializeView();
-		else new RetrieveFeedTask().execute();
+		else {
+			if (requeryTimer == null) requeryTimer = new Timer();
+			requeryTimer.schedule(new PeriodicRequeryTask(), 0, REQUERY_PERIOD);
+		}
 	}
 	
 	@Override
 	protected boolean viewIsReady() {
-		return (receivedEvents != null && !receivedEvents.isEmpty()) || haveRetrievedEvents;
+		return (receivedEvents != null && !receivedEvents.isEmpty()) || requeryTimer != null;
 	}
 	
 	@Override
@@ -67,7 +72,7 @@ public class EventsFragment extends BaseFragment {
 	
 	// Getters and Setters
 	public List<Event> getReceivedEvents() {
-		return this.receivedEvents;
+		return receivedEvents;
 	}
 	
 	public Integer getPage() {
@@ -99,7 +104,6 @@ public class EventsFragment extends BaseFragment {
 				retrieveAvatarDrawables(receivedEvents);
 				adapter.setEvents(receivedEvents);
 				adapter.notifyDataSetChanged();
-				haveRetrievedEvents = true;
 			}
 			return null;
 		}
@@ -151,5 +155,18 @@ public class EventsFragment extends BaseFragment {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Timer task for requerying the event feed every 5 minutes while the activity is running 
+	 */
+	private class PeriodicRequeryTask extends TimerTask {
+
+		@Override
+		public void run() {
+			// Run the retrieve-feed task
+			new RetrieveFeedTask().execute();
+		}
+		
 	}
 }
