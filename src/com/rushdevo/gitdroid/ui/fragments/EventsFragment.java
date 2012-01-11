@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -14,6 +15,8 @@ import java.util.TreeMap;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,11 +36,14 @@ public class EventsFragment extends BaseFragment {
 	private EventService service;
 	private static List<Event> receivedEvents = new ArrayList<Event>();
 	private Integer page;
+	private static Long lastQueried;
 	
 	private EventsAdapter adapter;
 	
 	private Timer requeryTimer;
 	private static final long REQUERY_PERIOD = 1000*60*5;	// 5 Minutes
+	
+	private static final int REQUERY_MESSAGE = 1;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -47,8 +53,34 @@ public class EventsFragment extends BaseFragment {
 	}
 	
 	@Override
+	public void onResume() {
+		super.onResume();
+		if (lastQueried != null) {
+			// Reset the requery timer
+			// Requery every REQUERY_PERIOD
+			// Start the initial requery based on how long we've been paused for
+			Long current = Calendar.getInstance().getTimeInMillis();
+			Long diff = current - lastQueried;
+			Long nextQuery = REQUERY_PERIOD - diff;
+			if (nextQuery < 0) nextQuery = 0L;
+			requeryTimer = new Timer();
+			requeryTimer.schedule(new PeriodicRequeryTask(), nextQuery, REQUERY_PERIOD);
+		}
+	}
+	
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.events, container, false);
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		// Don't fire the requery timer in the background
+		if (requeryTimer != null) {
+			requeryTimer.cancel();
+			requeryTimer = null;
+		}
 	}
 	
 	@Override
@@ -87,6 +119,21 @@ public class EventsFragment extends BaseFragment {
 	
 	///////////// INNER CLASSES ////////////////////////
 	/**
+	 * Handler for executing UI tasks from within a TimerTask
+	 */
+	private Handler handler = new Handler() {
+    	@Override
+    	public void handleMessage(Message message) {
+    		switch(message.what) {
+    		case REQUERY_MESSAGE:
+    			// Time to requery the feed
+    			new RetrieveFeedTask().execute();
+        		break;
+    		}
+    	}
+    };
+    
+	/**
 	 * Async task for passing the temp code to github to get the access token back
 	 */
 	private class RetrieveFeedTask extends AsyncTask<Void, Void, Void> {
@@ -104,6 +151,7 @@ public class EventsFragment extends BaseFragment {
 				retrieveAvatarDrawables(receivedEvents);
 				adapter.setEvents(receivedEvents);
 				adapter.notifyDataSetChanged();
+				lastQueried = Calendar.getInstance().getTimeInMillis();
 			}
 			return null;
 		}
@@ -161,12 +209,10 @@ public class EventsFragment extends BaseFragment {
 	 * Timer task for requerying the event feed every 5 minutes while the activity is running 
 	 */
 	private class PeriodicRequeryTask extends TimerTask {
-
 		@Override
 		public void run() {
 			// Run the retrieve-feed task
-			new RetrieveFeedTask().execute();
+			handler.sendEmptyMessage(REQUERY_MESSAGE);
 		}
-		
 	}
 }
