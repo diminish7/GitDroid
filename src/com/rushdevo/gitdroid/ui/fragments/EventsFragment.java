@@ -13,7 +13,6 @@ import java.util.TimerTask;
 import java.util.TreeMap;
 
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -43,7 +42,9 @@ public class EventsFragment extends BaseFragment {
 	private Timer requeryTimer;
 	private static final long REQUERY_PERIOD = 1000*60*5;	// 5 Minutes
 	
-	private static final int REQUERY_MESSAGE = 1;
+	private static final int SHOW_SPINNER_MESSAGE = 1;
+	private static final int HIDE_SPINNER_MESSAGE = 2;
+	private static final int SET_EVENT_LIST_MESSAGE = 3;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -125,41 +126,39 @@ public class EventsFragment extends BaseFragment {
     	@Override
     	public void handleMessage(Message message) {
     		switch(message.what) {
-    		case REQUERY_MESSAGE:
-    			// Time to requery the feed
-    			new RetrieveFeedTask().execute();
-        		break;
+    		case SHOW_SPINNER_MESSAGE:
+    			showSpinner(R.id.news_feed_container);
+    			break;
+    		case HIDE_SPINNER_MESSAGE:
+    			hideSpinner(R.id.news_feed_container);
+    			break;
+    		case SET_EVENT_LIST_MESSAGE:
+    			adapter.setEvents(receivedEvents);
+				adapter.notifyDataSetChanged();
+				break;
     		}
     	}
     };
     
 	/**
-	 * Async task for passing the temp code to github to get the access token back
+	 * Timer task for requerying the event feed every 5 minutes while the activity is running 
 	 */
-	private class RetrieveFeedTask extends AsyncTask<Void, Void, Void> {
+	private class PeriodicRequeryTask extends TimerTask {
 		@Override
-		protected void onPreExecute() {
-			showSpinner(R.id.news_feed_container);
-		}
-		
-		@Override
-		protected Void doInBackground(Void... params) {
-			// Retrieve events
+		public void run() {
+			// Show the spinner
+			handler.sendEmptyMessage(SHOW_SPINNER_MESSAGE);
+			// Query the event feed
 			if (getActivity() != null) { // In case this gets called after the activity is detached
 				receivedEvents = getEventServiceInstance().retrieveReceivedEvents(getPage());
 				// Download avatar images for each event
 				retrieveAvatarDrawables(receivedEvents);
-				adapter.setEvents(receivedEvents);
-				adapter.notifyDataSetChanged();
+				handler.sendEmptyMessage(SET_EVENT_LIST_MESSAGE);
 				lastQueried = Calendar.getInstance().getTimeInMillis();
 			}
-			return null;
-		}
-		
-		@Override
-		protected void onPostExecute(Void result) {
-			// Initialize the view
-			getInitHandler().sendEmptyMessage(INIT_VIEW_MESSAGE);
+			
+			// Hide the spinner
+			handler.sendEmptyMessage(HIDE_SPINNER_MESSAGE);
 		}
 		
 		private void retrieveAvatarDrawables(List<Event> events) {
@@ -202,17 +201,6 @@ public class EventsFragment extends BaseFragment {
 					}
 				}
 			}
-		}
-	}
-
-	/**
-	 * Timer task for requerying the event feed every 5 minutes while the activity is running 
-	 */
-	private class PeriodicRequeryTask extends TimerTask {
-		@Override
-		public void run() {
-			// Run the retrieve-feed task
-			handler.sendEmptyMessage(REQUERY_MESSAGE);
 		}
 	}
 }
