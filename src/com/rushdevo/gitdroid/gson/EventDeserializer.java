@@ -9,6 +9,7 @@ import java.util.Date;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.rushdevo.gitdroid.github.v3.models.Event;
@@ -47,19 +48,19 @@ public class EventDeserializer implements JsonDeserializer<Event> {
 		Event event = new Event();
 		JsonObject obj = json.getAsJsonObject();
 		JsonElement el = obj.get("type");
-		if (el != null) event.setType(el.getAsString());
+		if (!isNull(el)) event.setType(el.getAsString());
 		el = obj.get("public");
-		event.setIsPublic((el == null) ? false : el.getAsBoolean());
+		event.setIsPublic((isNull(el)) ? false : el.getAsBoolean());
 		el = obj.get("created_at");
-		if (el != null) event.setCreatedAt((Date)ctx.deserialize(el, Date.class));
+		if (!isNull(el)) event.setCreatedAt((Date)ctx.deserialize(el, Date.class));
 		el = obj.get("repo");
-		if (el != null) event.setRepo((Repository)ctx.deserialize(el, Repository.class));
+		if (!isNull(el)) event.setRepo((Repository)ctx.deserialize(el, Repository.class));
 		el = obj.get("actor");
-		if (el != null) event.setActor((User)ctx.deserialize(el, User.class));
+		if (!isNull(el)) event.setActor((User)ctx.deserialize(el, User.class));
 		el = obj.get("org");
-		if (el != null) event.setOrg((Organization)ctx.deserialize(el, Organization.class));
+		if (!isNull(el)) event.setOrg((Organization)ctx.deserialize(el, Organization.class));
 		el = obj.get("payload");
-		if (el != null && event.getType() != null) event.setPayload(getPayload(el, ctx, event.getType()));
+		if (!isNull(el) && event.getType() != null) event.setPayload(getPayload(el, ctx, event.getType()));
 		return event;
 	}
 	
@@ -104,5 +105,13 @@ public class EventDeserializer implements JsonDeserializer<Event> {
 			return null;
 		}
 	}
-
+	
+	/**
+	 * Determine if a JSON element is null (either doesn't exist, or is explicitly set to null)
+	 * @param el - The JSON element to check
+	 * @return true iff the JSON element is null
+	 */
+	private boolean isNull(JsonElement el) {
+		return el == null || el instanceof JsonNull;
+	}
 }
