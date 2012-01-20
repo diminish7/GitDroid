@@ -110,7 +110,7 @@ public abstract class BaseFragment extends ListFragment {
 	 * @param mainViewId: The id of the main view that the spinner will toggle with
 	 */
 	protected void showSpinner(int mainViewId) {
-		FragmentActivity activity = getActivity();
+		FragmentActivity activity = (FragmentActivity)getActivity();
 		if (activity != null) { // Called async, could be detached from activity now
 			View main = activity.findViewById(mainViewId);
 			View spinner = activity.findViewById(R.id.spinner_container);
@@ -127,7 +127,7 @@ public abstract class BaseFragment extends ListFragment {
 	 * @param mainViewId: The id of the main view that the spinner will toggle with
 	 */
 	protected void hideSpinner(int mainViewId) {
-		FragmentActivity activity = getActivity();
+		FragmentActivity activity = (FragmentActivity)getActivity();
 		if (activity != null) { // Called async, could be detached from activity now
 			View main = getActivity().findViewById(mainViewId);
 			View spinner = getActivity().findViewById(R.id.spinner_container);
