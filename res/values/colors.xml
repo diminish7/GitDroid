@@ -2,4 +2,8 @@
 <resources>
     <color name="main_background">#FFFFFFFF</color>
 	<color name="menu_background">#FFE1E1E1</color>
+	<color name="white">#FFFFFFFF</color>
+	<color name="green">#FFA5CA39</color>
+	<color name="dark_grey">#FF999999</color>
+	<color name="grey">#FFCCCCCC</color>
 </resources>
