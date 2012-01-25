@@ -271,16 +271,15 @@ containing a value of this type.
         public static final int abs__config_allowActionMenuItemTextWithIcon=0x7f050000;
     }
     public static final class color {
-        public static final int abs__item_bg=0x7f060007;
+        public static final int abs__item_bg=0x7f060006;
         public static final int abs__item_focused=0x7f060000;
-        public static final int abs__tab_text_color_dark=0x7f060008;
-        public static final int abs__tab_text_color_light=0x7f060009;
-        public static final int dark_grey=0x7f060005;
-        public static final int green=0x7f060004;
-        public static final int grey=0x7f060006;
-        public static final int main_background=0x7f060001;
-        public static final int menu_background=0x7f060002;
-        public static final int white=0x7f060003;
+        public static final int abs__tab_text_color_dark=0x7f060007;
+        public static final int abs__tab_text_color_light=0x7f060008;
+        public static final int black=0x7f060005;
+        public static final int dark_grey=0x7f060003;
+        public static final int green=0x7f060002;
+        public static final int grey=0x7f060004;
+        public static final int white=0x7f060001;
     }
     public static final class dimen {
         /**  Default height of an action bar. 
@@ -455,9 +454,16 @@ containing a value of this type.
         public static final int watched_repositories=0x7f080008;
     }
     public static final class style {
+        public static final int AvatarView=0x7f0a0027;
+        public static final int ContentFragmentContainer=0x7f0a0021;
+        public static final int ContentList=0x7f0a0023;
+        public static final int ContentListItem=0x7f0a0024;
+        public static final int ContentListItemContainer=0x7f0a0026;
+        public static final int ContentListItemHeadline=0x7f0a0025;
         public static final int Internal_Widget_Sherlock_ActionBar=0x7f0a001c;
         public static final int Internal_Widget_Sherlock_Light_ActionBar=0x7f0a001d;
         public static final int MainContainer=0x7f0a0020;
+        public static final int MainTopBorder=0x7f0a0022;
         public static final int MenuList=0x7f0a001f;
         public static final int TextAppearance_Widget_Subtitle=0x7f0a001b;
         public static final int TextAppearance_Widget_Title=0x7f0a001a;

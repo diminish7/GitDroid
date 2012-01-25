@@ -16,8 +16,7 @@
 	    android:visibility="gone">
 		<ListView
 		    android:id="@+id/android:list"
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
+		    style="@style/ContentList"
 	    	/>
 	    <TextView
 		    android:id="@+id/android:empty"

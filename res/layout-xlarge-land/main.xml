@@ -4,19 +4,24 @@
     style="@style/MainContainer"
     >
 	
-	<fragment 
-		class="com.rushdevo.gitdroid.ui.fragments.ActionListFragment"
-		android:id="@+id/action_list_fragment"
-		android:layout_width="0dp"
-		android:layout_weight="3.5"
-		android:layout_height="fill_parent"
-		/>
+    <LinearLayout style="@style/MainTopBorder" />
+    
+    <LinearLayout style="@style/ContentFragmentContainer" >
+        
+		<fragment 
+			class="com.rushdevo.gitdroid.ui.fragments.ActionListFragment"
+			android:id="@+id/action_list_fragment"
+			android:layout_width="0dp"
+			android:layout_weight="3.5"
+			android:layout_height="fill_parent"
+			/>
+		
+		<LinearLayout
+		    android:id="@+id/content_containter"
+			android:layout_width="0dp"
+			android:layout_weight="6.5"
+			android:layout_height="fill_parent"
+			/>
 	
-	<LinearLayout
-	    android:id="@+id/content_containter"
-		android:layout_width="0dp"
-		android:layout_weight="6.5"
-		android:layout_height="fill_parent"
-		/>
-
+	</LinearLayout>
 </LinearLayout>

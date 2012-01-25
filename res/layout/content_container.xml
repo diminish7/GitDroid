@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/standalone_content_container"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    />
+    >
+    <LinearLayout style="@style/MainTopBorder" />
+    
+    <LinearLayout
+        android:id="@+id/standalone_content_container"
+        style="@style/ContentFragmentContainer" />
+        
+</LinearLayout>

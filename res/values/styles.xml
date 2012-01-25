@@ -15,6 +15,44 @@
     <style name="MainContainer">
         <item name="android:layout_width">fill_parent</item>
     	<item name="android:layout_height">fill_parent</item>
-    	<item name="android:background">@color/main_background</item>
+    	<item name="android:background">@color/white</item>
+    	<item name="android:orientation">vertical</item>
+    </style>
+    <style name="ContentFragmentContainer" parent="MainContainer">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingTop">20dip</item>
+    </style>
+    <style name="MainTopBorder">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">15dip</item>
+        <item name="android:background">@color/green</item>
+    </style>
+    <style name="ContentList">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:divider">@color/grey</item>
+        <item name="android:dividerHeight">2dip</item>
+    </style>
+    <style name="ContentListItem">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:textColor">@color/dark_grey</item>
+        <item name="android:textSize">9pt</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+    <style name="ContentListItemHeadline" parent="ContentListItem">
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="ContentListItemContainer">
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:padding">10dip</item>
+    </style>
+    <style name="AvatarView">
+        <item name="android:layout_width">50dip</item>
+	    <item name="android:layout_height">50dip</item>
+	    <item name="android:paddingRight">10dip</item>
     </style>
 </resources>
