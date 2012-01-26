@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="GitDroidTheme" parent="Theme.Sherlock.Light">
+        <item name="android:textColor">@color/dark_grey</item>
+        <item name="android:typeface">monospace</item>
+        <item name="android:background">@color/white</item>
+    </style>
     <style name="MenuList">
 		<item name="android:paddingLeft">32dip</item>
 		<item name="android:paddingTop">0dip</item>
@@ -10,12 +15,10 @@
 		<item name="android:background">@drawable/menu_bg</item>
 		<item name="android:textColor">@color/white</item>
 		<item name="android:textSize">11pt</item>
-		<item name="android:typeface">monospace</item>
     </style>
     <style name="MainContainer">
         <item name="android:layout_width">fill_parent</item>
     	<item name="android:layout_height">fill_parent</item>
-    	<item name="android:background">@color/white</item>
     	<item name="android:orientation">vertical</item>
     </style>
     <style name="ContentFragmentContainer" parent="MainContainer">
@@ -36,9 +39,7 @@
     <style name="ContentListItem">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">fill_parent</item>
-        <item name="android:textColor">@color/dark_grey</item>
         <item name="android:textSize">9pt</item>
-        <item name="android:typeface">monospace</item>
     </style>
     <style name="ContentListItemHeadline" parent="ContentListItem">
         <item name="android:textColor">@color/black</item>

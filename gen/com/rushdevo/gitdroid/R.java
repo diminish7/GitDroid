@@ -454,17 +454,18 @@ containing a value of this type.
         public static final int watched_repositories=0x7f080008;
     }
     public static final class style {
-        public static final int AvatarView=0x7f0a0027;
-        public static final int ContentFragmentContainer=0x7f0a0021;
-        public static final int ContentList=0x7f0a0023;
-        public static final int ContentListItem=0x7f0a0024;
-        public static final int ContentListItemContainer=0x7f0a0026;
-        public static final int ContentListItemHeadline=0x7f0a0025;
+        public static final int AvatarView=0x7f0a0028;
+        public static final int ContentFragmentContainer=0x7f0a0022;
+        public static final int ContentList=0x7f0a0024;
+        public static final int ContentListItem=0x7f0a0025;
+        public static final int ContentListItemContainer=0x7f0a0027;
+        public static final int ContentListItemHeadline=0x7f0a0026;
+        public static final int GitDroidTheme=0x7f0a001f;
         public static final int Internal_Widget_Sherlock_ActionBar=0x7f0a001c;
         public static final int Internal_Widget_Sherlock_Light_ActionBar=0x7f0a001d;
-        public static final int MainContainer=0x7f0a0020;
-        public static final int MainTopBorder=0x7f0a0022;
-        public static final int MenuList=0x7f0a001f;
+        public static final int MainContainer=0x7f0a0021;
+        public static final int MainTopBorder=0x7f0a0023;
+        public static final int MenuList=0x7f0a0020;
         public static final int TextAppearance_Widget_Subtitle=0x7f0a001b;
         public static final int TextAppearance_Widget_Title=0x7f0a001a;
         public static final int Theme_Sherlock=0x7f0a0000;
