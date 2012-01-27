@@ -42,6 +42,7 @@ public class MainActivity extends BaseActivity implements ActionSelected {
 		    	FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 		    	fragmentTransaction.replace(R.id.content_containter, currentContentFragment);
 		    	fragmentTransaction.commit();
+		    	setTitleFromAction(action);
 	    	} else {
 	    		// Single-panel layout, start the content activity
 	    		Intent intent = new Intent(this, ContentActivity.class);

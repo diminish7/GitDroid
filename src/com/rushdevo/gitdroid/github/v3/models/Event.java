@@ -14,7 +14,7 @@ public class Event extends BaseGithubModel {
 	// Consts
 	private static final int HOUR_IN_SECONDS = 60*60;
 	private static final int DAY_IN_SECONDS = HOUR_IN_SECONDS*24;
-	private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("M d, yyyy");
+	private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("MMMM d, yyyy");
 	
 	// Properties
 	private String type;

@@ -41,6 +41,18 @@ public abstract class BaseActivity extends FragmentActivity {
 	}
 	
 	/**
+	 * Set the title from an action
+	 * e.g. GitDroid - News Feed
+	 * @param action
+	 */
+	public void setTitleFromAction(String action) {
+		StringBuilder title = new StringBuilder(getString(R.string.app_name));
+    	title.append(" - ");
+    	title.append(action);
+    	setTitle(title.toString());
+	}
+	
+	/**
 	 * Track a page view with Google Analytics
 	 * @param className - The name of the activity or fragment we are tracking
 	 */

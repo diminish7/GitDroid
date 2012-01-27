@@ -4,9 +4,9 @@
 	<string name="exception_message">An error occurred: %s</string>
 	<string name="loading">Loading...</string>
 	
-	<string name="events">Received Events</string>
-	<string name="public_activity">Public Activity</string>
-	<string name="repositories">Your Repositories</string>
+	<string name="events">News Feed</string>
+	<string name="public_activity">My Public Activity</string>
+	<string name="repositories">My Repositories</string>
 	<string name="collaborator_repositories">Collaborator Repositories</string>
 	<string name="watched_repositories">Watched Repositories</string>
 	<string name="followers">Followers</string>

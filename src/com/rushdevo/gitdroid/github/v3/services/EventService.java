@@ -19,31 +19,69 @@ public class EventService extends GithubService {
 		super(ctx);
 	}
 	
+	/////// URL BUILDERS ////////
+	
 	/**
 	 * Gets the received events URL for the current user
 	 * https://api.github.com/users/:user/received_events
 	 * @return the URL
 	 */
 	public String getReceivedEventsUrl(Integer page) {
-		String login = getGitDroidApplication().getCurrentUserLogin();
-		if (login == null) return null;
-		StringBuilder builder = new StringBuilder();
-		builder.append(UserService.USERS_URL);
-		builder.append("/");
-		builder.append(login);
+		StringBuilder builder = getBuilderForCurrentUserUrl();
 		builder.append("/received_events?page=");
 		builder.append(page);
 		return builder.toString();
 	}
 	
 	/**
-	 * Get the list of events
+	 * Gets the public events URL for the current user
+	 * https://api.github.com/users/:user/events/public
+	 * @return the URL
+	 */
+	public String getPublicEventsUrl(Integer page) {
+		StringBuilder builder = getBuilderForCurrentUserUrl();
+		builder.append("/events/public?page=");
+		builder.append(page);
+		return builder.toString();
+	}
+	
+	/////// API CALLS ///////////
+	
+	/**
+	 * Get the list of received events (the private news feed)
 	 * @return The list of events
 	 */
 	public List<Event> retrieveReceivedEvents(Integer page) {
 		String json = getResponseBody(Uri.parse(getReceivedEventsUrl(page)), true);
 		Type listType = new TypeToken<List<Event>>(){}.getType();
 		return getGson().fromJson(json, listType);
+	}
+	
+	/**
+	 * Get the list of public activity events for the current user
+	 * @return The list of events
+	 */
+	public List<Event> retrievePublicEvents(Integer page) {
+		String json = getResponseBody(Uri.parse(getPublicEventsUrl(page)), true);
+		Type listType = new TypeToken<List<Event>>(){}.getType();
+		return getGson().fromJson(json, listType);
+	}
+	
+	//////// HELPERS ///////////
+	
+	/**
+	 * Helper to build the base user API URL for the current user
+	 * https://api.github.com/users/:user
+	 * @return The StringBuilder with the URL built
+	 */
+	private StringBuilder getBuilderForCurrentUserUrl() {
+		String login = getGitDroidApplication().getCurrentUserLogin();
+		if (login == null) return null;
+		StringBuilder builder = new StringBuilder();
+		builder.append(UserService.USERS_URL);
+		builder.append("/");
+		builder.append(login);
+		return builder;
 	}
 	
 }

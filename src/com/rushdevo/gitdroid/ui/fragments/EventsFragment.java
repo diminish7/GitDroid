@@ -33,6 +33,7 @@ import com.rushdevo.gitdroid.utils.ErrorDisplay;
  */
 public class EventsFragment extends BaseFragment {
 	private EventService service;
+	// Make this static so it doesn't reload every time
 	private static List<Event> receivedEvents = new ArrayList<Event>();
 	private Integer page;
 	private static Long lastQueried;
@@ -49,7 +50,7 @@ public class EventsFragment extends BaseFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.adapter = new EventsAdapter(getActivity(), android.R.layout.simple_list_item_1, receivedEvents);
+		this.adapter = new EventsAdapter(getActivity(), android.R.layout.simple_list_item_1, getEvents());
 		setListAdapter(adapter);
 	}
 	
@@ -95,7 +96,7 @@ public class EventsFragment extends BaseFragment {
 	
 	@Override
 	protected boolean viewIsReady() {
-		return (receivedEvents != null && !receivedEvents.isEmpty()) || requeryTimer != null;
+		return (getEvents() != null && !getEvents().isEmpty()) || requeryTimer != null;
 	}
 	
 	@Override
@@ -103,8 +104,12 @@ public class EventsFragment extends BaseFragment {
 		hideSpinner(R.id.news_feed_container);
 	}
 	
+	public void retrieveEvents() {
+		receivedEvents = getEventServiceInstance().retrieveReceivedEvents(getPage());
+	}
+	
 	// Getters and Setters
-	public List<Event> getReceivedEvents() {
+	public List<Event> getEvents() {
 		return receivedEvents;
 	}
 	
@@ -133,7 +138,7 @@ public class EventsFragment extends BaseFragment {
     			hideSpinner(R.id.news_feed_container);
     			break;
     		case SET_EVENT_LIST_MESSAGE:
-    			adapter.setEvents(receivedEvents);
+    			adapter.setEvents(getEvents());
 				adapter.notifyDataSetChanged();
 				break;
     		}
@@ -150,9 +155,9 @@ public class EventsFragment extends BaseFragment {
 			handler.sendEmptyMessage(SHOW_SPINNER_MESSAGE);
 			// Query the event feed
 			if (getActivity() != null) { // In case this gets called after the activity is detached
-				receivedEvents = getEventServiceInstance().retrieveReceivedEvents(getPage());
+				retrieveEvents();
 				// Download avatar images for each event
-				retrieveAvatarDrawables(receivedEvents);
+				retrieveAvatarDrawables(getEvents());
 				handler.sendEmptyMessage(SET_EVENT_LIST_MESSAGE);
 				lastQueried = Calendar.getInstance().getTimeInMillis();
 			}
@@ -163,7 +168,7 @@ public class EventsFragment extends BaseFragment {
 		
 		private void retrieveAvatarDrawables(List<Event> events) {
 			Map<String, List<Event>> eventsByLogin = new TreeMap<String, List<Event>>();
-			// Group events by user so just one call per user
+			// Group receivedEvents by user so just one call per user
 			for (Event event : events) {
 				User actor = event.getActor();
 				if (actor == null) continue;	// Shouldn't happen

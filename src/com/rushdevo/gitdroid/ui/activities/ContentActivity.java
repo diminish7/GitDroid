@@ -22,6 +22,7 @@ public class ContentActivity extends BaseActivity {
     	FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
     	fragmentTransaction.replace(R.id.standalone_content_container, fragment);
     	fragmentTransaction.commit();
+    	setTitleFromAction(action);
 	}
 	
 	@Override
