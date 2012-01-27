@@ -62,6 +62,22 @@ public class PushEvent extends BaseGithubModel implements EventPayload {
 	}
 	@Override
 	public String getContent() {
-		return "";
+		StringBuilder builder = new StringBuilder();
+		if (getCommits() != null && getCommits().length > 0) {
+			Commit commit = getCommits()[0];
+			builder.append(commit.getPartialSha());
+			builder.append(" ");
+			builder.append(commit.getPartialMessage());
+			if (getCommits().length > 1) {
+				int additionalCommits = getCommits().length - 1;
+				String pluralizedCommit = (additionalCommits == 1) ? "commit" : "commits";
+				builder.append(" (and ");
+				builder.append(additionalCommits);
+				builder.append(" other ");
+				builder.append(pluralizedCommit);
+				builder.append(")");
+			}
+		}
+		return builder.toString();
 	}
 }

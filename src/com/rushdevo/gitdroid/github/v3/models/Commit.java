@@ -18,11 +18,25 @@ public class Commit extends BaseGithubModel {
 	public void setSha(String sha) {
 		this.sha = sha;
 	}
+	public String getPartialSha() {
+		if (sha == null || sha.length() <= 7) { 
+			return sha;
+		} else {
+			return sha.substring(0, 7);
+		}
+	}
 	public String getMessage() {
 		return message;
 	}
 	public void setMessage(String message) {
 		this.message = message;
+	}
+	public String getPartialMessage() {
+		if (message == null || message.length() <= 50) {
+			return message;
+		} else {
+			return message.substring(0, 50) + "...";
+		}
 	}
 	public Author getAuthor() {
 		return author;
