@@ -41,7 +41,7 @@ public class ActionListFragment extends ListFragment {
 	
 	private void initializeAdapter() {
 		String[] actions = new String[] {
-			getString(R.string.events),
+			getString(R.string.received_events),
 			getString(R.string.public_activity),
 			getString(R.string.repositories),
 			getString(R.string.collaborator_repositories),

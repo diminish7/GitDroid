@@ -441,7 +441,6 @@ containing a value of this type.
         public static final int abs__tab_under_ab_tag=0x7f080000;
         public static final int app_name=0x7f080001;
         public static final int collaborator_repositories=0x7f080007;
-        public static final int events=0x7f080004;
         public static final int exception_message=0x7f080002;
         public static final int followers=0x7f080009;
         public static final int following=0x7f08000a;
@@ -450,6 +449,7 @@ containing a value of this type.
         public static final int loading=0x7f080003;
         public static final int organizations=0x7f08000b;
         public static final int public_activity=0x7f080005;
+        public static final int received_events=0x7f080004;
         public static final int repositories=0x7f080006;
         public static final int watched_repositories=0x7f080008;
     }

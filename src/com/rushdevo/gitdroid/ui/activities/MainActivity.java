@@ -34,7 +34,7 @@ public class MainActivity extends BaseActivity implements ActionSelected {
     @Override
 	public void OnActionSelected(String action) {
     	boolean updatePrefs = (action != null);
-    	if (panelLayout && action == null) action = getString(R.string.events);
+    	if (panelLayout && action == null) action = getString(R.string.received_events);
     	if (action != null && action != "") {
 	    	if (panelLayout) {
 	    		// Multi-panel layout, just change the selected fragment

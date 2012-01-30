@@ -17,7 +17,7 @@ public class ContentActivity extends BaseActivity {
         setContentView(R.layout.content_container);
         String action = getIntent().getExtras().getString(SELECTED_ACTION);
         // Shouldn't get here without an action, but just in case, default to news feed
-        if (action == null) action = getString(R.string.events);
+        if (action == null) action = getString(R.string.received_events);
         fragment = getContentFragmentMap().get(action);
     	FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
     	fragmentTransaction.replace(R.id.standalone_content_container, fragment);

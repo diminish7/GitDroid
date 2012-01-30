@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package com.rushdevo.gitdroid.ui.fragments;
 
 import java.io.IOException;
@@ -29,14 +32,11 @@ import com.rushdevo.gitdroid.utils.ErrorDisplay;
 
 /**
  * @author jasonrush
- * Display fragment for news feed content
+ *
  */
-public class EventsFragment extends BaseFragment {
+public abstract class BaseEventsFragment extends BaseFragment {
 	private EventService service;
-	// Make this static so it doesn't reload every time
-	private static List<Event> receivedEvents = new ArrayList<Event>();
 	private Integer page;
-	private static Long lastQueried;
 	
 	private EventsAdapter adapter;
 	
@@ -57,12 +57,12 @@ public class EventsFragment extends BaseFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (lastQueried != null) {
+		if (getLastQueried() != null) {
 			// Reset the requery timer
 			// Requery every REQUERY_PERIOD
 			// Start the initial requery based on how long we've been paused for
 			Long current = Calendar.getInstance().getTimeInMillis();
-			Long diff = current - lastQueried;
+			Long diff = current - getLastQueried();
 			Long nextQuery = REQUERY_PERIOD - diff;
 			if (nextQuery < 0) nextQuery = 0L;
 			requeryTimer = new Timer();
@@ -104,14 +104,14 @@ public class EventsFragment extends BaseFragment {
 		hideSpinner(R.id.news_feed_container);
 	}
 	
-	public void retrieveEvents() {
-		receivedEvents = getEventServiceInstance().retrieveReceivedEvents(getPage());
-	}
+	public abstract void retrieveEvents();
 	
 	// Getters and Setters
-	public List<Event> getEvents() {
-		return receivedEvents;
-	}
+	public abstract List<Event> getEvents();
+	
+	public abstract Long getLastQueried();
+	
+	public abstract void setLastQueried(Long lastQueried);
 	
 	public Integer getPage() {
 		if (page == null) page = 1;
@@ -159,7 +159,7 @@ public class EventsFragment extends BaseFragment {
 				// Download avatar images for each event
 				retrieveAvatarDrawables(getEvents());
 				handler.sendEmptyMessage(SET_EVENT_LIST_MESSAGE);
-				lastQueried = Calendar.getInstance().getTimeInMillis();
+				setLastQueried(Calendar.getInstance().getTimeInMillis());
 			}
 			
 			// Hide the spinner

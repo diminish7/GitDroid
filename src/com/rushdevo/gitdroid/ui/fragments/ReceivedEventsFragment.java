@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.rushdevo.gitdroid.ui.fragments;
 
 import java.util.ArrayList;
@@ -8,25 +5,23 @@ import java.util.List;
 
 import com.rushdevo.gitdroid.github.v3.models.Event;
 
-
 /**
  * @author jasonrush
- * Display fragment for public activity
- * Note that this is exactly the same as the events fragment except it is different events
+ * Display fragment for news feed content
  */
-public class PublicActivityFragment extends BaseEventsFragment {
+public class ReceivedEventsFragment extends BaseEventsFragment {
 	// Make this static so it doesn't reload every time
-	private static List<Event> publicEvents = new ArrayList<Event>();
+	private static List<Event> receivedEvents = new ArrayList<Event>();
 	private static Long lastQueried;
 	
 	@Override
 	public void retrieveEvents() {
-		publicEvents = getEventServiceInstance().retrievePublicEvents(getPage());
+		receivedEvents = getEventServiceInstance().retrieveReceivedEvents(getPage());
 	}
 	
 	@Override
 	public List<Event> getEvents() {
-		return publicEvents;
+		return receivedEvents;
 	}
 	
 	@Override
