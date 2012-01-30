@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.rushdevo.gitdroid.ui.fragments;
 
 import java.io.IOException;
@@ -32,7 +29,7 @@ import com.rushdevo.gitdroid.utils.ErrorDisplay;
 
 /**
  * @author jasonrush
- *
+ * Base fragment for viewing events
  */
 public abstract class BaseEventsFragment extends BaseFragment {
 	private EventService service;

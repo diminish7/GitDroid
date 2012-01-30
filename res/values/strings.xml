@@ -14,5 +14,7 @@
 	<string name="organizations">Organizations</string>
 	<string name="gists">Gists</string>
 	
+	<string name="homepage">Homepage: </string>
+	
 	<string name="list_no_events">No events to display...</string>
 </resources>

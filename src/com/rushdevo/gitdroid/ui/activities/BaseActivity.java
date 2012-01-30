@@ -21,7 +21,7 @@ import com.rushdevo.gitdroid.ui.fragments.FollowingFragment;
 import com.rushdevo.gitdroid.ui.fragments.GistsFragment;
 import com.rushdevo.gitdroid.ui.fragments.OrganizationsFragment;
 import com.rushdevo.gitdroid.ui.fragments.PublicActivityFragment;
-import com.rushdevo.gitdroid.ui.fragments.RepositoriesFragment;
+import com.rushdevo.gitdroid.ui.fragments.MyRepositoriesFragment;
 import com.rushdevo.gitdroid.ui.fragments.WatchedRepositoriesFragment;
 
 /**
@@ -106,7 +106,7 @@ public abstract class BaseActivity extends FragmentActivity {
 	    	contentFragmentMap = new TreeMap<String, Fragment>();
 			contentFragmentMap.put(getString(R.string.received_events), new ReceivedEventsFragment());
 			contentFragmentMap.put(getString(R.string.public_activity), new PublicActivityFragment());
-			contentFragmentMap.put(getString(R.string.repositories), new RepositoriesFragment());
+			contentFragmentMap.put(getString(R.string.repositories), new MyRepositoriesFragment());
 			contentFragmentMap.put(getString(R.string.collaborator_repositories), new CollaboratorRepositoriesFragment());
 			contentFragmentMap.put(getString(R.string.watched_repositories), new WatchedRepositoriesFragment());
 			contentFragmentMap.put(getString(R.string.followers), new FollowersFragment());

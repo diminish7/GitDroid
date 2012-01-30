@@ -271,11 +271,12 @@ containing a value of this type.
         public static final int abs__config_allowActionMenuItemTextWithIcon=0x7f050000;
     }
     public static final class color {
-        public static final int abs__item_bg=0x7f060006;
+        public static final int abs__item_bg=0x7f060007;
         public static final int abs__item_focused=0x7f060000;
-        public static final int abs__tab_text_color_dark=0x7f060007;
-        public static final int abs__tab_text_color_light=0x7f060008;
+        public static final int abs__tab_text_color_dark=0x7f060008;
+        public static final int abs__tab_text_color_light=0x7f060009;
         public static final int black=0x7f060005;
+        public static final int blue=0x7f060006;
         public static final int dark_grey=0x7f060003;
         public static final int green=0x7f060002;
         public static final int grey=0x7f060004;
@@ -396,6 +397,10 @@ containing a value of this type.
         public static final int organizations_todo=0x7f04002c;
         public static final int public_activity_todo=0x7f04002d;
         public static final int repositories_todo=0x7f04002e;
+        public static final int repository_container=0x7f04002f;
+        public static final int repository_description=0x7f040031;
+        public static final int repository_homepage=0x7f040032;
+        public static final int repository_name=0x7f040030;
         public static final int showCustom=0x7f040008;
         public static final int showHome=0x7f040005;
         public static final int showTitle=0x7f040007;
@@ -403,7 +408,7 @@ containing a value of this type.
         public static final int standalone_content_container=0x7f04001e;
         public static final int tabMode=0x7f040003;
         public static final int useLogo=0x7f040004;
-        public static final int watched_repositories_todo=0x7f04002f;
+        public static final int watched_repositories_todo=0x7f040033;
         public static final int wrap_content=0x7f040000;
     }
     public static final class integer {
@@ -434,8 +439,9 @@ containing a value of this type.
         public static final int organizations=0x7f030015;
         public static final int public_activity=0x7f030016;
         public static final int repositories=0x7f030017;
-        public static final int simple_list_item=0x7f030018;
-        public static final int watched_repositories=0x7f030019;
+        public static final int repository_list_item=0x7f030018;
+        public static final int simple_list_item=0x7f030019;
+        public static final int watched_repositories=0x7f03001a;
     }
     public static final class string {
         public static final int abs__tab_under_ab_tag=0x7f080000;
@@ -445,7 +451,8 @@ containing a value of this type.
         public static final int followers=0x7f080009;
         public static final int following=0x7f08000a;
         public static final int gists=0x7f08000c;
-        public static final int list_no_events=0x7f08000d;
+        public static final int homepage=0x7f08000d;
+        public static final int list_no_events=0x7f08000e;
         public static final int loading=0x7f080003;
         public static final int organizations=0x7f08000b;
         public static final int public_activity=0x7f080005;
@@ -454,12 +461,13 @@ containing a value of this type.
         public static final int watched_repositories=0x7f080008;
     }
     public static final class style {
-        public static final int AvatarView=0x7f0a0028;
+        public static final int AvatarView=0x7f0a0029;
         public static final int ContentFragmentContainer=0x7f0a0022;
         public static final int ContentList=0x7f0a0024;
         public static final int ContentListItem=0x7f0a0025;
-        public static final int ContentListItemContainer=0x7f0a0027;
+        public static final int ContentListItemContainer=0x7f0a0028;
         public static final int ContentListItemHeadline=0x7f0a0026;
+        public static final int ContentListItemLink=0x7f0a0027;
         public static final int GitDroidTheme=0x7f0a001f;
         public static final int Internal_Widget_Sherlock_ActionBar=0x7f0a001c;
         public static final int Internal_Widget_Sherlock_Light_ActionBar=0x7f0a001d;

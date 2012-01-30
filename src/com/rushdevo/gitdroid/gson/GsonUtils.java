@@ -2,6 +2,8 @@ package com.rushdevo.gitdroid.gson;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.rushdevo.gitdroid.github.v3.models.Event;
 
 /**
@@ -22,5 +24,14 @@ public class GsonUtils {
 			gson = builder.create();
 		}
 		return gson;
+	}
+	
+	/**
+	 * Determine if a JSON element is null (either doesn't exist, or is explicitly set to null)
+	 * @param el - The JSON element to check
+	 * @return true iff the JSON element is null
+	 */
+	public static boolean isNull(JsonElement el) {
+		return el == null || el instanceof JsonNull;
 	}
 }
