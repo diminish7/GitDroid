@@ -44,7 +44,7 @@ public class ActionListFragment extends ListFragment {
 			getString(R.string.received_events),
 			getString(R.string.public_activity),
 			getString(R.string.repositories),
-			getString(R.string.collaborator_repositories),
+			getString(R.string.member_repositories),
 			getString(R.string.watched_repositories),
 			getString(R.string.followers),
 			getString(R.string.following),

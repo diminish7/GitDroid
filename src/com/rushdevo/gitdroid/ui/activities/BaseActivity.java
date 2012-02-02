@@ -14,7 +14,7 @@ import android.support.v4.app.FragmentActivity;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.rushdevo.gitdroid.GitDroidApplication;
 import com.rushdevo.gitdroid.R;
-import com.rushdevo.gitdroid.ui.fragments.CollaboratorRepositoriesFragment;
+import com.rushdevo.gitdroid.ui.fragments.MemberReposotiriesFragment;
 import com.rushdevo.gitdroid.ui.fragments.ReceivedEventsFragment;
 import com.rushdevo.gitdroid.ui.fragments.FollowersFragment;
 import com.rushdevo.gitdroid.ui.fragments.FollowingFragment;
@@ -107,7 +107,7 @@ public abstract class BaseActivity extends FragmentActivity {
 			contentFragmentMap.put(getString(R.string.received_events), new ReceivedEventsFragment());
 			contentFragmentMap.put(getString(R.string.public_activity), new PublicActivityFragment());
 			contentFragmentMap.put(getString(R.string.repositories), new MyRepositoriesFragment());
-			contentFragmentMap.put(getString(R.string.collaborator_repositories), new CollaboratorRepositoriesFragment());
+			contentFragmentMap.put(getString(R.string.member_repositories), new MemberReposotiriesFragment());
 			contentFragmentMap.put(getString(R.string.watched_repositories), new WatchedRepositoriesFragment());
 			contentFragmentMap.put(getString(R.string.followers), new FollowersFragment());
 			contentFragmentMap.put(getString(R.string.following), new FollowingFragment());

@@ -8,7 +8,7 @@ import com.rushdevo.gitdroid.github.v3.models.Repository;
 
 /**
  * @author jasonrush
- * Display fragment for repositories content
+ * Display fragment for authenticated user's repositories content
  */
 public class MyRepositoriesFragment extends BaseRepositoriesFragment {
 	private static List<Repository> myRepositories = new ArrayList<Repository>();
