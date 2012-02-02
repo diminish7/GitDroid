@@ -13,7 +13,7 @@ import com.rushdevo.gitdroid.github.v3.models.Repository;
  * @author jasonrush
  * Custom adapter for showing repositories in a list
  */
-public class RepositoriesAdapter extends ArrayAdapter<Repository> {
+public class RepositoryAdapter extends ArrayAdapter<Repository> {
 	private List<Repository> repositories;
 	private Context ctx;
 	
@@ -23,7 +23,7 @@ public class RepositoriesAdapter extends ArrayAdapter<Repository> {
 	 * @param textViewResourceId
 	 * @param repositories
 	 */
-	public RepositoriesAdapter(Context context, int textViewResourceId, List<Repository> repositories) {
+	public RepositoryAdapter(Context context, int textViewResourceId, List<Repository> repositories) {
 		super(context, textViewResourceId, repositories);
 		this.repositories = repositories;
 		this.ctx = context;

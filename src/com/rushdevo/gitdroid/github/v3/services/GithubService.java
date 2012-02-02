@@ -168,4 +168,21 @@ public abstract class GithubService {
 		}
 		return client;
 	}
+	
+	//////// HELPERS ///////////
+	
+	/**
+	 * Helper to build the base user API URL for the current user
+	 * https://api.github.com/users/:user
+	 * @return The StringBuilder with the URL built
+	 */
+	protected StringBuilder getBuilderForCurrentUserUrl() {
+		String login = getGitDroidApplication().getCurrentUserLogin();
+		if (login == null) return null;
+		StringBuilder builder = new StringBuilder();
+		builder.append(UserService.USERS_URL);
+		builder.append("/");
+		builder.append(login);
+		return builder;
+	}
 }

@@ -17,4 +17,5 @@
 	<string name="homepage">Homepage: </string>
 	
 	<string name="list_no_events">No events to display...</string>
+	<string name="list_no_repositories">No repositories to display...</string>
 </resources>

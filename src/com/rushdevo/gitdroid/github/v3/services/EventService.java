@@ -66,22 +66,4 @@ public class EventService extends GithubService {
 		Type listType = new TypeToken<List<Event>>(){}.getType();
 		return getGson().fromJson(json, listType);
 	}
-	
-	//////// HELPERS ///////////
-	
-	/**
-	 * Helper to build the base user API URL for the current user
-	 * https://api.github.com/users/:user
-	 * @return The StringBuilder with the URL built
-	 */
-	private StringBuilder getBuilderForCurrentUserUrl() {
-		String login = getGitDroidApplication().getCurrentUserLogin();
-		if (login == null) return null;
-		StringBuilder builder = new StringBuilder();
-		builder.append(UserService.USERS_URL);
-		builder.append("/");
-		builder.append(login);
-		return builder;
-	}
-	
 }

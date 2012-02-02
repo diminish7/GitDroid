@@ -9,16 +9,22 @@
     
 	<include layout="@layout/loading" />
   	
-	<ListView
-	    android:id="@+id/android:list"
-	    style="@style/ContentList"
-    	/>
-	<TextView
-	    android:id="@+id/repositories_todo"
-		android:visibility="gone"
-		android:text="Repositories (TODO)"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"        
-	    />
+	<LinearLayout
+	    android:id="@+id/repositories_container"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:visibility="gone">
+		<ListView
+		    android:id="@+id/android:list"
+		    style="@style/ContentList"
+	    	/>
+	    <TextView
+		    android:id="@+id/android:empty"
+		    android:gravity="center_vertical|center_horizontal"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:text="@string/list_no_repositories"/>
+    </LinearLayout>
     
 </LinearLayout>
+    

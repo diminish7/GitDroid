@@ -395,12 +395,11 @@ containing a value of this type.
         public static final int news_feed_container=0x7f040024;
         public static final int normal=0x7f040001;
         public static final int organizations_todo=0x7f04002c;
-        public static final int public_activity_todo=0x7f04002d;
-        public static final int repositories_todo=0x7f04002e;
-        public static final int repository_container=0x7f04002f;
-        public static final int repository_description=0x7f040031;
-        public static final int repository_homepage=0x7f040032;
-        public static final int repository_name=0x7f040030;
+        public static final int repositories_container=0x7f04002d;
+        public static final int repository_container=0x7f04002e;
+        public static final int repository_description=0x7f040030;
+        public static final int repository_homepage=0x7f040031;
+        public static final int repository_name=0x7f04002f;
         public static final int showCustom=0x7f040008;
         public static final int showHome=0x7f040005;
         public static final int showTitle=0x7f040007;
@@ -408,7 +407,7 @@ containing a value of this type.
         public static final int standalone_content_container=0x7f04001e;
         public static final int tabMode=0x7f040003;
         public static final int useLogo=0x7f040004;
-        public static final int watched_repositories_todo=0x7f040033;
+        public static final int watched_repositories_todo=0x7f040032;
         public static final int wrap_content=0x7f040000;
     }
     public static final class integer {
@@ -437,11 +436,10 @@ containing a value of this type.
         public static final int loading=0x7f030013;
         public static final int main=0x7f030014;
         public static final int organizations=0x7f030015;
-        public static final int public_activity=0x7f030016;
-        public static final int repositories=0x7f030017;
-        public static final int repository_list_item=0x7f030018;
-        public static final int simple_list_item=0x7f030019;
-        public static final int watched_repositories=0x7f03001a;
+        public static final int repositories=0x7f030016;
+        public static final int repository_list_item=0x7f030017;
+        public static final int simple_list_item=0x7f030018;
+        public static final int watched_repositories=0x7f030019;
     }
     public static final class string {
         public static final int abs__tab_under_ab_tag=0x7f080000;
@@ -453,6 +451,7 @@ containing a value of this type.
         public static final int gists=0x7f08000c;
         public static final int homepage=0x7f08000d;
         public static final int list_no_events=0x7f08000e;
+        public static final int list_no_repositories=0x7f08000f;
         public static final int loading=0x7f080003;
         public static final int organizations=0x7f08000b;
         public static final int public_activity=0x7f080005;

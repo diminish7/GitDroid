@@ -6,7 +6,7 @@ import java.util.Date;
  * @author jasonrush
  * Class representing a Github repository
  */
-public class Repository extends BaseGithubModel {
+public class Repository extends BaseGithubModel implements Comparable<Repository>{
 	// Properties
 	private Integer id;
 	private String name;
@@ -156,5 +156,11 @@ public class Repository extends BaseGithubModel {
 	}
 	public void setCreatedAt(Date createdAt) {
 		this.created_at = createdAt;
+	}
+	
+	@Override
+	public int compareTo(Repository another) {
+		// Sort by created_at date
+		return another.getPushedAt().compareTo(getPushedAt());
 	}
 }
