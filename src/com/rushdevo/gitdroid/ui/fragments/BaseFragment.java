@@ -2,6 +2,7 @@ package com.rushdevo.gitdroid.ui.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -69,6 +70,10 @@ public abstract class BaseFragment extends ListFragment {
 	
 	protected String getAccessToken() {
 		return getGitDroidApplication().getAccessToken();
+	}
+	
+	protected Drawable getDefaultAvatar() {
+		return getResources().getDrawable(R.drawable.default_avatar);
 	}
 	
 	/**

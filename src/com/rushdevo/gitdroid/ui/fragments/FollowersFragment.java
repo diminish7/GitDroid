@@ -1,35 +1,24 @@
 package com.rushdevo.gitdroid.ui.fragments;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.rushdevo.gitdroid.R;
+import com.rushdevo.gitdroid.github.v3.models.User;
 
 /**
  * @author jasonrush
  * Display fragment for followers content
  */
-public class FollowersFragment extends BaseFragment {
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.followers, container, false);
-	}
+public class FollowersFragment extends BaseUsersFragment {
+	private static List<User> followers = new ArrayList<User>();
 	
 	@Override
-	protected void initializeData() {
-		// TODO Auto-generated method stub
-		initializeView();
+	public void retrieveUsers() {
+		followers = getUserServiceInstance().retrieveFollowers(getDefaultAvatar());
 	}
-	
+
 	@Override
-	protected boolean viewIsReady() {
-		return true;
-	}
-	
-	@Override
-	protected void initializeView() {
-		hideSpinner(R.id.followers_todo);
+	public List<User> getUsers() {
+		return followers;
 	}
 }

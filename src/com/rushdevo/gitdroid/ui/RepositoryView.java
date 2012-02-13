@@ -3,7 +3,6 @@ package com.rushdevo.gitdroid.ui;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,7 +14,7 @@ import com.rushdevo.gitdroid.github.v3.models.Repository;
  * View for displaying a Github repository
  */
 public class RepositoryView extends LinearLayout {
-private Repository repository;
+	private Repository repository;
 	
 	/**
 	 * Constructor
@@ -35,9 +34,6 @@ private Repository repository;
 	public void setRepository(Repository repository) {
 		this.repository = repository;
 		updateView(this);
-	}
-	public ImageView getAvatarImageView() {
-		return (ImageView)findViewById(R.id.avatar_view);
 	}
 	
 	// Helpers

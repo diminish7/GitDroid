@@ -1,9 +1,5 @@
 package com.rushdevo.gitdroid.ui.fragments;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -25,7 +21,6 @@ import com.rushdevo.gitdroid.github.v3.models.Event;
 import com.rushdevo.gitdroid.github.v3.models.User;
 import com.rushdevo.gitdroid.github.v3.services.EventService;
 import com.rushdevo.gitdroid.ui.EventsAdapter;
-import com.rushdevo.gitdroid.utils.ErrorDisplay;
 
 /**
  * @author jasonrush
@@ -181,21 +176,7 @@ public abstract class BaseEventsFragment extends BaseFragment {
 				if (!userEvents.isEmpty()) {
 					User user = userEvents.get(0).getActor();
 					if (user == null) continue;	// Shouldn't happen
-					String avatarUrl = user.getAvatarOrGravatarUrl();
-					if (avatarUrl == null) continue; // Shouldn't happen
-					Drawable avatar = null;
-					URL url;
-					InputStream is;
-					try {
-						url = new URL(avatarUrl);
-						is = (InputStream)url.getContent();
-						avatar = Drawable.createFromStream(is, user.getName());
-					} catch (MalformedURLException e) {
-						ErrorDisplay.debug(this, e);
-					} catch (IOException e) {
-						ErrorDisplay.debug(this, e);
-					}
-					if (avatar == null) avatar = getResources().getDrawable(R.drawable.default_avatar);
+					Drawable avatar = User.getAvatarForUserAsDrawable(user, getDefaultAvatar());
 					for (Event event : userEvents) {
 						User actor = event.getActor();
 						if (actor == null) continue; 	// Shouldn't happen

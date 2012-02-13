@@ -14,7 +14,7 @@ import com.rushdevo.gitdroid.R;
 public class FollowingFragment extends BaseFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.following, container, false);
+		return inflater.inflate(R.layout.users, container, false);
 	}
 	
 	@Override
@@ -30,6 +30,6 @@ public class FollowingFragment extends BaseFragment {
 	
 	@Override
 	protected void initializeView() {
-		hideSpinner(R.id.following_todo);
+//		hideSpinner(R.id.followers_todo);
 	}
 }
