@@ -20,6 +20,7 @@ public class UserService extends GithubService {
 	public static final String USER_URL = BASE_URL + "/user";
 	public static final String USERS_URL = USER_URL + "s";
 	public static final String FOLLOWERS_URL = USER_URL + "/followers";
+	public static final String FOLLOWING_URL = USER_URL + "/following";
 	
 	public UserService(Context ctx) {
 		super(ctx);
@@ -36,6 +37,14 @@ public class UserService extends GithubService {
 		return User.fromJson(getResponseBody(Uri.parse(USER_URL), true), User.class);
 	}
 	
+	/**
+	 * Retrieve the currently authenticated user's Followers from Github
+	 * 
+	 * https://api.github.com/user/followers
+	 * 
+	 * @param defaultAvatar - The avatar to display if they have no avatar set up
+	 * @return The list of users
+	 */
 	public List<User> retrieveFollowers(Drawable defaultAvatar) {
 		String json = getResponseBody(Uri.parse(FOLLOWERS_URL), true);
 		Type listType = new TypeToken<List<User>>(){}.getType();
@@ -45,5 +54,24 @@ public class UserService extends GithubService {
 			follower.retrieveAvatarAsDrawable(defaultAvatar);
 		}
 		return followers;
+	}
+	
+	/**
+	 * Retrieve the list of users following the currently authenticated user from Github
+	 * 
+	 * https://api.github.com/user/following
+	 * 
+	 * @param defaultAvatar - The avatar to display if they have no avatar set up
+	 * @return The list of users
+	 */
+	public List<User> retrieveFollowing(Drawable defaultAvatar) {
+		String json = getResponseBody(Uri.parse(FOLLOWING_URL), true);
+		Type listType = new TypeToken<List<User>>(){}.getType();
+		List<User> following = getGson().fromJson(json, listType);
+		// Preload the avatar drawables
+		for (User follower : following) {
+			follower.retrieveAvatarAsDrawable(defaultAvatar);
+		}
+		return following;
 	}
 }
