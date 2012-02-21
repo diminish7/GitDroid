@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 
 import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.listeners.ActionSelected;
@@ -63,6 +64,16 @@ public class MainActivity extends BaseActivity implements ActionSelected {
 	    	prefEditor.putString(SELECTED_ACTION, action);
 	    	prefEditor.commit();
     	}
+	}
+    
+    @Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+	    	// Clicking back from here means going to the main menu
+	    	// NOTE: This might change in the future, may need to keep track of the stack
+	    	clearSelectedAction();
+	    }
+	    return super.onKeyDown(keyCode, event);
 	}
     
     ////////// GETTERS AND SETTERS /////////////

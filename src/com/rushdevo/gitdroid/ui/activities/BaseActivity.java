@@ -47,8 +47,10 @@ public abstract class BaseActivity extends FragmentActivity {
 	 */
 	public void setTitleFromAction(String action) {
 		StringBuilder title = new StringBuilder(getString(R.string.app_name));
-    	title.append(" - ");
-    	title.append(action);
+		if (action != null && action != "") {
+	    	title.append(" - ");
+	    	title.append(action);
+		}
     	setTitle(title.toString());
 	}
 	
@@ -124,5 +126,6 @@ public abstract class BaseActivity extends FragmentActivity {
         Editor prefEditor = getSharedPrefs().edit();
         prefEditor.remove(SELECTED_ACTION);
         prefEditor.commit();
+        setTitleFromAction(null);
 	}
 }
