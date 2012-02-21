@@ -378,9 +378,9 @@ containing a value of this type.
         public static final int abs__tab_icon=0x7f040013;
         public static final int abs__textButton=0x7f040019;
         public static final int abs__up=0x7f040010;
-        public static final int action_list_fragment=0x7f040027;
+        public static final int action_list_fragment=0x7f040028;
         public static final int avatar_view=0x7f04001e;
-        public static final int content_containter=0x7f040028;
+        public static final int content_containter=0x7f040027;
         public static final int event_content=0x7f040022;
         public static final int event_content_container=0x7f04001f;
         public static final int event_description=0x7f040020;
