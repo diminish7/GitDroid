@@ -11,7 +11,7 @@ import com.rushdevo.gitdroid.github.v3.models.Repository;
  * Display fragment for authenticated user's repositories content
  */
 public class MyRepositoriesFragment extends BaseRepositoriesFragment {
-	private static List<Repository> myRepositories = new ArrayList<Repository>();
+	private List<Repository> myRepositories = new ArrayList<Repository>();
 	
 	@Override
 	public void retrieveRepositories() {

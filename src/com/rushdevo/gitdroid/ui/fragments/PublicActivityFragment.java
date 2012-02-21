@@ -16,8 +16,8 @@ import com.rushdevo.gitdroid.github.v3.models.Event;
  */
 public class PublicActivityFragment extends BaseEventsFragment {
 	// Make this static so it doesn't reload every time
-	private static List<Event> publicEvents = new ArrayList<Event>();
-	private static Long lastQueried;
+	private List<Event> publicEvents = new ArrayList<Event>();
+	private Long lastQueried;
 	
 	@Override
 	public void retrieveEvents() {

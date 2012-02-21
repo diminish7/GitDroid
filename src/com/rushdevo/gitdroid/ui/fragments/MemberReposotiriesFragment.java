@@ -10,7 +10,7 @@ import com.rushdevo.gitdroid.github.v3.models.Repository;
  * Display fragment for authenticated user's member (collaborator) repositories content
  */
 public class MemberReposotiriesFragment extends BaseRepositoriesFragment {
-	private static List<Repository> memberRepositories = new ArrayList<Repository>();
+	private List<Repository> memberRepositories = new ArrayList<Repository>();
 	
 	@Override
 	public void retrieveRepositories() {

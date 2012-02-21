@@ -10,7 +10,7 @@ import com.rushdevo.gitdroid.github.v3.models.User;
  * Display fragment for followers content
  */
 public class FollowersFragment extends BaseUsersFragment {
-	private static List<User> followers = new ArrayList<User>();
+	private List<User> followers = new ArrayList<User>();
 	
 	@Override
 	public void retrieveUsers() {

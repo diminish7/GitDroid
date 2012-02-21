@@ -10,7 +10,7 @@ import com.rushdevo.gitdroid.github.v3.models.Repository;
  * Display fragment for watched repositories content
  */
 public class WatchedRepositoriesFragment extends BaseRepositoriesFragment {
-private static List<Repository> watchedRepositories = new ArrayList<Repository>();
+	private List<Repository> watchedRepositories = new ArrayList<Repository>();
 	
 	@Override
 	public void retrieveRepositories() {
