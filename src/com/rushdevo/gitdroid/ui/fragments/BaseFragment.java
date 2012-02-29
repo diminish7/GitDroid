@@ -46,6 +46,7 @@ public abstract class BaseFragment extends ListFragment {
 	}
 	
 	public GitDroidApplication getGitDroidApplication() {
+		if (getActivity() == null) return null;
 		return (GitDroidApplication)getActivity().getApplication();
 	}
 	
@@ -207,8 +208,10 @@ public abstract class BaseFragment extends ListFragment {
 		
 		@Override
 		protected void onPostExecute(User currentUser) {
-			getGitDroidApplication().setCurrentUser(currentUser);
-			getInitHandler().sendEmptyMessage(INIT_DATA_MESSAGE);
+			if (getGitDroidApplication() != null) {
+				getGitDroidApplication().setCurrentUser(currentUser);
+				getInitHandler().sendEmptyMessage(INIT_DATA_MESSAGE);
+			}
 		}
 		
 	}

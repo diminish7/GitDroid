@@ -4,6 +4,7 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 
@@ -12,7 +13,6 @@ import com.rushdevo.gitdroid.listeners.ActionSelected;
 import com.rushdevo.gitdroid.ui.fragments.ActionListFragment;
 
 public class MainActivity extends BaseActivity implements ActionSelected {
-	private Boolean panelLayout;
 	private ActionListFragment actionListFragment;
 	private Fragment currentContentFragment;
 	
@@ -20,23 +20,17 @@ public class MainActivity extends BaseActivity implements ActionSelected {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        Configuration config = getResources().getConfiguration();
-        // We are in a panel layout iff the orientation is landscape and the screen is xlarge
-        panelLayout = config.orientation == Configuration.ORIENTATION_LANDSCAPE && config.isLayoutSizeAtLeast(Configuration.SCREENLAYOUT_SIZE_XLARGE);
         actionListFragment = getOrAddActionListFragment();
     	actionListFragment.setActionSelected(this);
     	OnActionSelected(getSharedPrefs().getString(SELECTED_ACTION, null));
     }
     
     public ActionListFragment getOrAddActionListFragment() {
-    	ActionListFragment fragment = (ActionListFragment)getSupportFragmentManager().findFragmentById(R.id.action_list_fragment);
-    	if (isSinglePanelLayout() && fragment == null) {
-            fragment = new ActionListFragment();
-        	FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        	fragmentTransaction.add(R.id.content_containter, fragment);
-        	fragmentTransaction.commit();
+    	actionListFragment = (ActionListFragment)getSupportFragmentManager().findFragmentById(R.id.action_list_fragment);
+    	if (isSinglePanelLayout()) {
+            initializeActionListFragment();
     	}
-    	return fragment;
+    	return actionListFragment;
     }
     
     @Override
@@ -48,14 +42,11 @@ public class MainActivity extends BaseActivity implements ActionSelected {
     @Override
 	public void OnActionSelected(String action) {
     	boolean updatePrefs = (action != null);
-    	if (isPanelLayout() && action == null) action = getString(R.string.received_events);
+    	if (isMultiPanelLayout() && action == null) action = getString(R.string.received_events);
     	if (action != null && action != "") {
-			currentContentFragment = getContentFragmentMap().get(action);
-	    	FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-	    	fragmentTransaction.replace(R.id.content_containter, currentContentFragment);
-	    	// If this is a single-panel layout, add this to the back stack
-	    	if (isSinglePanelLayout()) fragmentTransaction.addToBackStack(null);
-	    	fragmentTransaction.commit();
+    		// If we're just launching the app, add the menu fragment if needed for the backstack
+    		currentContentFragment = getContentFragmentMap().get(action);
+	    	displayFragment(currentContentFragment, isSinglePanelLayout());
 	    	setTitleFromAction(action);
     	}
     	if (updatePrefs) {
@@ -69,19 +60,67 @@ public class MainActivity extends BaseActivity implements ActionSelected {
     @Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 	    if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-	    	// Clicking back from here means going to the main menu
-	    	// NOTE: This might change in the future, may need to keep track of the stack
+	    	// TODO: This works for now because the backstack is only one level deep
+	    	// Clear the cached selected action
 	    	clearSelectedAction();
+	    	if (isMultiPanelLayout())
+	    		getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 	    }
 	    return super.onKeyDown(keyCode, event);
 	}
     
     ////////// GETTERS AND SETTERS /////////////
-    public Boolean isPanelLayout() {
-    	return panelLayout;
+    /**
+     * Determine if the current configuration is set to a multi-panel layout (xlarge screen and landscape)
+     * @return true if we are in panel layout
+     */
+    public Boolean isMultiPanelLayout() {
+        return isMultiPanelLayout(getResources().getConfiguration());
     }
     
+    /**
+     * Determine if the current configuration is set to single panel layout (not xlarge screen or not landscape)
+     * @return true if we are in a single panel layout
+     */
     public Boolean isSinglePanelLayout() {
-    	return !panelLayout;
+    	return isSinglePanelLayout(getResources().getConfiguration());
+    }
+    
+    ////////// HELPERS //////////////
+    /**
+     * Determine if the configuration is set to a multi-panel layout (xlarge screen and landscape)
+     * @param config - The configuration to check
+     * @return true if we are in panel layout
+     */
+    private Boolean isMultiPanelLayout(Configuration config) {
+    	return config.orientation == Configuration.ORIENTATION_LANDSCAPE && config.isLayoutSizeAtLeast(Configuration.SCREENLAYOUT_SIZE_XLARGE);
+    }
+    
+    /**
+     * Determine if the configuration is set to single panel layout (not xlarge screen or not landscape)
+     * @param config - The configuration to check
+     * @return true if we are in a single panel layout
+     */
+    private Boolean isSinglePanelLayout(Configuration config) {
+    	return !isMultiPanelLayout(config);
+    }
+    /**
+     * Initializes the main action list fragment
+     */
+    private void initializeActionListFragment() {
+    	actionListFragment = new ActionListFragment();
+    	displayFragment(actionListFragment, false);
+    }
+    
+    /**
+     * Initializes and displays a fragment
+     * @param fragment - The fragment to display
+     * @param addToBackStack - True if this fragment transaction should be added to the back stack
+     */
+    private void displayFragment(Fragment fragment, boolean addToBackStack) {
+    	FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+    	fragmentTransaction.replace(R.id.content_containter, fragment);
+    	if (addToBackStack) fragmentTransaction.addToBackStack(null);
+    	fragmentTransaction.commit();
     }
 }
