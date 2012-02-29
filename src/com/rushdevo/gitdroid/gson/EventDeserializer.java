@@ -30,6 +30,7 @@ import com.rushdevo.gitdroid.github.v3.models.event_payloads.IssuesEvent;
 import com.rushdevo.gitdroid.github.v3.models.event_payloads.MemberEvent;
 import com.rushdevo.gitdroid.github.v3.models.event_payloads.PublicEvent;
 import com.rushdevo.gitdroid.github.v3.models.event_payloads.PullRequestEvent;
+import com.rushdevo.gitdroid.github.v3.models.event_payloads.PullRequestReviewCommentEvent;
 import com.rushdevo.gitdroid.github.v3.models.event_payloads.PushEvent;
 import com.rushdevo.gitdroid.github.v3.models.event_payloads.TeamAddEvent;
 import com.rushdevo.gitdroid.github.v3.models.event_payloads.WatchEvent;
@@ -92,6 +93,8 @@ public class EventDeserializer implements JsonDeserializer<Event> {
 			return (PublicEvent)ctx.deserialize(json, PublicEvent.class);
 		} else if (type.equals("PullRequestEvent")) {
 			return (PullRequestEvent)ctx.deserialize(json, PullRequestEvent.class);
+		} else if (type.equals("PullRequestReviewCommentEvent")) {
+			return (PullRequestReviewCommentEvent)ctx.deserialize(json, PullRequestReviewCommentEvent.class);
 		} else if (type.equals("PushEvent")) {
 			return (PushEvent)ctx.deserialize(json, PushEvent.class);
 		} else if (type.equals("TeamAddEvent")) {
