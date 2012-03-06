@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rushdevo.gitdroid.R;
+import com.rushdevo.gitdroid.utils.NonConfigurationChangeData;
 
 /**
  * @author jasonrush
@@ -31,5 +32,16 @@ public class OrganizationsFragment extends BaseFragment {
 	@Override
 	protected void initializeView() {
 		hideSpinner(R.id.organizations_todo);
+	}
+	
+	@Override
+	public Object onRetainCustomNonConfigurationInstance() {
+		// TODO: Implement once org data is fleshed out
+		return null;
+	}
+	
+	@Override
+	public void initializeNonConfigurationChangeData(NonConfigurationChangeData data) {
+		// TODO: Implement once org data is fleshed out
 	}
 }

@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.listeners.ActionSelected;
+import com.rushdevo.gitdroid.utils.NonConfigurationChangeData;
 
 /**
  * @author jasonrush
@@ -20,7 +21,6 @@ public class ActionListFragment extends BaseFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		
 	}
 	
 	@Override
@@ -49,6 +49,17 @@ public class ActionListFragment extends BaseFragment {
 		actionSelected.OnActionSelected(action); 
 	}
 	
+	@Override
+	public Object onRetainCustomNonConfigurationInstance() {
+		// No data to cache during config change
+		return null;
+	}
+	
+	@Override
+	public void initializeNonConfigurationChangeData(NonConfigurationChangeData data) {
+		// NOOP - No data to cache during config change
+	}
+	
 	public void setActionSelected(ActionSelected actionSelected) {
 		this.actionSelected = actionSelected;
 	}
@@ -69,5 +80,4 @@ public class ActionListFragment extends BaseFragment {
 		ArrayAdapter<String> actionsAdapter = new ArrayAdapter<String>(getActivity(), R.layout.simple_list_item, actions);
 		setListAdapter(actionsAdapter);
 	}
-
 }

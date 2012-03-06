@@ -12,6 +12,7 @@ import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.github.v3.models.User;
 import com.rushdevo.gitdroid.github.v3.services.UserService;
 import com.rushdevo.gitdroid.ui.UserAdapter;
+import com.rushdevo.gitdroid.utils.NonConfigurationChangeData;
 
 /**
  * @author jasonrush
@@ -49,6 +50,11 @@ public abstract class BaseUsersFragment extends BaseFragment {
 	@Override
 	protected void initializeView() {
 		hideSpinner(R.id.users_container);
+	}
+	
+	@Override
+	public Object onRetainCustomNonConfigurationInstance() {
+		return new NonConfigurationChangeData(this, getUsers());
 	}
 	
 	public abstract void retrieveUsers();

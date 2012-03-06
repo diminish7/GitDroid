@@ -12,6 +12,7 @@ import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.github.v3.models.Repository;
 import com.rushdevo.gitdroid.github.v3.services.RepositoryService;
 import com.rushdevo.gitdroid.ui.RepositoryAdapter;
+import com.rushdevo.gitdroid.utils.NonConfigurationChangeData;
 
 /**
  * @author jasonrush
@@ -49,6 +50,11 @@ public abstract class BaseRepositoriesFragment extends BaseFragment {
 	@Override
 	protected void initializeView() {
 		hideSpinner(R.id.repositories_container);
+	}
+	
+	@Override
+	public Object onRetainCustomNonConfigurationInstance() {
+		return new NonConfigurationChangeData(this, getRepositories());
 	}
 	
 	public abstract void retrieveRepositories();

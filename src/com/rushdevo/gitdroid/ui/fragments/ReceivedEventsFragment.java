@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.rushdevo.gitdroid.github.v3.models.Event;
+import com.rushdevo.gitdroid.utils.NonConfigurationChangeData;
 
 /**
  * @author jasonrush
@@ -32,5 +33,16 @@ public class ReceivedEventsFragment extends BaseEventsFragment {
 	@Override
 	public void setLastQueried(Long timestamp) {
 		lastQueried = timestamp;
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public void initializeNonConfigurationChangeData(NonConfigurationChangeData data) {
+		if (data != null) {
+			Object obj = data.getData(this);
+			if (obj != null) {
+				receivedEvents = (List<Event>)obj;
+			}
+		}
 	}
 }

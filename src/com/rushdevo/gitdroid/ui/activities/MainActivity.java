@@ -11,10 +11,11 @@ import android.view.KeyEvent;
 import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.listeners.ActionSelected;
 import com.rushdevo.gitdroid.ui.fragments.ActionListFragment;
+import com.rushdevo.gitdroid.ui.fragments.BaseFragment;
 
 public class MainActivity extends BaseActivity implements ActionSelected {
 	private ActionListFragment actionListFragment;
-	private Fragment currentContentFragment;
+	private BaseFragment currentContentFragment;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,13 @@ public class MainActivity extends BaseActivity implements ActionSelected {
         actionListFragment = getOrAddActionListFragment();
     	actionListFragment.setActionSelected(this);
     	OnActionSelected(getSharedPrefs().getString(SELECTED_ACTION, null));
+    }
+    
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+    	// Delegate to the current content fragment
+    	if (currentContentFragment == null) return null;
+    	else return currentContentFragment.onRetainCustomNonConfigurationInstance();
     }
     
     public ActionListFragment getOrAddActionListFragment() {

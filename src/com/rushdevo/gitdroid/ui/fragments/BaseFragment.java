@@ -19,6 +19,7 @@ import com.rushdevo.gitdroid.github.v3.services.OAuthService;
 import com.rushdevo.gitdroid.github.v3.services.UserService;
 import com.rushdevo.gitdroid.ui.activities.BaseActivity;
 import com.rushdevo.gitdroid.utils.ErrorDisplay;
+import com.rushdevo.gitdroid.utils.NonConfigurationChangeData;
 
 /**
  * @author jasonrush
@@ -36,6 +37,7 @@ public abstract class BaseFragment extends ListFragment {
         super.onCreate(savedInstanceState);
         initHandler = new InitHandler(this.getActivity());
         ((BaseActivity)getActivity()).trackPageView(getClass().getSimpleName());
+        initializeNonConfigurationChangeData(getLastCustomNonConfigurationInstance());
         initializeCommonData();
 	}
 	
@@ -43,6 +45,17 @@ public abstract class BaseFragment extends ListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		if (viewIsReady()) initializeView();
+	}
+	
+	/**
+	 * Delegates to the activity. Returns null if the cached data isn't a NonConfigurationChangeData instance
+	 * @return The cached data from the last config change
+	 */
+	public NonConfigurationChangeData getLastCustomNonConfigurationInstance() {
+		if (getActivity() == null) return null;
+		Object data = ((FragmentActivity)getActivity()).getLastCustomNonConfigurationInstance();
+		if (data instanceof NonConfigurationChangeData) return (NonConfigurationChangeData)data;
+		return null;
 	}
 	
 	public GitDroidApplication getGitDroidApplication() {
@@ -74,6 +87,7 @@ public abstract class BaseFragment extends ListFragment {
 	}
 	
 	protected Drawable getDefaultAvatar() {
+		if (getActivity() == null) return null;
 		return getResources().getDrawable(R.drawable.default_avatar);
 	}
 	
@@ -82,7 +96,7 @@ public abstract class BaseFragment extends ListFragment {
 	 */
 	protected void authenticate() {
 		startActivity(new Intent(Intent.ACTION_VIEW, getOAuthUri()));
-		getActivity().finish();
+		if (getActivity() != null) getActivity().finish();
 	}
 	
 	/**
@@ -165,6 +179,14 @@ public abstract class BaseFragment extends ListFragment {
 	 * Returns true if the data is loaded and ready to initialize the view
 	 */
 	protected abstract boolean viewIsReady();
+	
+	/**
+	 * Called by the surrounding parent activity's onRetainCustomNonConfigurationInstance()
+	 * @return The object that this fragment would like to retain during config change
+	 */
+	public abstract Object onRetainCustomNonConfigurationInstance();
+	
+	protected abstract void initializeNonConfigurationChangeData(NonConfigurationChangeData data);
 	
 	///////////// INNER CLASSES ////////////////////////
 	/**

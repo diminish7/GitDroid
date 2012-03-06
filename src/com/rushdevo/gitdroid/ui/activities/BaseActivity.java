@@ -8,20 +8,20 @@ import java.util.TreeMap;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.rushdevo.gitdroid.GitDroidApplication;
 import com.rushdevo.gitdroid.R;
-import com.rushdevo.gitdroid.ui.fragments.MemberReposotiriesFragment;
-import com.rushdevo.gitdroid.ui.fragments.ReceivedEventsFragment;
+import com.rushdevo.gitdroid.ui.fragments.BaseFragment;
 import com.rushdevo.gitdroid.ui.fragments.FollowersFragment;
 import com.rushdevo.gitdroid.ui.fragments.FollowingFragment;
 import com.rushdevo.gitdroid.ui.fragments.GistsFragment;
+import com.rushdevo.gitdroid.ui.fragments.MemberReposotiriesFragment;
+import com.rushdevo.gitdroid.ui.fragments.MyRepositoriesFragment;
 import com.rushdevo.gitdroid.ui.fragments.OrganizationsFragment;
 import com.rushdevo.gitdroid.ui.fragments.PublicActivityFragment;
-import com.rushdevo.gitdroid.ui.fragments.MyRepositoriesFragment;
+import com.rushdevo.gitdroid.ui.fragments.ReceivedEventsFragment;
 import com.rushdevo.gitdroid.ui.fragments.WatchedRepositoriesFragment;
 
 /**
@@ -33,7 +33,7 @@ public abstract class BaseActivity extends FragmentActivity {
 	public static final String SELECTED_ACTION = "SELECTED_ACTION";
 	
 	protected GoogleAnalyticsTracker analyticsTracker;
-	protected Map<String, Fragment> contentFragmentMap;
+	protected Map<String, BaseFragment> contentFragmentMap;
 	protected Map<String, String> reverseContentFragmentMap;
 	
 	public GitDroidApplication getGitDroidApplication() {
@@ -103,9 +103,9 @@ public abstract class BaseActivity extends FragmentActivity {
 	/**
 	 * @return The lazy-loaded content fragment map
 	 */
-	protected Map<String, Fragment> getContentFragmentMap() {
+	protected Map<String, BaseFragment> getContentFragmentMap() {
 		if (contentFragmentMap == null) {
-	    	contentFragmentMap = new TreeMap<String, Fragment>();
+	    	contentFragmentMap = new TreeMap<String, BaseFragment>();
 			contentFragmentMap.put(getString(R.string.received_events), new ReceivedEventsFragment());
 			contentFragmentMap.put(getString(R.string.public_activity), new PublicActivityFragment());
 			contentFragmentMap.put(getString(R.string.repositories), new MyRepositoriesFragment());
