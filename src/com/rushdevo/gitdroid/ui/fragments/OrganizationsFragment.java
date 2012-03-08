@@ -1,47 +1,38 @@
 package com.rushdevo.gitdroid.ui.fragments;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.rushdevo.gitdroid.R;
+import com.rushdevo.gitdroid.github.v3.models.User;
 import com.rushdevo.gitdroid.utils.NonConfigurationChangeData;
+
 
 /**
  * @author jasonrush
  * Display fragment for organizations content
  */
-public class OrganizationsFragment extends BaseFragment {
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.organizations, container, false);
-	}
+public class OrganizationsFragment extends BaseUsersFragment {
+	private List<User> orgs = new ArrayList<User>();
 	
 	@Override
-	protected void initializeData() {
-		// TODO Auto-generated method stub
-		initializeView();
+	public void retrieveUsers() {
+		orgs = getUserServiceInstance().retrieveOrganizations(getDefaultAvatar());
+	}
+
+	@Override
+	public List<User> getUsers() {
+		return orgs;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	protected void initializeNonConfigurationChangeData(NonConfigurationChangeData data) {
+		if (data != null) {
+			Object obj = data.getData(this);
+			if (obj != null) {
+				orgs = (List<User>)obj;
+			}
+		}
 	}
 	
-	@Override
-	protected boolean viewIsReady() {
-		return true;
-	}
-	
-	@Override
-	protected void initializeView() {
-		hideSpinner(R.id.organizations_todo);
-	}
-	
-	@Override
-	public Object onRetainCustomNonConfigurationInstance() {
-		// TODO: Implement once org data is fleshed out
-		return null;
-	}
-	
-	@Override
-	public void initializeNonConfigurationChangeData(NonConfigurationChangeData data) {
-		// TODO: Implement once org data is fleshed out
-	}
 }
