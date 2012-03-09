@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	style="@style/ContentListItemContainer"
+	android:orientation="vertical"
+	>
+    <TextView
+        android:id="@+id/gist_id"
+        style="@style/ContentListItem" />
+	<TextView 
+        android:id="@+id/gist_description"
+        style="@style/ContentListItemHeadline" />
+    <TextView
+        android:id="@+id/gist_creator_and_timestamp"
+        style="@style/ContentListItem" />
+</LinearLayout>

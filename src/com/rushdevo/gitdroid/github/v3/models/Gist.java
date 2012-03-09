@@ -2,6 +2,8 @@ package com.rushdevo.gitdroid.github.v3.models;
 
 import java.util.Date;
 
+import com.rushdevo.gitdroid.utils.DateUtils;
+
 /**
  * @author jasonrush
  * Class representing a Github Gist
@@ -82,5 +84,16 @@ public class Gist extends BaseGithubModel {
 	}
 	public void setCreatedAt(Date createdAt) {
 		this.created_at = createdAt;
+	}
+	public String getFormattedDateAndByString() {
+		StringBuilder builder = new StringBuilder();
+		String formattedDate = DateUtils.getTimestamp(getCreatedAt());
+		if (formattedDate != null && formattedDate.length() > 0) {
+			builder.append(formattedDate);
+			builder.append(" ");
+		}
+		builder.append("by ");
+		builder.append(getUser().getLogin());
+		return builder.toString();
 	}
 }
