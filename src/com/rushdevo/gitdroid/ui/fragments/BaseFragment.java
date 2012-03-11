@@ -10,6 +10,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuItem;
+import android.view.MenuInflater;
 import android.view.View;
 
 import com.rushdevo.gitdroid.GitDroidApplication;
@@ -39,12 +42,29 @@ public abstract class BaseFragment extends ListFragment {
         ((BaseActivity)getActivity()).trackPageView(getClass().getSimpleName());
         initializeNonConfigurationChangeData(getLastCustomNonConfigurationInstance());
         initializeCommonData();
+        setHasOptionsMenu(hasMenu());
 	}
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		if (viewIsReady()) initializeView();
+	}
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.main, menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+		case R.id.refresh:
+			handleRefresh();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 	
 	/**
@@ -91,6 +111,14 @@ public abstract class BaseFragment extends ListFragment {
 		return getResources().getDrawable(R.drawable.default_avatar);
 	}
 	
+	/**
+	 * Determines if this fragment should add menu items to the action bar
+	 * 
+	 * @return True by default. Override in subclasses to prevent
+	 */
+	protected Boolean hasMenu() {
+		return true;
+	}
 	/**
 	 * Performs OAuth authentication
 	 */
@@ -179,6 +207,11 @@ public abstract class BaseFragment extends ListFragment {
 	 * Returns true if the data is loaded and ready to initialize the view
 	 */
 	protected abstract boolean viewIsReady();
+	
+	/**
+	 * Click handler for the refresh menu item
+	 */
+	protected abstract void handleRefresh();
 	
 	/**
 	 * Called by the surrounding parent activity's onRetainCustomNonConfigurationInstance()

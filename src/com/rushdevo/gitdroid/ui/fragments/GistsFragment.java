@@ -70,6 +70,11 @@ public class GistsFragment extends BaseFragment {
 		}
 	}
 	
+	@Override
+	protected void handleRefresh() {
+		new QueryGistsTask().execute();
+	}
+	
 	public void retrieveGists() {
 		gists = getGistServiceInstance().retrieveGists();
 	}

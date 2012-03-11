@@ -60,6 +60,17 @@ public class ActionListFragment extends BaseFragment {
 		// NOOP - No data to cache during config change
 	}
 	
+	@Override
+	protected Boolean hasMenu() {
+		// This fragment never contributes menu items to the action bar
+		return false;
+	}
+	
+	@Override
+	protected void handleRefresh() {
+		// NOOP - Another fragment will deal with this
+	}
+	
 	public void setActionSelected(ActionSelected actionSelected) {
 		this.actionSelected = actionSelected;
 	}

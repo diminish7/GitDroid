@@ -20,4 +20,6 @@
 	<string name="list_no_repositories">No repositories to display...</string>
 	<string name="list_no_users">No users to display...</string>
 	<string name="list_no_gists">No gists to display...</string>
+	
+	<string name="refresh">Refresh</string>
 </resources>

@@ -63,6 +63,11 @@ public abstract class BaseEventsFragment extends BaseFragment {
 		return new NonConfigurationChangeData(this, getEvents());
 	}
 	
+	@Override
+	protected void handleRefresh() {
+		new QueryEventsTask().execute();
+	}
+	
 	public abstract void retrieveEvents();
 	
 	// Getters and Setters

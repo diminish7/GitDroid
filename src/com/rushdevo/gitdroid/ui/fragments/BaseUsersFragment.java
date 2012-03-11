@@ -57,6 +57,11 @@ public abstract class BaseUsersFragment extends BaseFragment {
 		return new NonConfigurationChangeData(this, getUsers());
 	}
 	
+	@Override
+	protected void handleRefresh() {
+		new QueryUsersTask().execute();
+	}
+	
 	public abstract void retrieveUsers();
 	
 	// GETTERS AND SETTERS

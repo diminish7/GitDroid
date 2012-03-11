@@ -355,7 +355,8 @@ containing a value of this type.
         public static final int abs__tab_unselected_pressed_holo=0x7f020028;
         public static final int default_avatar=0x7f020029;
         public static final int ic_launcher=0x7f02002a;
-        public static final int menu_bg=0x7f02002b;
+        public static final int ic_menu_refresh=0x7f02002b;
+        public static final int menu_bg=0x7f02002c;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f04001b;
@@ -394,6 +395,7 @@ containing a value of this type.
         public static final int main_container=0x7f040029;
         public static final int news_feed_container=0x7f040023;
         public static final int normal=0x7f040001;
+        public static final int refresh=0x7f040035;
         public static final int repositories_container=0x7f04002c;
         public static final int repository_container=0x7f04002d;
         public static final int repository_description=0x7f04002f;
@@ -441,6 +443,9 @@ containing a value of this type.
         public static final int user_list_item=0x7f030016;
         public static final int users=0x7f030017;
     }
+    public static final class menu {
+        public static final int main=0x7f0b0000;
+    }
     public static final class string {
         public static final int abs__tab_under_ab_tag=0x7f080000;
         public static final int app_name=0x7f080001;
@@ -458,6 +463,7 @@ containing a value of this type.
         public static final int organizations=0x7f08000b;
         public static final int public_activity=0x7f080005;
         public static final int received_events=0x7f080004;
+        public static final int refresh=0x7f080012;
         public static final int repositories=0x7f080006;
         public static final int watched_repositories=0x7f080008;
     }

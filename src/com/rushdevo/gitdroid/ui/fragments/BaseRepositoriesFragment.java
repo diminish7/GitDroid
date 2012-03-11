@@ -57,6 +57,11 @@ public abstract class BaseRepositoriesFragment extends BaseFragment {
 		return new NonConfigurationChangeData(this, getRepositories());
 	}
 	
+	@Override
+	protected void handleRefresh() {
+		new QueryRepositoriesTask().execute();
+	}
+	
 	public abstract void retrieveRepositories();
 	
 	// GETTERS AND SETTERS
