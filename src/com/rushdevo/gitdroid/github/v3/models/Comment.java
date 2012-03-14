@@ -26,8 +26,7 @@ public class Comment extends BaseGithubModel {
 		else return commit_id.substring(0, 7);
 	}
 	public String getPartialBody() {
-		if (body == null) return "";
-		else return StringUtils.getTruncatedString(body);
+		return StringUtils.getTruncatedString(body);
 	}
 	public String getUrl() {
 		return url;
