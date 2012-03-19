@@ -24,8 +24,7 @@ public class GollumEvent extends BaseGithubModel implements EventPayload {
 		if (event == null) return "(unknown wiki event)";
 		StringBuilder builder = new StringBuilder();
 		builder.append(event.getActorName());
-		builder.append(" modified wiki pages ");
-		builder.append(" on ");
+		builder.append(" modified wiki pages on ");
 		builder.append(event.getRepoName());
 		return builder.toString();
 	}

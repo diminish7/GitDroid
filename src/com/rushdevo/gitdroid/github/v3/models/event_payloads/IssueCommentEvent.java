@@ -40,7 +40,7 @@ public class IssueCommentEvent extends BaseGithubModel implements EventPayload {
 		StringBuilder builder = new StringBuilder();
 		builder.append(event.getActorName());
 		builder.append(" commented on ");
-		if (issue == null && issue.getNumber() == null) builder.append("an issue");
+		if (issue == null || issue.getNumber() == null) builder.append("an issue");
 		else {
 			builder.append("issue ");
 			builder.append(issue.getNumber());

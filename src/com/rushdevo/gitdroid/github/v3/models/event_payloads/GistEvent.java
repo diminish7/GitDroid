@@ -38,7 +38,7 @@ public class GistEvent extends BaseGithubModel implements EventPayload {
 			builder.append(action);
 			builder.append("d ");	// Past tense
 		}
-		if (gist == null || gist.getId() == null) builder.append(" a gist");
+		if (gist == null || gist.getId() == null) builder.append("a gist");
 		else {
 			builder.append("gist: ");
 			builder.append(gist.getId());
