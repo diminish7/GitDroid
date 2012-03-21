@@ -34,9 +34,12 @@ public class DateUtils {
 		if (diff < HOUR_IN_SECONDS) {
 			// If less than an hour ago: 'n minutes ago'
 			int diffMinutes = diff / 60;
-			builder.append(diffMinutes);
-			if (diffMinutes == 1) builder.append(" minute ago");
-			else builder.append(" minutes ago");
+			if (diffMinutes == 0) builder.append("Just now");
+			else if (diffMinutes == 1) builder.append("A minute ago");
+			else {
+				builder.append(diffMinutes);
+				builder.append(" minutes ago");
+			}
 		} else if (diff < DAY_IN_SECONDS) {
 			// If less than a day ago: 'n hours ago'
 			long diffHours = Math.round(diff / 60.0 / 60.0);
