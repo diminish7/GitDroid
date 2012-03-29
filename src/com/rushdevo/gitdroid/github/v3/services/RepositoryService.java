@@ -4,6 +4,8 @@ import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.http.client.HttpClient;
+
 import android.content.Context;
 import android.net.Uri;
 
@@ -20,6 +22,10 @@ public class RepositoryService extends GithubService {
 
 	public RepositoryService(Context ctx) {
 		super(ctx);
+	}
+	
+	public RepositoryService(Context ctx, HttpClient client) {
+		super(ctx, client);
 	}
 	
 	/////// URL BUILDERS ////////

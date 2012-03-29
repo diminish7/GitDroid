@@ -6,6 +6,9 @@ package com.rushdevo.gitdroid.github.v3.services;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import android.content.Context;
 import android.net.Uri;
 
@@ -54,7 +57,18 @@ public class OAuthService extends GithubService {
 	 * @param scopes
 	 */
 	public OAuthService(Context ctx, String clientId, String redirectUri, String clientSecret, Set<String> scopes) {
-		super(ctx);
+		this(ctx, new DefaultHttpClient(), clientId, redirectUri, clientSecret, scopes);
+	}
+	
+	/**
+	 * Initialize the oauth service with client id, redirect uri and scopes
+	 * 
+	 * @param clientId
+	 * @param redirectUri
+	 * @param scopes
+	 */
+	public OAuthService(Context ctx, HttpClient client, String clientId, String redirectUri, String clientSecret, Set<String> scopes) {
+		super(ctx, client);
 		this.clientId = clientId;
 		this.clientSecret = clientSecret;
 		this.redirectUri = redirectUri;

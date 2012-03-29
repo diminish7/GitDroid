@@ -34,8 +34,13 @@ public abstract class GithubService {
 	private static final Integer SUCCESS = 200;
 	
 	public GithubService(Context ctx) {
+		this(ctx, new DefaultHttpClient());
+	}
+	
+	public GithubService(Context ctx, HttpClient client) {
 		this.ctx = ctx;
 		this.app = (GitDroidApplication)ctx.getApplicationContext();
+		this.client = client;
 	}
 	
 	/**
@@ -163,9 +168,6 @@ public abstract class GithubService {
 	}
 	
 	private HttpClient getClient() {
-		if (client == null) {
-			client = new DefaultHttpClient();
-		}
 		return client;
 	}
 	

@@ -6,6 +6,8 @@ package com.rushdevo.gitdroid.github.v3.services;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import org.apache.http.client.HttpClient;
+
 import android.content.Context;
 import android.net.Uri;
 
@@ -23,6 +25,10 @@ public class GistService extends GithubService {
 	
 	public GistService(Context ctx) {
 		super(ctx);
+	}
+	
+	public GistService(Context ctx, HttpClient client) {
+		super(ctx, client);
 	}
 	
 	/**

@@ -4,6 +4,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.client.HttpClient;
+
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -27,6 +29,10 @@ public class UserService extends GithubService {
 	
 	public UserService(Context ctx) {
 		super(ctx);
+	}
+	
+	public UserService(Context ctx, HttpClient client) {
+		super(ctx, client);
 	}
 	
 	/**

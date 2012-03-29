@@ -3,6 +3,8 @@ package com.rushdevo.gitdroid.github.v3.services;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import org.apache.http.client.HttpClient;
+
 import android.content.Context;
 import android.net.Uri;
 
@@ -17,6 +19,10 @@ public class EventService extends GithubService {
 	
 	public EventService(Context ctx) {
 		super(ctx);
+	}
+	
+	public EventService(Context ctx, HttpClient client) {
+		super(ctx, client);
 	}
 	
 	/////// URL BUILDERS ////////
