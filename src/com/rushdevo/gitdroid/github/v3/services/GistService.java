@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.rushdevo.gitdroid.github.v3.services;
 
 import java.lang.reflect.Type;
