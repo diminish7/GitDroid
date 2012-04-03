@@ -1,14 +1,10 @@
 package com.rushdevo.gitdroid.github.v3.models;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Date;
 
 import android.graphics.drawable.Drawable;
 
-import com.rushdevo.gitdroid.utils.ErrorDisplay;
+import com.rushdevo.gitdroid.utils.UserAvatarHelper;
 
 /**
  * @author jasonrush
@@ -121,7 +117,7 @@ public class User extends BaseGithubModel {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Boolean getHireable() {
+	public Boolean isHireable() {
 		return hireable;
 	}
 	public void setHireable(Boolean hireable) {
@@ -213,27 +209,8 @@ public class User extends BaseGithubModel {
 	}
 	
 	// HELPERS //
-	public void retrieveAvatarAsDrawable(Drawable defaultAvatar) {
-		Drawable avatar = getAvatarForUserAsDrawable(this, defaultAvatar);
+	public void retrieveAvatarAsDrawable(UserAvatarHelper userAvatarHelper, Drawable defaultAvatar) {
+		Drawable avatar = userAvatarHelper.getAvatarForUserAsDrawable(this, defaultAvatar);
 		setAvatar(avatar);
-	}
-	
-	public static Drawable getAvatarForUserAsDrawable(User user, Drawable defaultAvatar) {
-		String avatarUrl = user.getAvatarOrGravatarUrl();
-		if (avatarUrl == null) return null; // Shouldn't happen
-		Drawable avatar = null;
-		URL url;
-		InputStream is;
-		try {
-			url = new URL(avatarUrl);
-			is = (InputStream)url.getContent();
-			avatar = Drawable.createFromStream(is, user.getName());
-		} catch (MalformedURLException e) {
-			ErrorDisplay.debug(user, e);
-		} catch (IOException e) {
-			ErrorDisplay.debug(user, e);
-		}
-		if (avatar == null) avatar = defaultAvatar;
-		return avatar;
 	}
 }

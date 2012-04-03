@@ -9,7 +9,11 @@ import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpUriRequest;
-import org.easymock.EasyMock;
+
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.replay;
 
 /**
  * @author jasonrush
@@ -17,23 +21,23 @@ import org.easymock.EasyMock;
  */
 public class MockHelper {
 	public static void setupHttpClientMock(HttpClient client, String expectedBody) throws IllegalStateException, IOException {
-		HttpResponse response = EasyMock.createMock(HttpResponse.class);
-		HttpEntity entity = EasyMock.createMock(HttpEntity.class);
-		StatusLine statusLine = EasyMock.createMock(StatusLine.class);
+		HttpResponse response = createMock(HttpResponse.class);
+		HttpEntity entity = createMock(HttpEntity.class);
+		StatusLine statusLine = createMock(StatusLine.class);
 		
 		InputStream stream = new ByteArrayInputStream(expectedBody.getBytes());
 		
-		EasyMock.expect(statusLine.getStatusCode()).andStubReturn(new Integer(200));
-		EasyMock.expect(entity.getContent()).andStubReturn(stream);
+		expect(statusLine.getStatusCode()).andStubReturn(new Integer(200));
+		expect(entity.getContent()).andStubReturn(stream);
 		
-		EasyMock.expect(response.getStatusLine()).andStubReturn(statusLine);
-		EasyMock.expect(response.getEntity()).andStubReturn(entity);
+		expect(response.getStatusLine()).andStubReturn(statusLine);
+		expect(response.getEntity()).andStubReturn(entity);
 		
-		EasyMock.expect(client.execute((HttpUriRequest)EasyMock.anyObject())).andStubReturn(response);
+		expect(client.execute((HttpUriRequest)anyObject())).andStubReturn(response);
 		
-		EasyMock.replay(client);
-		EasyMock.replay(response);
-		EasyMock.replay(entity);
-		EasyMock.replay(statusLine);
+		replay(client);
+		replay(response);
+		replay(entity);
+		replay(statusLine);
 	}
 }

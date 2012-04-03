@@ -18,6 +18,8 @@ import com.rushdevo.gitdroid.github.v3.models.User;
 import com.rushdevo.gitdroid.github.v3.services.EventService;
 import com.rushdevo.gitdroid.ui.EventsAdapter;
 import com.rushdevo.gitdroid.utils.NonConfigurationChangeData;
+import com.rushdevo.gitdroid.utils.UserAvatarHelper;
+import com.rushdevo.gitdroid.utils.UserAvatarHelperImpl;
 
 /**
  * @author jasonrush
@@ -107,6 +109,7 @@ public abstract class BaseEventsFragment extends BaseFragment {
 	     }
 	     
 	     private void retrieveAvatarDrawables(List<Event> events) {
+	    	UserAvatarHelper userAvatarHelper = new UserAvatarHelperImpl();
 			Map<String, List<Event>> eventsByLogin = new TreeMap<String, List<Event>>();
 			// Group receivedEvents by user so just one call per user
 			for (Event event : events) {
@@ -124,7 +127,7 @@ public abstract class BaseEventsFragment extends BaseFragment {
 				if (!userEvents.isEmpty()) {
 					User user = userEvents.get(0).getActor();
 					if (user == null) continue;	// Shouldn't happen
-					Drawable avatar = User.getAvatarForUserAsDrawable(user, getDefaultAvatar());
+					Drawable avatar = userAvatarHelper.getAvatarForUserAsDrawable(user, getDefaultAvatar());
 					for (Event event : userEvents) {
 						User actor = event.getActor();
 						if (actor == null) continue; 	// Shouldn't happen

@@ -13,6 +13,8 @@ import android.net.Uri;
 import com.google.gson.reflect.TypeToken;
 import com.rushdevo.gitdroid.github.v3.models.Organization;
 import com.rushdevo.gitdroid.github.v3.models.User;
+import com.rushdevo.gitdroid.utils.UserAvatarHelper;
+import com.rushdevo.gitdroid.utils.UserAvatarHelperImpl;
 
 /**
  * @author jasonrush
@@ -27,12 +29,20 @@ public class UserService extends GithubService {
 	public static final String FOLLOWING_URL = USER_URL + "/following";
 	public static final String ORGS_URL = USER_URL + "/orgs";
 	
+	private UserAvatarHelper userAvatarHelper;
+	
 	public UserService(Context ctx) {
 		super(ctx);
+		this.userAvatarHelper = new UserAvatarHelperImpl();
 	}
 	
 	public UserService(Context ctx, HttpClient client) {
+		this(ctx, client, new UserAvatarHelperImpl());
+	}
+	
+	public UserService(Context ctx, HttpClient client, UserAvatarHelper userAvatarHelper) {
 		super(ctx, client);
+		this.userAvatarHelper = userAvatarHelper;
 	}
 	
 	/**
@@ -60,7 +70,7 @@ public class UserService extends GithubService {
 		List<User> followers = getGson().fromJson(json, listType);
 		// Preload the avatar drawables
 		for (User follower : followers) {
-			follower.retrieveAvatarAsDrawable(defaultAvatar);
+			follower.retrieveAvatarAsDrawable(userAvatarHelper, defaultAvatar);
 		}
 		return followers;
 	}
@@ -79,7 +89,7 @@ public class UserService extends GithubService {
 		List<User> following = getGson().fromJson(json, listType);
 		// Preload the avatar drawables
 		for (User follower : following) {
-			follower.retrieveAvatarAsDrawable(defaultAvatar);
+			follower.retrieveAvatarAsDrawable(userAvatarHelper, defaultAvatar);
 		}
 		return following;
 	}
@@ -99,7 +109,7 @@ public class UserService extends GithubService {
 		List<User> orgsAsUser = new ArrayList<User>();
 		while (!orgs.isEmpty()) {
 			Organization org = orgs.remove(0);
-			org.retrieveAvatarAsDrawable(defaultAvatar);
+			org.retrieveAvatarAsDrawable(userAvatarHelper, defaultAvatar);
 			orgsAsUser.add(org);
 		}
 		return orgsAsUser;
