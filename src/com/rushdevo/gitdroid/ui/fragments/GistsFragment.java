@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.github.v3.models.Gist;
@@ -19,7 +20,7 @@ import com.rushdevo.gitdroid.utils.NonConfigurationChangeData;
  * @author jasonrush
  * Display fragment for gist content
  */
-public class GistsFragment extends BaseFragment {
+public class GistsFragment extends BaseListFragment {
 	private GistService service;
 	private GistAdapter adapter;
 	private List<Gist> gists = new ArrayList<Gist>();
@@ -34,6 +35,13 @@ public class GistsFragment extends BaseFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.gists, container, false);
+	}
+	
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		Gist gist = (Gist)l.getItemAtPosition(position);
+		getObjectSelectedListener().OnObjectSelected(gist, new GistFragment());
 	}
 	
 	@Override

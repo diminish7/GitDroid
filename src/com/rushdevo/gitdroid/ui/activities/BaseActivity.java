@@ -13,7 +13,7 @@ import android.support.v4.app.FragmentActivity;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.rushdevo.gitdroid.GitDroidApplication;
 import com.rushdevo.gitdroid.R;
-import com.rushdevo.gitdroid.ui.fragments.BaseFragment;
+import com.rushdevo.gitdroid.ui.fragments.BaseListFragment;
 import com.rushdevo.gitdroid.ui.fragments.FollowersFragment;
 import com.rushdevo.gitdroid.ui.fragments.FollowingFragment;
 import com.rushdevo.gitdroid.ui.fragments.GistsFragment;
@@ -33,7 +33,7 @@ public abstract class BaseActivity extends FragmentActivity {
 	public static final String SELECTED_ACTION = "SELECTED_ACTION";
 	
 	protected GoogleAnalyticsTracker analyticsTracker;
-	protected Map<String, BaseFragment> contentFragmentMap;
+	protected Map<String, BaseListFragment> contentFragmentMap;
 	protected Map<String, String> reverseContentFragmentMap;
 	
 	public GitDroidApplication getGitDroidApplication() {
@@ -103,9 +103,9 @@ public abstract class BaseActivity extends FragmentActivity {
 	/**
 	 * @return The lazy-loaded content fragment map
 	 */
-	protected Map<String, BaseFragment> getContentFragmentMap() {
+	protected Map<String, BaseListFragment> getContentFragmentMap() {
 		if (contentFragmentMap == null) {
-	    	contentFragmentMap = new TreeMap<String, BaseFragment>();
+	    	contentFragmentMap = new TreeMap<String, BaseListFragment>();
 			contentFragmentMap.put(getString(R.string.received_events), new ReceivedEventsFragment());
 			contentFragmentMap.put(getString(R.string.public_activity), new PublicActivityFragment());
 			contentFragmentMap.put(getString(R.string.repositories), new MyRepositoriesFragment());

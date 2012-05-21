@@ -1,6 +1,7 @@
 package com.rushdevo.gitdroid.ui;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -23,8 +24,25 @@ private Gist gist;
 	 */
 	public GistView(Context ctx, Gist gist) {
 		super(ctx);
-		this.gist = gist;
-		addView(inflateView(ctx), new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT));
+		init(ctx, gist);
+	}
+	
+	/**
+	 * Constructor
+	 * @param ctx
+	 * @param attrSet
+	 */
+	public GistView(Context ctx, AttributeSet attrs) {
+		super(ctx, attrs);
+		init(ctx, null);
+	}
+	
+	/**
+	 * Constructor
+	 * @param ctx
+	 */
+	public GistView(Context ctx) {
+		this(ctx, (Gist)null);
 	}
 	
 	// Getters and Setters
@@ -37,6 +55,11 @@ private Gist gist;
 	}
 	
 	// Helpers
+	private void init(Context ctx, Gist gist) {
+		this.gist = gist;
+		addView(inflateView(ctx), new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT));
+	}
+	
 	private View inflateView(Context ctx) {
 		LayoutInflater inflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view  = inflater.inflate(R.layout.gist_list_item, null);
@@ -46,11 +69,13 @@ private Gist gist;
 	
 	private void updateView(View view) {
 		// Grab the views from the layout
-		TextView idView = (TextView)view.findViewById(R.id.gist_id);
-		TextView descriptionView = (TextView)view.findViewById(R.id.gist_description);
-		TextView creatorAndTimestampView = (TextView)view.findViewById(R.id.gist_creator_and_timestamp);
-		idView.setText("gist: " + gist.getId());
-		descriptionView.setText(gist.getDescription());
-		creatorAndTimestampView.setText(gist.getFormattedDateAndByString());
+		if (gist != null) {
+			TextView idView = (TextView)view.findViewById(R.id.gist_id);
+			TextView descriptionView = (TextView)view.findViewById(R.id.gist_description);
+			TextView creatorAndTimestampView = (TextView)view.findViewById(R.id.gist_creator_and_timestamp);
+			idView.setText("gist: " + gist.getId());
+			descriptionView.setText(gist.getDescription());
+			creatorAndTimestampView.setText(gist.getFormattedDateAndByString());
+		}
 	}
 }

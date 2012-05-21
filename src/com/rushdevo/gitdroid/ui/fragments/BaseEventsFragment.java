@@ -25,7 +25,7 @@ import com.rushdevo.gitdroid.utils.UserAvatarHelperImpl;
  * @author jasonrush
  * Base fragment for viewing events
  */
-public abstract class BaseEventsFragment extends BaseFragment {
+public abstract class BaseEventsFragment extends BaseListFragment {
 	private EventService service;
 	
 	private EventsAdapter adapter;

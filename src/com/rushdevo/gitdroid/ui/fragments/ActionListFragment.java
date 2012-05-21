@@ -8,15 +8,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.rushdevo.gitdroid.R;
-import com.rushdevo.gitdroid.listeners.ActionSelected;
+import com.rushdevo.gitdroid.listeners.ActionSelectedListener;
 import com.rushdevo.gitdroid.utils.NonConfigurationChangeData;
 
 /**
  * @author jasonrush
  * Main list fragment for displaying left-hand side menu
  */
-public class ActionListFragment extends BaseFragment {
-	private ActionSelected actionSelected;
+public class ActionListFragment extends BaseListFragment {
+	private ActionSelectedListener actionSelectedListener;
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class ActionListFragment extends BaseFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		String action = l.getItemAtPosition(position).toString(); 
-		actionSelected.OnActionSelected(action); 
+		actionSelectedListener.OnActionSelected(action); 
 	}
 	
 	@Override
@@ -71,8 +71,8 @@ public class ActionListFragment extends BaseFragment {
 		// NOOP - Another fragment will deal with this
 	}
 	
-	public void setActionSelected(ActionSelected actionSelected) {
-		this.actionSelected = actionSelected;
+	public void setActionSelected(ActionSelectedListener actionSelectedListener) {
+		this.actionSelectedListener = actionSelectedListener;
 	}
 	
 	private void initializeAdapter() {

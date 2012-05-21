@@ -19,6 +19,7 @@ import com.rushdevo.gitdroid.github.v3.models.Gist;
 public class GistService extends GithubService {
 	// Static Gist URLS
 	public static final String GISTS_URL = BASE_URL + "/gists";
+	public static final String GIST_LINK_URL = "https://gist.github.com";
 	
 	public GistService(Context ctx) {
 		super(ctx);
@@ -26,6 +27,21 @@ public class GistService extends GithubService {
 	
 	public GistService(Context ctx, HttpClient client) {
 		super(ctx, client);
+	}
+	
+	/**
+	 * Get the URL for the gist display script
+	 * 
+	 * @param gist The gist to display
+	 * @return url The string URL for the gist display script
+	 */
+	public String getGistDisplayScriptUrl(Gist gist) {
+		StringBuilder builder = new StringBuilder();
+		builder.append(GIST_LINK_URL);
+		builder.append("/");
+		builder.append(gist.getId());
+		builder.append(".js");
+		return builder.toString();
 	}
 	
 	/**

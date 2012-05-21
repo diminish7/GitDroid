@@ -9,13 +9,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 
 import com.rushdevo.gitdroid.R;
-import com.rushdevo.gitdroid.listeners.ActionSelected;
+import com.rushdevo.gitdroid.listeners.ActionSelectedListener;
+import com.rushdevo.gitdroid.listeners.ObjectSelectedListener;
 import com.rushdevo.gitdroid.ui.fragments.ActionListFragment;
 import com.rushdevo.gitdroid.ui.fragments.BaseFragment;
+import com.rushdevo.gitdroid.ui.fragments.BaseListFragment;
 
-public class MainActivity extends BaseActivity implements ActionSelected {
+public class MainActivity extends BaseActivity implements ActionSelectedListener, ObjectSelectedListener {
 	private ActionListFragment actionListFragment;
-	private BaseFragment currentContentFragment;
+	private BaseListFragment currentContentFragment;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class MainActivity extends BaseActivity implements ActionSelected {
     	if (action != null && action != "") {
     		// If we're just launching the app, add the menu fragment if needed for the backstack
     		currentContentFragment = getContentFragmentMap().get(action);
+    		currentContentFragment.setObjectSelectedListener(this);
 	    	displayFragment(currentContentFragment, isSinglePanelLayout());
 	    	setTitleFromAction(action);
     	}
@@ -64,6 +67,12 @@ public class MainActivity extends BaseActivity implements ActionSelected {
 	    	prefEditor.commit();
     	}
 	}
+    
+    @Override
+    public void OnObjectSelected(Object object, BaseFragment fragment) {
+    	fragment.setContentObject(object);
+    	displayFragment(fragment, true);
+    }
     
     @Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {

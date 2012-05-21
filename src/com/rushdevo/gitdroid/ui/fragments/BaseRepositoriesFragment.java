@@ -18,7 +18,7 @@ import com.rushdevo.gitdroid.utils.NonConfigurationChangeData;
  * @author jasonrush
  * Base fragment for viewing repositories
  */
-public abstract class BaseRepositoriesFragment extends BaseFragment {
+public abstract class BaseRepositoriesFragment extends BaseListFragment {
 	private RepositoryService service;
 	private RepositoryAdapter adapter;
 	

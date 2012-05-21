@@ -18,7 +18,7 @@ import com.rushdevo.gitdroid.utils.NonConfigurationChangeData;
  * @author jasonrush
  * Base fragment for displaying lists of users (used by FollowersFragment and FollowingFragment, for example)
  */
-public abstract class BaseUsersFragment extends BaseFragment {
+public abstract class BaseUsersFragment extends BaseListFragment {
 	private UserService service;
 	private UserAdapter adapter;
 	
