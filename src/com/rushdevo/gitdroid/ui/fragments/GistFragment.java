@@ -13,6 +13,7 @@ import com.rushdevo.gitdroid.R;
 import com.rushdevo.gitdroid.github.v3.models.Gist;
 import com.rushdevo.gitdroid.github.v3.services.GistService;
 import com.rushdevo.gitdroid.ui.GistView;
+import com.rushdevo.gitdroid.utils.NonConfigurationChangeData;
 
 /**
  * @author jasonrush
@@ -43,6 +44,11 @@ public class GistFragment extends BaseFragment {
 	public void setContentObject(Object object) {
 		setGist((Gist)object);
 	}
+	
+	@Override
+	public Object onRetainCustomNonConfigurationInstance() {
+		return new NonConfigurationChangeData(this, getGist());
+	}
 
 	///////// GETTERS AND SETTERS ///////////
 	public void setGist(Gist gist) {
@@ -56,6 +62,14 @@ public class GistFragment extends BaseFragment {
 	public GistService getGistServiceInstance() {
 		if (service == null) service = new GistService(getActivity());
 		return service;
+	}
+	
+	@Override
+	public void initializeNonConfigurationChangeData(NonConfigurationChangeData data) {
+		if (data != null) {
+			Object obj = data.getData(this);
+			if (obj != null) gist = (Gist)obj;
+		}
 	}
 	
 	////////// HELPERS /////////////

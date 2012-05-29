@@ -13,11 +13,12 @@ import com.rushdevo.gitdroid.listeners.ActionSelectedListener;
 import com.rushdevo.gitdroid.listeners.ObjectSelectedListener;
 import com.rushdevo.gitdroid.ui.fragments.ActionListFragment;
 import com.rushdevo.gitdroid.ui.fragments.BaseFragment;
-import com.rushdevo.gitdroid.ui.fragments.BaseListFragment;
+import com.rushdevo.gitdroid.ui.fragments.GitDroidFragment;
 
 public class MainActivity extends BaseActivity implements ActionSelectedListener, ObjectSelectedListener {
 	private ActionListFragment actionListFragment;
-	private BaseListFragment currentContentFragment;
+	private GitDroidFragment currentContentFragment;
+	private int contentDepth = 0;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,12 +53,13 @@ public class MainActivity extends BaseActivity implements ActionSelectedListener
     @Override
 	public void OnActionSelected(String action) {
     	boolean updatePrefs = (action != null);
+    	contentDepth = 0; // Zero out the screen depth counter
     	if (isMultiPanelLayout() && action == null) action = getString(R.string.received_events);
     	if (action != null && action != "") {
     		// If we're just launching the app, add the menu fragment if needed for the backstack
     		currentContentFragment = getContentFragmentMap().get(action);
     		currentContentFragment.setObjectSelectedListener(this);
-	    	displayFragment(currentContentFragment, isSinglePanelLayout());
+	    	displayFragment((Fragment)currentContentFragment, isSinglePanelLayout());
 	    	setTitleFromAction(action);
     	}
     	if (updatePrefs) {
@@ -70,18 +72,25 @@ public class MainActivity extends BaseActivity implements ActionSelectedListener
     
     @Override
     public void OnObjectSelected(Object object, BaseFragment fragment) {
+    	currentContentFragment = (GitDroidFragment)fragment;
     	fragment.setContentObject(object);
     	displayFragment(fragment, true);
+    	contentDepth += 1;
     }
     
     @Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 	    if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-	    	// TODO: This works for now because the backstack is only one level deep
 	    	// Clear the cached selected action
-	    	clearSelectedAction();
+	    	if (contentDepth == 0) clearSelectedAction();
 	    	if (isMultiPanelLayout())
-	    		getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+	    		if (contentDepth == 0 ) {
+	    			// We are on a top-level screen, so back is equal to bailing out of the app
+	    			getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+	    		} else {
+	    			// We are on a detail screen, so let the back stack handle this and just decrement the counter
+	    			contentDepth -= 1;
+	    		}
 	    }
 	    return super.onKeyDown(keyCode, event);
 	}

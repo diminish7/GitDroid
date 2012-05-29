@@ -29,7 +29,7 @@ import com.rushdevo.gitdroid.utils.NonConfigurationChangeData;
  * @author jasonrush
  * Base list fragment class for shared list fragment behavior
  */
-public abstract class BaseListFragment extends ListFragment {
+public abstract class BaseListFragment extends ListFragment implements GitDroidFragment {
 	protected static final int INIT_DATA_MESSAGE = 0;
 	protected static final int INIT_VIEW_MESSAGE = 1;
 	protected static final int NO_ACCESS_CODE_MESSAGE = 2;
@@ -223,12 +223,6 @@ public abstract class BaseListFragment extends ListFragment {
 	 * Click handler for the refresh menu item
 	 */
 	protected abstract void handleRefresh();
-	
-	/**
-	 * Called by the surrounding parent activity's onRetainCustomNonConfigurationInstance()
-	 * @return The object that this fragment would like to retain during config change
-	 */
-	public abstract Object onRetainCustomNonConfigurationInstance();
 	
 	protected abstract void initializeNonConfigurationChangeData(NonConfigurationChangeData data);
 	
