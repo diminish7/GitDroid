@@ -89,8 +89,8 @@ public class Gist extends BaseGithubModel {
 		this.created_at = createdAt;
 	}
 	public List<Comment> getAllComments() {
-		if (allComments == null) return new ArrayList<Comment>();
-		else return allComments;
+		if (allComments == null) allComments = new ArrayList<Comment>();
+		return allComments;
 	}
 	public void setAllComments(List<Comment> comments) {
 		this.allComments = comments;
