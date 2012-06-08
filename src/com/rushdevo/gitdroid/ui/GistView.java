@@ -2,7 +2,6 @@ package com.rushdevo.gitdroid.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,7 +13,7 @@ import com.rushdevo.gitdroid.github.v3.models.Gist;
  * @author jasonrush
  * View for displaying a Github gist in a list
  */
-public class GistView extends LinearLayout {
+public class GistView extends BaseListItemView {
 private Gist gist;
 	
 	/**
@@ -57,17 +56,10 @@ private Gist gist;
 	// Helpers
 	private void init(Context ctx, Gist gist) {
 		this.gist = gist;
-		addView(inflateView(ctx), new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT));
+		addView(inflateView(ctx, R.layout.gist_list_item), new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT));
 	}
 	
-	private View inflateView(Context ctx) {
-		LayoutInflater inflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View view  = inflater.inflate(R.layout.gist_list_item, null);
-		updateView(view);
-		return view;
-	}
-	
-	private void updateView(View view) {
+	protected void updateView(View view) {
 		// Grab the views from the layout
 		if (gist != null) {
 			TextView idView = (TextView)view.findViewById(R.id.gist_id);

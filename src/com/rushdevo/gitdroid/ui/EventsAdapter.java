@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.rushdevo.gitdroid.ui;
 
 import java.util.List;

@@ -2,6 +2,7 @@ package com.rushdevo.gitdroid.github.v3.models;
 
 import java.util.Date;
 
+import com.rushdevo.gitdroid.utils.DateUtils;
 import com.rushdevo.gitdroid.utils.StringUtils;
 
 /**
@@ -81,5 +82,17 @@ public class Comment extends BaseGithubModel {
 	}
 	public void setUpdatedAt(Date updatedAt) {
 		this.updated_at = updatedAt;
+	}
+	
+	public String getFormattedDateAndByString() {
+		StringBuilder builder = new StringBuilder();
+		String formattedDate = DateUtils.getTimestamp(getCreatedAt());
+		if (formattedDate != null && formattedDate.length() > 0) {
+			builder.append(formattedDate);
+			builder.append(" ");
+		}
+		builder.append("by ");
+		builder.append(getUser().getLogin());
+		return builder.toString();
 	}
 }

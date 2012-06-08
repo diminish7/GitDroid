@@ -1,7 +1,6 @@
 package com.rushdevo.gitdroid.ui;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,7 +13,7 @@ import com.rushdevo.gitdroid.github.v3.models.User;
  * @author jasonrush
  * View for displaying a Github user in a list
  */
-public class UserView extends LinearLayout {
+public class UserView extends BaseListItemView {
 	private User user;
 	
 	/**
@@ -25,7 +24,7 @@ public class UserView extends LinearLayout {
 	public UserView(Context ctx, User user) {
 		super(ctx);
 		this.user = user;
-		addView(inflateView(ctx), new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT));
+		addView(inflateView(ctx, R.layout.user_list_item), new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT));
 	}
 	
 	// Getters and Setters
@@ -38,14 +37,7 @@ public class UserView extends LinearLayout {
 	}
 	
 	// Helpers
-	private View inflateView(Context ctx) {
-		LayoutInflater inflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View view  = inflater.inflate(R.layout.user_list_item, null);
-		updateView(view);
-		return view;
-	}
-	
-	private void updateView(View view) {
+	protected void updateView(View view) {
 		// Grab the views from the layout
 		TextView loginView = (TextView)view.findViewById(R.id.user_login);
 		TextView nameView = (TextView)view.findViewById(R.id.user_name);

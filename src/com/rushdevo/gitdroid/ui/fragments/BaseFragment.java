@@ -1,11 +1,11 @@
 package com.rushdevo.gitdroid.ui.fragments;
 
-import com.rushdevo.gitdroid.listeners.ObjectSelectedListener;
-import com.rushdevo.gitdroid.utils.NonConfigurationChangeData;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+
+import com.rushdevo.gitdroid.listeners.ObjectSelectedListener;
+import com.rushdevo.gitdroid.utils.NonConfigurationChangeData;
 
 /**
  * @author jasonrush

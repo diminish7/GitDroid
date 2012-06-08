@@ -30,6 +30,12 @@
         <item name="android:layout_height">15dip</item>
         <item name="android:background">@color/green</item>
     </style>
+    <style name="SectionHeader">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">11pt</item>
+    </style>
     <style name="ContentList">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">fill_parent</item>
@@ -58,5 +64,10 @@
         <item name="android:layout_width">50dip</item>
 	    <item name="android:layout_height">50dip</item>
 	    <item name="android:paddingRight">10dip</item>
+    </style>
+    <style name="Divider">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">2dip</item>
+        <item name="android:background">@color/green</item>
     </style>
 </resources>

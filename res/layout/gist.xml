@@ -29,7 +29,8 @@
         android:id="@+id/gist_container"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
-        
+    
+    <include layout="@layout/comments" />
     
 </LinearLayout>
     

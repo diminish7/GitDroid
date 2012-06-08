@@ -96,10 +96,10 @@ public abstract class BaseEventsFragment extends BaseListFragment {
 		}
 		
 	     protected Void doInBackground(Void... args) {
-	         retrieveEvents();
-	         // Download avatar images for each event
-			retrieveAvatarDrawables(getEvents());
-	         return null;
+	    	 retrieveEvents();
+	    	 // Download avatar images for each event
+	    	 retrieveAvatarDrawables(getEvents());
+	    	 return null;
 	     }
 
 	     protected void onPostExecute(Void arg) {

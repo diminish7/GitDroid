@@ -1,7 +1,6 @@
 package com.rushdevo.gitdroid.ui;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,7 +12,7 @@ import com.rushdevo.gitdroid.github.v3.models.Repository;
  * @author jasonrush
  * View for displaying a Github repository
  */
-public class RepositoryView extends LinearLayout {
+public class RepositoryView extends BaseListItemView {
 	private Repository repository;
 	
 	/**
@@ -24,7 +23,7 @@ public class RepositoryView extends LinearLayout {
 	public RepositoryView(Context ctx, Repository repository) {
 		super(ctx);
 		this.repository = repository;
-		addView(inflateView(ctx), new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT));
+		addView(inflateView(ctx, R.layout.repository_list_item), new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT));
 	}
 	
 	// Getters and Setters
@@ -37,14 +36,7 @@ public class RepositoryView extends LinearLayout {
 	}
 	
 	// Helpers
-	private View inflateView(Context ctx) {
-		LayoutInflater inflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View view  = inflater.inflate(R.layout.repository_list_item, null);
-		updateView(view);
-		return view;
-	}
-	
-	private void updateView(View view) {
+	protected void updateView(View view) {
 		// Grab the views from the layout
 		TextView nameView = (TextView)view.findViewById(R.id.repository_name);
 		TextView descriptionView = (TextView)view.findViewById(R.id.repository_description);

@@ -9,6 +9,7 @@ import android.content.Context;
 import android.net.Uri;
 
 import com.google.gson.reflect.TypeToken;
+import com.rushdevo.gitdroid.github.v3.models.Comment;
 import com.rushdevo.gitdroid.github.v3.models.Gist;
 
 /**
@@ -45,6 +46,21 @@ public class GistService extends GithubService {
 	}
 	
 	/**
+	 * Get the URL for the gist comments API call
+	 * 
+	 * @param gist The gist whose comments you want
+	 * @return url The string URL for the gist comments
+	 */
+	public String getGistCommentsUrl(Gist gist) {
+		StringBuilder builder = new StringBuilder();
+		builder.append(GISTS_URL);
+		builder.append("/");
+		builder.append(gist.getId());
+		builder.append("/comments");
+		return builder.toString();
+	}
+	
+	/**
 	 * Retrieve the list of gists from the currently authenticated user from Github
 	 * 
 	 * https://api.github.com/gists
@@ -54,6 +70,20 @@ public class GistService extends GithubService {
 	public List<Gist> retrieveGists() {
 		String json = getResponseBody(Uri.parse(GISTS_URL), true);
 		Type listType = new TypeToken<List<Gist>>(){}.getType();
+		return getGson().fromJson(json, listType);
+	}
+	
+	/**
+	 * Retrieve the list of comments for a given gist
+	 * 
+	 * https://api.github.com/gists/:gist/comments
+	 * 
+	 * @param gist The gist whose comments you want
+	 * @return The list of comments
+	 */
+	public List<Comment> retrieveComments(Gist gist) {
+		String json = getResponseBody(Uri.parse(getGistCommentsUrl(gist)), true);
+		Type listType = new TypeToken<List<Comment>>(){}.getType();
 		return getGson().fromJson(json, listType);
 	}
 }

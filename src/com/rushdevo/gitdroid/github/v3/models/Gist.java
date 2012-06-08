@@ -1,6 +1,8 @@
 package com.rushdevo.gitdroid.github.v3.models;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.rushdevo.gitdroid.utils.DateUtils;
 
@@ -23,6 +25,7 @@ public class Gist extends BaseGithubModel {
 	private String git_pull_url;
 	private String git_push_url;
 	private Date created_at;
+	private List<Comment> allComments;
 	
 	// Getters and Setters
 	public String getUrl() {
@@ -84,6 +87,13 @@ public class Gist extends BaseGithubModel {
 	}
 	public void setCreatedAt(Date createdAt) {
 		this.created_at = createdAt;
+	}
+	public List<Comment> getAllComments() {
+		if (allComments == null) return new ArrayList<Comment>();
+		else return allComments;
+	}
+	public void setAllComments(List<Comment> comments) {
+		this.allComments = comments;
 	}
 	public String getFormattedDateAndByString() {
 		StringBuilder builder = new StringBuilder();
