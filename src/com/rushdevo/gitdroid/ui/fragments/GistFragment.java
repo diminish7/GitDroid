@@ -44,7 +44,9 @@ public class GistFragment extends BaseFragment {
 		View view = inflater.inflate(R.layout.gist, container, false);
 		
 		commentsContainer = view.findViewById(R.id.comments_container);
-		commentsList = (ListView)view.findViewById(R.id.comments_list);
+		commentsList = (ListView)view.findViewById(android.R.id.list);
+		
+		commentsList.setEmptyView(view.findViewById(android.R.id.empty));
 		this.adapter = new CommentsAdapter(getActivity(), android.R.layout.simple_list_item_1, getComments());
 		commentsList.setAdapter(adapter);
 		

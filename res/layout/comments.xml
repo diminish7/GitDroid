@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center">
 	<ProgressBar
 		android:id="@+id/comment_progress" 
-		style="@android:style/Widget.ProgressBar.Large.Inverse"
-		android:layout_width="wrap_content"
+		style="@android:style/Widget.ProgressBar.Small.Inverse"
+		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_gravity="center"
 		android:visibility="gone"
@@ -26,7 +26,7 @@
 	        android:id="@+id/comment_divider"
 	        style="@style/Divider" />
 		<ListView
-		    android:id="@+id/comments_list"
+		    android:id="@+id/android:list"
 		    style="@style/ContentList"
 	    	/>
 	    <TextView
