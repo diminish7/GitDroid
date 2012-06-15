@@ -25,9 +25,10 @@
 	    <LinearLayout
 	        android:id="@+id/comment_divider"
 	        style="@style/Divider" />
-		<ListView
+		<com.rushdevo.gitdroid.ui.ExpandedListView
 		    android:id="@+id/android:list"
 		    style="@style/ContentList"
+		    android:scrollbars="none"
 	    	/>
 	    <TextView
 		    android:id="@+id/android:empty"
