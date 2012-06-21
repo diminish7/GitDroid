@@ -3,14 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center">
+    android:layout_gravity="center_horizontal">
 	<ProgressBar
 		android:id="@+id/comment_progress" 
-		style="@android:style/Widget.ProgressBar.Small.Inverse"
+		style="@android:style/Widget.ProgressBar.Large.Inverse"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_gravity="center"
-		android:visibility="gone"
+		android:layout_gravity="center_horizontal"
 		/>
 	  	
 	<LinearLayout
@@ -20,15 +19,15 @@
 	    android:orientation="vertical"
 	    android:visibility="gone">
 	    <TextView 
+	        android:id="@+id/comments_label"
 	        style="@style/SectionHeader"
 	        android:text="@string/comments" />
 	    <LinearLayout
 	        android:id="@+id/comment_divider"
 	        style="@style/Divider" />
-		<com.rushdevo.gitdroid.ui.ExpandedListView
+		<ListView
 		    android:id="@+id/android:list"
 		    style="@style/ContentList"
-		    android:scrollbars="none"
 	    	/>
 	    <TextView
 		    android:id="@+id/android:empty"
@@ -36,5 +35,9 @@
 		    android:layout_width="fill_parent"
 		    android:layout_height="fill_parent"
 		    android:text="@string/list_no_comments"/>
+	    <Button 
+			android:id="@+id/add_comment_button"
+			android:text="@string/add_comment"
+			style="@style/FormButton" />
 	</LinearLayout>
 </LinearLayout>

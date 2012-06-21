@@ -5,16 +5,21 @@
         <item name="android:typeface">monospace</item>
         <item name="android:background">@color/white</item>
     </style>
-    <style name="MenuList">
-		<item name="android:paddingLeft">32dip</item>
-		<item name="android:paddingTop">0dip</item>
+    <style name="ActionButton">
+        <item name="android:paddingTop">0dip</item>
 		<item name="android:paddingBottom">0dip</item>
-		<item name="android:gravity">center_vertical</item>
 		<item name="android:layout_width">fill_parent</item>
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:background">@drawable/menu_bg</item>
 		<item name="android:textColor">@color/white</item>
 		<item name="android:textSize">11pt</item>
+    </style>
+    <style name="MenuList" parent="ActionButton">
+		<item name="android:paddingLeft">32dip</item>
+		<item name="android:gravity">center_vertical</item>
+    </style>
+    <style name="FormButton" parent="ActionButton">
+        <item name="android:gravity">center</item>
     </style>
     <style name="MainContainer">
         <item name="android:layout_width">fill_parent</item>

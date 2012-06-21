@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import android.content.Context;
+
+import com.rushdevo.gitdroid.github.v3.services.GistService;
 import com.rushdevo.gitdroid.utils.DateUtils;
 
 /**
  * @author jasonrush
  * Class representing a Github Gist
  */
-public class Gist extends BaseGithubModel {
+public class Gist extends BaseGithubModel implements Commentable {
 	// TODO: This needs a custom deserializer to deal with the property 'public'
 	// 		 Also, there are several other objects associated with this
 	
@@ -95,6 +98,12 @@ public class Gist extends BaseGithubModel {
 	public void setAllComments(List<Comment> comments) {
 		this.allComments = comments;
 	}
+	public String getDisplayName() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Gist ");
+		builder.append(getId());
+		return builder.toString();
+	}
 	public String getFormattedDateAndByString() {
 		StringBuilder builder = new StringBuilder();
 		String formattedDate = DateUtils.getTimestamp(getCreatedAt());
@@ -105,5 +114,9 @@ public class Gist extends BaseGithubModel {
 		builder.append("by ");
 		builder.append(getUser().getLogin());
 		return builder.toString();
+	}
+	
+	public void retrieveComments(Context context) {
+		setAllComments(new GistService(context).retrieveComments(this));
 	}
 }

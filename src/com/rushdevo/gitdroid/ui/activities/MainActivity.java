@@ -73,6 +73,7 @@ public class MainActivity extends BaseActivity implements ActionSelectedListener
     @Override
     public void OnObjectSelected(Object object, BaseFragment fragment) {
     	currentContentFragment = (GitDroidFragment)fragment;
+    	currentContentFragment.setObjectSelectedListener(this);
     	fragment.setContentObject(object);
     	displayFragment(fragment, true);
     	contentDepth += 1;

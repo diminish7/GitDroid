@@ -9,8 +9,6 @@
 	    android:orientation="vertical"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-	    android:paddingRight="50dip"
-	    android:paddingLeft="50dip"
 	    >
 	    <com.rushdevo.gitdroid.ui.GistView
 	        android:id="@+id/gist_header"
@@ -35,7 +33,12 @@
 	        android:id="@+id/gist_container"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content" />
-	    
-	    <include layout="@layout/comments" />    
+
+		<Button 
+			android:id="@+id/comments_button"
+			android:text="@string/view_comments"
+			android:visibility="gone"
+			style="@style/FormButton" />	    
+			
 	</LinearLayout>
 </ScrollView>
