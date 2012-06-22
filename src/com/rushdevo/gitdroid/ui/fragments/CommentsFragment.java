@@ -47,6 +47,8 @@ public class CommentsFragment extends BaseFragment {
 		
 		if (getComments() == null || getComments().isEmpty()) {
 			new QueryCommentsTask(getCommentable()).execute();
+		} else {
+			hideCommentSpinner();
 		}
 
 		return view;

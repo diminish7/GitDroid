@@ -34,11 +34,12 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content" />
 
-		<Button 
-			android:id="@+id/comments_button"
-			android:text="@string/view_comments"
-			android:visibility="gone"
+	    <LinearLayout style="@style/FormButtonContainer">
+			<Button
+				android:id="@+id/comments_button"
+				android:text="@string/view_comments"
+				android:visibility="gone"
 			style="@style/FormButton" />	    
-			
+		</LinearLayout>
 	</LinearLayout>
 </ScrollView>

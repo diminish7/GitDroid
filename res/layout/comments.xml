@@ -10,6 +10,7 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_gravity="center_horizontal"
+		android:visibility="gone"
 		/>
 	  	
 	<LinearLayout
@@ -35,9 +36,11 @@
 		    android:layout_width="fill_parent"
 		    android:layout_height="fill_parent"
 		    android:text="@string/list_no_comments"/>
-	    <Button 
-			android:id="@+id/add_comment_button"
-			android:text="@string/add_comment"
-			style="@style/FormButton" />
+	    <LinearLayout style="@style/FormButtonContainer">
+		    <Button 
+				android:id="@+id/add_comment_button"
+				android:text="@string/add_comment"
+				style="@style/FormButton" />
+		</LinearLayout>
 	</LinearLayout>
 </LinearLayout>
