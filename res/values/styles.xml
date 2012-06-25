@@ -21,13 +21,11 @@
     <style name="FormButton" parent="ActionButton">
 		<item name="android:layout_width">wrap_content</item>
 		<item name="android:background">@drawable/button_green</item>
-		<item name="android:paddingRight">32dip</item>
     </style>
     <style name="FormButtonContainer">
         <item name="android:layout_width">fill_parent</item>
 	    <item name="android:layout_height">wrap_content</item>
-	    <item name="android:paddingRight">50dip</item>
-	    <item name="android:gravity">right</item>
+	    <item name="android:gravity">center</item>
     </style>
     <style name="MainContainer">
         <item name="android:layout_width">fill_parent</item>

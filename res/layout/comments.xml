@@ -30,17 +30,16 @@
 		    android:id="@+id/android:list"
 		    style="@style/ContentList"
 	    	/>
-	    <TextView
+		<LinearLayout 
 		    android:id="@+id/android:empty"
-		    android:gravity="center_vertical|center_horizontal"
 		    android:layout_width="fill_parent"
 		    android:layout_height="fill_parent"
-		    android:text="@string/list_no_comments"/>
-	    <LinearLayout style="@style/FormButtonContainer">
-		    <Button 
-				android:id="@+id/add_comment_button"
-				android:text="@string/add_comment"
-				style="@style/FormButton" />
+		    android:orientation="vertical">
+		    <TextView
+			    android:gravity="center"
+			    style="@style/SectionHeader"
+			    android:text="@string/list_no_comments"/>
+		    <include layout="@layout/comment_button" />
 		</LinearLayout>
 	</LinearLayout>
 </LinearLayout>

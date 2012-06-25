@@ -1,0 +1,9 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingTop="10dip"
+    style="@style/FormButtonContainer">
+    <Button 
+		android:id="@+id/add_comment_button"
+		android:text="@string/add_comment"
+		style="@style/FormButton" />
+</LinearLayout>

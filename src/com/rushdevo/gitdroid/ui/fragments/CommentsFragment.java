@@ -35,6 +35,9 @@ public class CommentsFragment extends BaseFragment {
 		View view = inflater.inflate(R.layout.comments, container, false);
 		
 		commentsList = (ListView)view.findViewById(android.R.id.list);
+		View commentButton = inflater.inflate(R.layout.comment_button, commentsList, false);
+		commentsList.addFooterView(commentButton);
+		
 		commentSpinner = (ProgressBar)view.findViewById(R.id.comment_progress);
 		commentsContainer = view.findViewById(R.id.comments_container);
 		
