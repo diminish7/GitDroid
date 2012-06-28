@@ -6,7 +6,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -21,7 +23,7 @@ import com.rushdevo.gitdroid.utils.NonConfigurationChangeData;
  * @author jasonrush
  *
  */
-public class CommentsFragment extends BaseFragment {
+public class CommentsFragment extends BaseFragment implements OnClickListener {
 	private CommentsAdapter adapter;
 	private Commentable commentable;
 	
@@ -35,8 +37,11 @@ public class CommentsFragment extends BaseFragment {
 		View view = inflater.inflate(R.layout.comments, container, false);
 		
 		commentsList = (ListView)view.findViewById(android.R.id.list);
-		View commentButton = inflater.inflate(R.layout.comment_button, commentsList, false);
-		commentsList.addFooterView(commentButton);
+		View commentButtonContainer = inflater.inflate(R.layout.comment_button, commentsList, false);
+		Button commentButton = (Button)commentButtonContainer.findViewById(R.id.add_comment_button);
+		commentButton.setOnClickListener(this);
+		
+		commentsList.addFooterView(commentButtonContainer);
 		
 		commentSpinner = (ProgressBar)view.findViewById(R.id.comment_progress);
 		commentsContainer = view.findViewById(R.id.comments_container);
@@ -55,6 +60,11 @@ public class CommentsFragment extends BaseFragment {
 		}
 
 		return view;
+	}
+	
+	@Override
+	public void onClick(View v) {
+		getObjectSelectedListener().OnObjectSelected(getCommentable(), new CommentFormFragment());
 	}
 	
 	@Override

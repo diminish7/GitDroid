@@ -24,6 +24,8 @@
 	<string name="list_no_comments">No comments to display&#8230;</string>
 	
 	<string name="refresh">Refresh</string>
+	<string name="save">Save</string>
 	<string name="view_comments">View Comments</string>
 	<string name="add_comment">Add Comment</string>
+	<string name="comment">Comment</string>
 </resources>
