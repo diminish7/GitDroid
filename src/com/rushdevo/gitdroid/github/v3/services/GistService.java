@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import org.apache.http.client.HttpClient;
+import org.apache.http.entity.ByteArrayEntity;
 
 import android.content.Context;
 import android.net.Uri;
@@ -85,5 +86,24 @@ public class GistService extends GithubService {
 		String json = getResponseBody(Uri.parse(getGistCommentsUrl(gist)), true);
 		Type listType = new TypeToken<List<Comment>>(){}.getType();
 		return getGson().fromJson(json, listType);
+	}
+	
+	/**
+	 * Adds a new comment under the given gist
+	 * 
+	 * https://api.github.com/gists/:gist/comments
+	 * 
+	 * @param gist The gist to associate the comment with
+	 * @param commentBody The body of the comment
+	 * @return The comment created
+	 */
+	public Comment addComment(Gist gist, String commentBody) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("{\"body\":\"");
+		builder.append(commentBody);
+		builder.append("\"}");
+		ByteArrayEntity body = new ByteArrayEntity(builder.toString().getBytes());
+		String json = postResponseBody(Uri.parse(getGistCommentsUrl(gist)), body, true);
+		return getGson().fromJson(json, Comment.class);
 	}
 }

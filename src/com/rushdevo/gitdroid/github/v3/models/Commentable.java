@@ -12,4 +12,5 @@ public interface Commentable {
 	public String getDisplayName();
 	public List<Comment> getAllComments();
 	public void retrieveComments(Context context);
+	public void addComment(String commentBody, Context context);
 }

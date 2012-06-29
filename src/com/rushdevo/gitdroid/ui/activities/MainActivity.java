@@ -80,6 +80,11 @@ public class MainActivity extends BaseActivity implements ActionSelectedListener
     }
     
     @Override
+    public void OnObjectDeselected(BaseFragment fragment) {
+    	getSupportFragmentManager().popBackStackImmediate();
+    }
+    
+    @Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 	    if ((keyCode == KeyEvent.KEYCODE_BACK)) {
 	    	// Clear the cached selected action

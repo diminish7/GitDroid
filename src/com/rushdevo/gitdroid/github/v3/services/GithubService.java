@@ -9,6 +9,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.AbstractHttpEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.content.Context;
@@ -32,6 +33,7 @@ public abstract class GithubService {
 	protected GitDroidApplication app;
 	private HttpClient client;
 	private static final Integer SUCCESS = 200;
+	private static final Integer CREATED = 201;
 	
 	public GithubService(Context ctx) {
 		this(ctx, new DefaultHttpClient());
@@ -112,12 +114,15 @@ public abstract class GithubService {
 	 * Do an HTTP POST for the given URI
 	 * 
 	 * @param uri
+	 * @param body
 	 * @param appendAccessToken
 	 * @return The HttpResponse
 	 */
-	protected HttpResponse post(Uri uri, Boolean appendAccessToken) {
+	protected HttpResponse post(Uri uri, AbstractHttpEntity body, Boolean appendAccessToken) {
 		if (appendAccessToken) uri = getAuthenticatedUri(uri);
-		return executeRequest(new HttpPost(uri.toString()));
+		HttpPost post = new HttpPost(uri.toString());
+		if (body != null) post.setEntity(body);
+		return executeRequest(post, CREATED);
 	}
 	
 	/**
@@ -128,7 +133,18 @@ public abstract class GithubService {
 	 * @return the body of the HttpResponse
 	 */
 	protected String postResponseBody(Uri uri, Boolean appendAccessToken) {
-		return responseBody(post(uri, appendAccessToken)); 
+		return postResponseBody(uri, null, appendAccessToken);
+	}
+	
+	/**
+	 * Do an HTTP POST for the given URI
+	 * 
+	 * @param uri
+	 * @param appendAccessToken
+	 * @return the body of the HttpResponse
+	 */
+	protected String postResponseBody(Uri uri, AbstractHttpEntity body, Boolean appendAccessToken) {
+		return responseBody(post(uri, body, appendAccessToken)); 
 	}
 	
 	private String responseBody(HttpResponse response) {
@@ -151,12 +167,12 @@ public abstract class GithubService {
 		}
 	}
 	
-	private HttpResponse executeRequest(HttpUriRequest request) {
+	private HttpResponse executeRequest(HttpUriRequest request, Integer expectedResponse) {
 		HttpResponse response = null;
 		try {
 			response = getClient().execute(request);
 			Integer status = response.getStatusLine().getStatusCode();
-			if (!status.equals(SUCCESS)) {
+			if (!status.equals(expectedResponse)) {
 				throw new Exception("Invalid response from '" + request.getURI().toString() + "' (" + status + ")");
 			}
 		} catch (Exception e) {
@@ -165,6 +181,10 @@ public abstract class GithubService {
 			ErrorDisplay.debug(this, e);
 		}
 		return response;
+	}
+	
+	private HttpResponse executeRequest(HttpUriRequest request) {
+		return executeRequest(request, SUCCESS);
 	}
 	
 	private HttpClient getClient() {

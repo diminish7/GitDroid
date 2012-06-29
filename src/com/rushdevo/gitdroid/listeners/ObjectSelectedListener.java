@@ -13,4 +13,10 @@ public interface ObjectSelectedListener {
 	 * @param fragment - The fragment waiting to load the object
 	 */
 	public void OnObjectSelected(Object object, BaseFragment fragment);
+	
+	/**
+	 * Called when it is time to deselect the selected object (hide the view)
+	 * @param fragment - The fragment to remove
+	 */
+	public void OnObjectDeselected(BaseFragment fragment);
 }

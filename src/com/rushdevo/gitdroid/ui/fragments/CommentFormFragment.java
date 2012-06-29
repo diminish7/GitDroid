@@ -1,6 +1,7 @@
 package com.rushdevo.gitdroid.ui.fragments;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,8 @@ public class CommentFormFragment extends BaseFragment implements OnClickListener
 	ProgressBar spinner;
 	EditText commentField;
 	
+	InputMethodManager inputMethodManager;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.comment_form, container, false);
@@ -33,6 +36,8 @@ public class CommentFormFragment extends BaseFragment implements OnClickListener
 		spinner = (ProgressBar)view.findViewById(R.id.save_comment_spinner);
 		commentField = (EditText)view.findViewById(R.id.comment_field);
 		
+		inputMethodManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+		
 		return view;
 	}
 	
@@ -40,17 +45,12 @@ public class CommentFormFragment extends BaseFragment implements OnClickListener
 	public void onResume() {
 		super.onResume();
 		commentField.requestFocus(); 
-		InputMethodManager mgr = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-		mgr.showSoftInput(commentField, InputMethodManager.SHOW_IMPLICIT);
-
+		inputMethodManager.showSoftInput(commentField, InputMethodManager.SHOW_IMPLICIT);
 	}
 	
 	@Override
 	public void onClick(View v) {
-		showSpinner();
-		// TODO:
-		// 1. In an async task, delegate to commentable to save the comment
-		// 2. Hide the spinner and return to the previous fragment
+		new SaveCommentTask(commentField, this).execute();
 	}
 
 	@Override
@@ -89,4 +89,32 @@ public class CommentFormFragment extends BaseFragment implements OnClickListener
 	public void setCommentable(Commentable commentable) {
 		this.commentable = commentable;
 	}
+	
+	///////////// INNER CLASSES ////////////////////////
+	private class SaveCommentTask extends AsyncTask<Void, Void, Void> {
+		private EditText commentField;
+		private BaseFragment parentFragment;
+		private Context context;
+		
+		public SaveCommentTask(EditText commentField, BaseFragment parentFragment) {
+			this.commentField = commentField;
+			this.parentFragment = parentFragment;
+			this.context = parentFragment.getActivity();
+		}
+		
+		protected void onPreExecute() {
+			showSpinner();
+		}
+		
+	     protected Void doInBackground(Void... args) {
+	         getCommentable().addComment(commentField.getText().toString(), context);
+	         return null;
+	     }
+
+	     protected void onPostExecute(Void arg) {
+	    	 hideSpinner();
+	    	 inputMethodManager.hideSoftInputFromWindow(commentField.getWindowToken(), 0);
+	    	 getObjectSelectedListener().OnObjectDeselected(parentFragment);
+	     }
+	 }
 }

@@ -30,6 +30,8 @@ public class Gist extends BaseGithubModel implements Commentable {
 	private Date created_at;
 	private List<Comment> allComments;
 	
+	private GistService gistService;
+	
 	// Getters and Setters
 	public String getUrl() {
 		return url;
@@ -116,7 +118,17 @@ public class Gist extends BaseGithubModel implements Commentable {
 		return builder.toString();
 	}
 	
+	public GistService getGistServiceInstance(Context context) {
+		if (gistService == null) gistService = new GistService(context);
+		return gistService;
+	}
+	
 	public void retrieveComments(Context context) {
-		setAllComments(new GistService(context).retrieveComments(this));
+		setAllComments(getGistServiceInstance(context).retrieveComments(this));
+	}
+	
+	public void addComment(String commentBody, Context context) {
+		Comment newComment = getGistServiceInstance(context).addComment(this, commentBody);
+		if (newComment != null) this.allComments.add(newComment);
 	}
 }
